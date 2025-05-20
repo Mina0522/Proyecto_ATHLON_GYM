@@ -18,12 +18,15 @@ import javax.swing.JTextField;
 import Controller.LoginController;
 import Funciones_graficas.Graficos;
 import Funciones_graficas.Graficos_texto;
+import Model.AuthModel;
 
 public class View_loginGYM {
 	
 	// === Creamos nuestra ventana de tipo Vista_GYM.
 	private Vista_GYM iniciar_sesion;
 	private LoginController controller;
+	private AuthModel model;
+
 	
 	public JPanel panel_login, panel_inicio;
 	public JLabel img, text_inicio, img_logo;
@@ -32,6 +35,8 @@ public class View_loginGYM {
 	// === Constructor de View_loginGYM.
 	public View_loginGYM(Vista_GYM log) {
 		iniciar_sesion = log;
+		model = new AuthModel();
+		controller = new LoginController(View_loginGYM.this, model);
 	}
 	// === Metodo que construye y lo devuelve a la ventana principal.
 	public JPanel getPanel() {
@@ -107,6 +112,7 @@ public class View_loginGYM {
         });
         panel_inicio.add(btn_entrar);
 
+        
         btn_olvido_contra = new JButton("¿Olvidaste tu contraseña? ");
         btn_olvido_contra.setBounds(50, 300, 390, 55);
         btn_olvido_contra.setFont(new Font("Arial", Font.BOLD, 22));
@@ -120,5 +126,7 @@ public class View_loginGYM {
         panel_login.add(img);// Agregamos la imagen al panel principal.
         
 		return panel_login;
+		
+		
 	}
 }
