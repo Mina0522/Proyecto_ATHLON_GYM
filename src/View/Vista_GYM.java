@@ -1,15 +1,20 @@
 package View;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Vista_GYM extends JFrame{
 	
+	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	
 	// === Constructor que se ejecutara cada que se cree un objeto de tipo Vista_GYM.
 	public Vista_GYM () {
 		
 		setTitle("ATHLON GYM");
-		setSize(1280, 700);
+		setSize(screenSize);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
