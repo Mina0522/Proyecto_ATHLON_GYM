@@ -49,9 +49,4 @@ public class AuthModel {
 		}
 		return flag;
 	}
-	
-//	public static void main(String[] args) {
-//	
-//	}
-	
 }

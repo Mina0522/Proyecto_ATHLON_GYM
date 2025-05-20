@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.ModuleLayer.Controller;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -14,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Controller.LoginController;
 import Funciones_graficas.Graficos;
 import Funciones_graficas.Graficos_texto;
 
@@ -21,6 +23,7 @@ public class View_loginGYM {
 	
 	// === Creamos nuestra ventana de tipo Vista_GYM.
 	private Vista_GYM iniciar_sesion;
+	private LoginController controller;
 	
 	public JPanel panel_login, panel_inicio;
 	public JLabel img, text_inicio, img_logo;
@@ -76,16 +79,34 @@ public class View_loginGYM {
         panel_inicio.add(campo_contra);
 
         // === Boton que nos lleva a la pantalla inicial.
-        btn_entrar = new JButton("Iniciar sesion");
+        btn_entrar = new JButton("Iniciar sesión");
         btn_entrar.setBounds(50, 250, 390, 55);
         btn_entrar.setFont(new Font("Arial", Font.BOLD, 22));
         btn_entrar.setBackground(Color.BLACK);
         btn_entrar.setForeground(Color.WHITE);
         btn_entrar.setFocusPainted(false);
         btn_entrar.addActionListener(e -> {
-        	iniciar_sesion.pintar_vista(new Pantalla_Inicio(iniciar_sesion).getPanel());
+            String correo = campo_usuario.getText().trim();
+            String contrasena = new String(campo_contra.getPassword()).trim();
+
+            // === Validamos que no haya campos vacios.
+            if (correo.isEmpty() || contrasena.isEmpty()) {
+            	campo_usuario.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+                campo_contra.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+                JOptionPane.showMessageDialog(null, "¡Campos incompletos!");
+                return;
+            }
+            // === Validamos contraseñas correctas.
+            if (controller.auth(correo, contrasena)) {
+                iniciar_sesion.pintar_vista(new Pantalla_Inicio(iniciar_sesion).getPanel());
+            } else {
+            	campo_usuario.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+            	campo_contra.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+                JOptionPane.showMessageDialog(null, "Correo o contraseña incorrectos.");
+            }
         });
         panel_inicio.add(btn_entrar);
+
         
         btn_olvido_contra = new JButton("¿Olvidaste tu contraseña? ");
         btn_olvido_contra.setBounds(50, 300, 390, 55);
