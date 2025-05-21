@@ -22,7 +22,7 @@ public class Pantalla_Usuarios {
 	public JPanel menu_user;
 	public Graficos_fondo panel_negro;
 	public JLabel text_inicio, img_logo;
-	public JButton btn_entrar, noti, confi;
+	public JButton btn_entrar, noti, confi, btn_agg, btn_edit, btn_detalles, btn_eliminar;
 	public Color grisClaro = new Color(217, 217, 217);
 	
 	// === Constructor de Pantalla_Inicio 
@@ -60,7 +60,7 @@ public class Pantalla_Usuarios {
         btn_entrar.setBorderPainted(false);
         btn_entrar.setFocusPainted(false);
         btn_entrar.addActionListener(e -> {
-        	menu_inicio.pintar_vista(new Pantalla_Usuarios(menu_inicio).getPanel());
+        	menu_inicio.pintar_vista(new Pantalla_Inicio(menu_inicio).getPanel());
         });
         panel_negro.add(btn_entrar);
         
@@ -154,6 +154,51 @@ public class Pantalla_Usuarios {
 		confi.setFocusPainted(false);
 		confi.setOpaque(false);
 		menu_user.add(confi);
+		
+		// === Aqui se haran los botones del panel de usuario.
+		btn_agg = new JButton("Agregar usuario  ");
+		btn_agg.setBounds(360,160, 420, 130);
+		btn_agg.setFont(new Font("Arial", Font.BOLD, 32));
+		btn_agg.setBorderPainted(false);
+		btn_agg.setHorizontalAlignment(SwingConstants.RIGHT);
+		btn_agg.setFocusPainted(false);
+		btn_agg.setOpaque(true);
+		btn_agg.setBackground(Color.white);
+		btn_agg.setForeground(Color.black);
+		menu_user.add(btn_agg);
+		
+		btn_edit = new JButton("Editar usuario  ");
+		btn_edit.setBounds(840, 160, 420, 130);
+		btn_edit.setFont(new Font("Arial", Font.BOLD, 32));
+		btn_edit.setBorderPainted(false);
+		btn_edit.setHorizontalAlignment(SwingConstants.RIGHT);
+		btn_edit.setFocusPainted(false);
+		btn_edit.setOpaque(true);
+		btn_edit.setBackground(Color.white);
+		btn_edit.setForeground(Color.black);
+		menu_user.add(btn_edit);
+		
+		btn_detalles = new JButton("Detalles usuario  ");
+		btn_detalles.setBounds(360, 350, 420, 130);
+		btn_detalles.setFont(new Font("Arial", Font.BOLD, 32));
+		btn_detalles.setBorderPainted(false);
+		btn_detalles.setHorizontalAlignment(SwingConstants.RIGHT);
+		btn_detalles.setFocusPainted(false);
+		btn_detalles.setOpaque(true);
+		btn_detalles.setBackground(Color.white);
+		btn_detalles.setForeground(Color.black);
+		menu_user.add(btn_detalles);
+		
+		btn_eliminar= new JButton("Eliminar usuario  ");
+		btn_eliminar.setBounds(840, 350, 420, 130);
+		btn_eliminar.setFont(new Font("Arial", Font.BOLD, 32));
+		btn_eliminar.setBorderPainted(false);
+		btn_eliminar.setHorizontalAlignment(SwingConstants.RIGHT);
+		btn_eliminar.setFocusPainted(false);
+		btn_eliminar.setOpaque(true);
+		btn_eliminar.setBackground(Color.white);
+		btn_eliminar.setForeground(Color.black);
+		menu_user.add(btn_eliminar);
 		
 		return menu_user;
 	}

@@ -19,9 +19,9 @@ public class Pantalla_Inicio {
 	private Vista_GYM menu_inicio;
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
-	public JPanel menu;
-	public Graficos_fondo panel_negro;
-	public JLabel text_inicio, img_logo;
+	public JPanel menu, panel_horario;
+	public Graficos_fondo panel_negro,panel_clase;
+	public JLabel text_inicio, img_logo, txt_horario;
 	public JButton btn_entrar, noti, confi;
 	public Color grisClaro = new Color(217, 217, 217);
 	
@@ -154,6 +154,111 @@ public class Pantalla_Inicio {
 		confi.setFocusPainted(false);
 		confi.setOpaque(false);
 		menu.add(confi);
+
+		// === Aqui se crea el panel con la imagen y boton de crear clase.
+		panel_clase = new Graficos_fondo("files/fondo_inicio.png");
+		panel_clase.setBounds(305, 380, 570, 300);
+		panel_clase.setLayout(null);
+		menu.add(panel_clase);
+		
+		btn_entrar = new JButton("Crear clase");
+        btn_entrar.setBounds(30, 230, 190, 45);
+        btn_entrar.setFont(new Font("Arial", Font.BOLD, 24));
+        btn_entrar.setBackground(Color.white);
+        btn_entrar.setForeground(Color.black);
+        btn_entrar.setBorderPainted(false);
+        btn_entrar.setFocusPainted(false);
+        panel_clase.add(btn_entrar);
+        
+        // === Aqui se crea el panel del horario y se ponen labels con la hora y clase.
+        panel_horario = new JPanel();
+        panel_horario.setLayout(null);
+        panel_horario.setBackground(Color.white);
+        panel_horario.setOpaque(true);
+        panel_horario.setBounds(905, 380, 400,300);
+        menu.add(panel_horario);
+        
+        txt_horario = new JLabel("Horario");
+        txt_horario.setFont(new Font("Arial", Font.BOLD, 35));
+        txt_horario.setBounds(126, 20, 180, 50);
+		panel_horario.add(txt_horario);
+		
+		JLabel txt_clase_1 = new JLabel("       10:00 am            Yoga ");
+		txt_clase_1.setFont(new Font("Arial", Font.PLAIN, 28));
+		txt_clase_1.setBounds(0, 80, 460, 50);
+		panel_horario.add(txt_clase_1);
+		
+		JLabel txt_clase_2 = new JLabel("       11:00 am            Gym ");
+		txt_clase_2.setFont(new Font("Arial", Font.PLAIN, 28));
+		txt_clase_2.setBounds(0, 150, 460, 50);
+		panel_horario.add(txt_clase_2);
+		
+		JLabel txt_clase_3 = new JLabel("       12:00 am             Box ");
+		txt_clase_3.setFont(new Font("Arial", Font.PLAIN, 28));
+		txt_clase_3.setBounds(0, 220, 460, 50);
+		panel_horario.add(txt_clase_3);
+		
+		// === Aqui se crea los paneles de los widgets y se ponen labels.
+		JPanel panel_widget_1 = new JPanel();
+		panel_widget_1.setLayout(null);
+		panel_widget_1.setBackground(Color.white);
+		panel_widget_1.setOpaque(true);
+		panel_widget_1.setBounds(305, 130, 300,220);
+        menu.add(panel_widget_1);
+        
+        JLabel txt_widget_1 = new JLabel("Miembros activos");
+        txt_widget_1.setFont(new Font("Arial", Font.BOLD, 30));
+        txt_widget_1.setHorizontalAlignment(SwingConstants.LEFT);
+        txt_widget_1.setBounds(20, 25, 280, 50);
+        panel_widget_1.add(txt_widget_1);
+        
+        JLabel num_widget_1 = new JLabel("712");
+        num_widget_1.setFont(new Font("Arial", Font.BOLD, 65));
+        num_widget_1.setHorizontalAlignment(SwingConstants.LEFT);
+        num_widget_1.setBounds(20, 125, 280, 50);
+        panel_widget_1.add(num_widget_1);
+        
+        // ===
+        
+        JPanel panel_widget_2 = new JPanel();
+        panel_widget_2.setLayout(null);
+        panel_widget_2.setBackground(Color.white);
+        panel_widget_2.setOpaque(true);
+        panel_widget_2.setBounds(640, 130,300,220);
+        menu.add(panel_widget_2);
+        
+        JLabel txt_widget_2 = new JLabel("Nuevos registros");
+        txt_widget_2.setFont(new Font("Arial", Font.BOLD, 30));
+        txt_widget_2.setHorizontalAlignment(SwingConstants.LEFT);
+        txt_widget_2.setBounds(20, 25, 280, 50);
+        panel_widget_2.add(txt_widget_2);
+        
+        JLabel num_widget_2 = new JLabel("102");
+        num_widget_2.setFont(new Font("Arial", Font.BOLD, 65));
+        num_widget_2.setHorizontalAlignment(SwingConstants.LEFT);
+        num_widget_2.setBounds(20, 125, 280, 50);
+        panel_widget_2.add(num_widget_2);
+        
+        // ===
+        
+        JPanel panel_widget_3 = new JPanel();
+        panel_widget_3.setLayout(null);
+        panel_widget_3.setBackground(Color.white);
+        panel_widget_3.setOpaque(true);
+        panel_widget_3.setBounds(970, 130,300,220);
+        menu.add(panel_widget_3);
+        
+        JLabel txt_widget_3 = new JLabel("Pagos pendientes");
+        txt_widget_3.setFont(new Font("Arial", Font.BOLD, 30));
+        txt_widget_3.setHorizontalAlignment(SwingConstants.LEFT);
+        txt_widget_3.setBounds(20, 25, 280, 50);
+        panel_widget_3.add(txt_widget_3);
+        
+        JLabel num_widget_3 = new JLabel("12");
+        num_widget_3.setFont(new Font("Arial", Font.BOLD, 65));
+        num_widget_3.setHorizontalAlignment(SwingConstants.LEFT);
+        num_widget_3.setBounds(20, 125, 280, 50);
+        panel_widget_3.add(num_widget_3);
 		
 		return menu;
 	}

@@ -59,12 +59,11 @@ public class Checador {
 		panel_login.add(panel_inicio);
 		
 		// === Elementos.
-		ImageIcon icono_user = new ImageIcon(getClass().getResource("/files/usuario .png"));
+		ImageIcon icono_user = new ImageIcon(getClass().getResource("/files/usuario.png"));
 		img_logo = new JLabel(icono_user);
-		img_logo.setBounds(390, 35, 64, 64);
+		img_logo.setBounds(210, 35, 64, 64);
 		panel_inicio.add(img_logo);
 
-        
         // ===================================================================================
 		// === Boton para volver al inicio
 		ImageIcon icono_noti = new ImageIcon(getClass().getResource("/files/volver.png"));
