@@ -3,79 +3,45 @@ package View;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import Funciones_graficas.Graficos_fondo;
 
-public class Pantalla_Instructores {
-
+public class Pantalla_Usuarios_Agregar {
+	
 	// === Creamos nuestra ventana de tipo Vista_GYM
 	private Vista_GYM menu_inicio;
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
-	public JPanel panel_instructor;
+	public JPanel menu_user;
 	public Graficos_fondo panel_negro;
 	public JLabel text_inicio, img_logo;
-	public JButton btn_entrar, noti, confi;
+	public JButton btn_entrar, noti, confi, btn_crear, btn_cancelar;
 	public Color grisClaro = new Color(217, 217, 217);
+	public JTextField campo_nombre, campo_correo, campo_tel, campo_espe;
 	
 	// === Constructor de Pantalla_Inicio 
-	public Pantalla_Instructores(Vista_GYM log) {
+	public Pantalla_Usuarios_Agregar(Vista_GYM log) {
 		menu_inicio = log;
 	}
 	
 	public JPanel getPanel() {
 		
-		panel_instructor = new JPanel();
-		panel_instructor.setBackground(grisClaro);
-		panel_instructor.setLayout(null);
+		menu_user = new JPanel();
+		menu_user.setBackground(grisClaro);
+		menu_user.setLayout(null);
 		
-		text_inicio = new JLabel("INSTRUCTORES");
+		text_inicio = new JLabel("USUARIOS");
 		text_inicio.setFont(new Font("Arial", Font.BOLD, 32));
 		text_inicio.setBounds(255, 20, 290, 50);
-		panel_instructor.add(text_inicio);
-		
-		// === Panel contenedor para las tarjetas
-		JPanel panel_contenedor = new JPanel();
-		panel_contenedor.setBackground(grisClaro);
-		panel_contenedor.setBounds(270, 100, 950, 300); // Ajusta según tu diseño
-		panel_contenedor.setLayout(new GridLayout(2, 3, 40, 30)); 
-
-		// === Datos de instructores 
-		String[] nombres = {
-		    "Ryan Garcia", "Felipe Ramos", "Elen Barrera",
-		    "El Pepe", "Carlos Hernández", "Sarah Diaz"
-		};
-
-		// === Crear cada tarjeta y añadirla al panel contenedor
-		for (String nombre_instructor : nombres) {
-		    JPanel tarjeta = new JPanel();
-		    tarjeta.setLayout(null);
-		    tarjeta.setBackground(Color.WHITE);
-
-		    // Línea negra superior
-		    JPanel linea = new JPanel();
-		    linea.setBackground(Color.BLACK);
-		    linea.setBounds(0, 0, 300, 50);
-		    tarjeta.add(linea);
-
-		    // Nombre centrado
-		    JLabel nombre = new JLabel(nombre_instructor);
-		    nombre.setFont(new Font("Arial", Font.BOLD, 24));
-		    nombre.setForeground(Color.white);
-		    nombre.setBounds(0, 25, 200, 30);
-		    linea.add(nombre);
-
-		    panel_contenedor.add(tarjeta);
-		}
-		panel_instructor.add(panel_contenedor);
+		menu_user.add(text_inicio);
 		
 		// === Colocamos el panel negro este sera nuestro menu con los bontones.
 		panel_negro = new Graficos_fondo();
@@ -83,7 +49,8 @@ public class Pantalla_Instructores {
 		panel_negro.setBounds(0, 0, 250, screenSize.height);
 		panel_negro.setLayout(null);
 		panel_negro.agregarImagen("files/logoATHLON_cb.png", 25, 40, 180, 75);
-		panel_instructor.add(panel_negro);
+		menu_user.add(panel_negro);
+		
 		
 		// === Boton para el inicio.
         btn_entrar = new JButton("Inicio");
@@ -95,7 +62,7 @@ public class Pantalla_Instructores {
         btn_entrar.setBorderPainted(false);
         btn_entrar.setFocusPainted(false);
         btn_entrar.addActionListener(e -> {
-        	menu_inicio.pintar_vista(new Pantalla_Instructores(menu_inicio).getPanel());
+        	menu_inicio.pintar_vista(new Pantalla_Usuarios(menu_inicio).getPanel());
         });
         panel_negro.add(btn_entrar);
         
@@ -179,7 +146,7 @@ public class Pantalla_Instructores {
 		noti.setContentAreaFilled(false);
 		noti.setFocusPainted(false);
 		noti.setOpaque(false);
-		panel_instructor.add(noti);
+		menu_user.add(noti);
 		
 		ImageIcon icono_ajuste = new ImageIcon(getClass().getResource("/files/configuracion.png"));
 		confi = new JButton(icono_ajuste);
@@ -188,9 +155,62 @@ public class Pantalla_Instructores {
 		confi.setContentAreaFilled(false);
 		confi.setFocusPainted(false);
 		confi.setOpaque(false);
-		panel_instructor.add(confi);
+		menu_user.add(confi);
 		
-		return panel_instructor;
-	}
+		// === Aquí se hará el panel de agregar usuario y sus textFields
+		Graficos_fondo panel_Agregar = new Graficos_fondo();
+		panel_Agregar.setLayout(null);
+		panel_Agregar.setBounds(550, 120, 600, 620);
+		menu_user.add(panel_Agregar);
 
+		JLabel titulo = new JLabel("Datos personales");
+		titulo.setFont(new Font("Arial", Font.BOLD, 28));
+		titulo.setHorizontalAlignment(SwingConstants.CENTER);
+		titulo.setBounds(30, 30, 540, 30); 
+		panel_Agregar.add(titulo);
+
+		campo_nombre = new JTextField("Nombre");
+		campo_nombre.setBounds(30, 100, 540, 40);
+		campo_nombre.setFont(new Font("Arial", Font.PLAIN, 18));
+		campo_nombre.setBackground(grisClaro);
+		campo_nombre.setBorder(null);
+		panel_Agregar.add(campo_nombre);
+
+		campo_correo = new JTextField("Correo");
+		campo_nombre.setBounds(30, 180, 540, 40);
+		campo_nombre.setFont(new Font("Arial", Font.PLAIN, 18));
+		campo_nombre.setBackground(grisClaro);
+		campo_nombre.setBorder(null);
+		panel_Agregar.add(campo_nombre);
+
+		campo_tel = new JTextField("Telefono");
+		campo_tel.setBounds(30, 260, 540, 40); 
+		campo_tel.setFont(new Font("Arial", Font.PLAIN, 18));
+		campo_tel.setBackground(grisClaro);
+		campo_tel.setBorder(null);
+		panel_Agregar.add(campo_tel);
+
+		campo_espe = new JTextField("Especialidad");
+		campo_espe.setBounds(30, 340, 540, 40); 
+		campo_espe.setFont(new Font("Arial", Font.PLAIN, 18));
+		campo_espe.setBackground(grisClaro);
+		campo_espe.setBorder(null);
+		panel_Agregar.add(campo_espe);
+
+		btn_crear = new JButton("Crear");
+		btn_crear.setBounds(30, 420, 540, 40); 
+		btn_crear.setFont(new Font("Arial", Font.BOLD, 20));
+		btn_crear.setBackground(Color.BLACK);
+		btn_crear.setForeground(Color.WHITE);
+		panel_Agregar.add(btn_crear);
+
+		btn_cancelar = new JButton("Cancelar");
+		btn_cancelar.setBounds(30, 500, 540, 40); 
+		btn_cancelar.setFont(new Font("Arial", Font.BOLD, 20));
+		btn_cancelar.setBackground(Color.GRAY);
+		btn_cancelar.setForeground(Color.BLACK);
+		panel_Agregar.add(btn_cancelar);
+
+		return menu_user;
+	}
 }

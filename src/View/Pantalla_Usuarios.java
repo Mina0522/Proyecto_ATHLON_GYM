@@ -165,6 +165,9 @@ public class Pantalla_Usuarios {
 		btn_agg.setOpaque(true);
 		btn_agg.setBackground(Color.white);
 		btn_agg.setForeground(Color.black);
+		btn_agg.addActionListener(e -> {
+        	menu_inicio.pintar_vista(new Pantalla_Usuarios_Agregar(menu_inicio).getPanel());
+        });
 		menu_user.add(btn_agg);
 		
 		btn_edit = new JButton("Editar usuario  ");
@@ -176,6 +179,9 @@ public class Pantalla_Usuarios {
 		btn_edit.setOpaque(true);
 		btn_edit.setBackground(Color.white);
 		btn_edit.setForeground(Color.black);
+		btn_edit.addActionListener(e -> {
+        	menu_inicio.pintar_vista(new Pantalla_Usuarios_Editar(menu_inicio).getPanel());
+        });
 		menu_user.add(btn_edit);
 		
 		btn_detalles = new JButton("Detalles usuario  ");
@@ -187,6 +193,9 @@ public class Pantalla_Usuarios {
 		btn_detalles.setOpaque(true);
 		btn_detalles.setBackground(Color.white);
 		btn_detalles.setForeground(Color.black);
+		btn_detalles.addActionListener(e -> {
+        	menu_inicio.pintar_vista(new Pantalla_Usuarios_Detalles(menu_inicio).getPanel());
+        });
 		menu_user.add(btn_detalles);
 		
 		btn_eliminar= new JButton("Eliminar usuario  ");
@@ -198,6 +207,9 @@ public class Pantalla_Usuarios {
 		btn_eliminar.setOpaque(true);
 		btn_eliminar.setBackground(Color.white);
 		btn_eliminar.setForeground(Color.black);
+		btn_eliminar.addActionListener(e -> {
+        	menu_inicio.pintar_vista(new Pantalla_Usuarios_Eliminar(menu_inicio).getPanel());
+        });
 		menu_user.add(btn_eliminar);
 		
 		return menu_user;

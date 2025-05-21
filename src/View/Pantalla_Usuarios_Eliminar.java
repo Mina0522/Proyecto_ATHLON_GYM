@@ -3,7 +3,6 @@ package View;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
@@ -14,68 +13,33 @@ import javax.swing.SwingConstants;
 
 import Funciones_graficas.Graficos_fondo;
 
-public class Pantalla_Instructores {
+public class Pantalla_Usuarios_Eliminar {
 
 	// === Creamos nuestra ventana de tipo Vista_GYM
 	private Vista_GYM menu_inicio;
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
-	public JPanel panel_instructor;
+	public JPanel panel_plan;
 	public Graficos_fondo panel_negro;
 	public JLabel text_inicio, img_logo;
 	public JButton btn_entrar, noti, confi;
 	public Color grisClaro = new Color(217, 217, 217);
 	
 	// === Constructor de Pantalla_Inicio 
-	public Pantalla_Instructores(Vista_GYM log) {
+	public Pantalla_Usuarios_Eliminar(Vista_GYM log) {
 		menu_inicio = log;
 	}
 	
 	public JPanel getPanel() {
 		
-		panel_instructor = new JPanel();
-		panel_instructor.setBackground(grisClaro);
-		panel_instructor.setLayout(null);
+		panel_plan = new JPanel();
+		panel_plan.setBackground(grisClaro);
+		panel_plan.setLayout(null);
 		
-		text_inicio = new JLabel("INSTRUCTORES");
+		text_inicio = new JLabel("ELIMINAR");
 		text_inicio.setFont(new Font("Arial", Font.BOLD, 32));
 		text_inicio.setBounds(255, 20, 290, 50);
-		panel_instructor.add(text_inicio);
-		
-		// === Panel contenedor para las tarjetas
-		JPanel panel_contenedor = new JPanel();
-		panel_contenedor.setBackground(grisClaro);
-		panel_contenedor.setBounds(270, 100, 950, 300); // Ajusta según tu diseño
-		panel_contenedor.setLayout(new GridLayout(2, 3, 40, 30)); 
-
-		// === Datos de instructores 
-		String[] nombres = {
-		    "Ryan Garcia", "Felipe Ramos", "Elen Barrera",
-		    "El Pepe", "Carlos Hernández", "Sarah Diaz"
-		};
-
-		// === Crear cada tarjeta y añadirla al panel contenedor
-		for (String nombre_instructor : nombres) {
-		    JPanel tarjeta = new JPanel();
-		    tarjeta.setLayout(null);
-		    tarjeta.setBackground(Color.WHITE);
-
-		    // Línea negra superior
-		    JPanel linea = new JPanel();
-		    linea.setBackground(Color.BLACK);
-		    linea.setBounds(0, 0, 300, 50);
-		    tarjeta.add(linea);
-
-		    // Nombre centrado
-		    JLabel nombre = new JLabel(nombre_instructor);
-		    nombre.setFont(new Font("Arial", Font.BOLD, 24));
-		    nombre.setForeground(Color.white);
-		    nombre.setBounds(0, 25, 200, 30);
-		    linea.add(nombre);
-
-		    panel_contenedor.add(tarjeta);
-		}
-		panel_instructor.add(panel_contenedor);
+		panel_plan.add(text_inicio);
 		
 		// === Colocamos el panel negro este sera nuestro menu con los bontones.
 		panel_negro = new Graficos_fondo();
@@ -83,7 +47,8 @@ public class Pantalla_Instructores {
 		panel_negro.setBounds(0, 0, 250, screenSize.height);
 		panel_negro.setLayout(null);
 		panel_negro.agregarImagen("files/logoATHLON_cb.png", 25, 40, 180, 75);
-		panel_instructor.add(panel_negro);
+		panel_plan.add(panel_negro);
+		
 		
 		// === Boton para el inicio.
         btn_entrar = new JButton("Inicio");
@@ -95,7 +60,7 @@ public class Pantalla_Instructores {
         btn_entrar.setBorderPainted(false);
         btn_entrar.setFocusPainted(false);
         btn_entrar.addActionListener(e -> {
-        	menu_inicio.pintar_vista(new Pantalla_Instructores(menu_inicio).getPanel());
+        	menu_inicio.pintar_vista(new Pantalla_Usuarios_Eliminar(menu_inicio).getPanel());
         });
         panel_negro.add(btn_entrar);
         
@@ -137,7 +102,7 @@ public class Pantalla_Instructores {
         btn_entrar.setBorderPainted(false);
         btn_entrar.setFocusPainted(false);
         btn_entrar.addActionListener(e -> {
-        	menu_inicio.pintar_vista(new Pantalla_Planes(menu_inicio).getPanel());
+        	menu_inicio.pintar_vista(new Pantalla_Usuarios_Eliminar(menu_inicio).getPanel());
         });
         panel_negro.add(btn_entrar);
         
@@ -179,7 +144,7 @@ public class Pantalla_Instructores {
 		noti.setContentAreaFilled(false);
 		noti.setFocusPainted(false);
 		noti.setOpaque(false);
-		panel_instructor.add(noti);
+		panel_plan.add(noti);
 		
 		ImageIcon icono_ajuste = new ImageIcon(getClass().getResource("/files/configuracion.png"));
 		confi = new JButton(icono_ajuste);
@@ -188,9 +153,9 @@ public class Pantalla_Instructores {
 		confi.setContentAreaFilled(false);
 		confi.setFocusPainted(false);
 		confi.setOpaque(false);
-		panel_instructor.add(confi);
+		panel_plan.add(confi);
 		
-		return panel_instructor;
+		return panel_plan;
 	}
 
 }
