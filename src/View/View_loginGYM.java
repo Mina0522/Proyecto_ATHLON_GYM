@@ -46,9 +46,9 @@ public class View_loginGYM {
 	public JPanel getPanel() {
 		
 		// === Panel que contendra nuestros elementos.
-		panel_login = new Graficos_fondo("Files/fondo_logo.png");
+		panel_login = new Graficos_fondo("files/fondo_logo.png");
 		panel_login.setLayout(null);
-		panel_login.agregarImagen("Files/logoATHLON_cn.png",500, 55, 380,135);
+		panel_login.agregarImagen("files/logoATHLON_cn.png",500, 55, 380,135);
 
 		// === Colocamos el panel en  y lo añadimos al panel del login.
 		panel_inicio = new JPanel();

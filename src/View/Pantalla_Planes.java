@@ -46,7 +46,7 @@ public class Pantalla_Planes {
 		panel_negro.setBackground(Color.BLACK);
 		panel_negro.setBounds(0, 0, 250, screenSize.height);
 		panel_negro.setLayout(null);
-		panel_negro.agregarImagen("Files/logoATHLON_cb.png", 25, 40, 180, 75);
+		panel_negro.agregarImagen("files/logoATHLON_cb.png", 25, 40, 180, 75);
 		panel_plan.add(panel_negro);
 		
 		

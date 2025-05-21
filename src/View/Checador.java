@@ -24,7 +24,7 @@ import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Model.AuthModel;
 
-public class Pantalla_Checador {
+public class Checador {
 	
 	// === Creamos nuestra ventana de tipo Vista_GYM.
 	private Vista_GYM checador;
@@ -38,7 +38,7 @@ public class Pantalla_Checador {
 	public JButton btn_entrar, btn_comentario, btn_volver;
 	
 	// === Constructor de View_loginGYM.
-	public Pantalla_Checador(Vista_GYM log) {
+	public Checador(Vista_GYM log) {
 		checador = log;
 		model = new AuthModel();
 	}
@@ -59,41 +59,13 @@ public class Pantalla_Checador {
 		panel_login.add(panel_inicio);
 		
 		// === Elementos.
-		text_inicio = new JLabel("Checador");
-		text_inicio.setFont(new Font("Arial", Font.BOLD, 40));
-		text_inicio.setBounds(160, 50, 500, 50);
-        panel_inicio.add(text_inicio);
-        
-        // === Campos de usuario y contraseña personalizados. 
-        Graficos_texto campo_usuario = new Graficos_texto();
-        campo_usuario.setPlaceholder(" Ingresa tu usuario");
-        campo_usuario.setBounds(50, 140, 390, 50);
-        campo_usuario.setBackground(Color.lightGray);
-        campo_usuario.setFont(new Font("Arial", Font.PLAIN, 18));
-        campo_usuario.setBorder(null);
-        panel_inicio.add(campo_usuario);
+		ImageIcon icono_user = new ImageIcon(getClass().getResource("/files/usuario .png"));
+		img_logo = new JLabel(icono_user);
+		img_logo.setBounds(390, 35, 64, 64);
+		panel_inicio.add(img_logo);
 
-        // === Boton que nos lleva a la pantalla inicial.
-        btn_entrar = new JButton("Checar entrada");
-        btn_entrar.setBounds(50, 250, 390, 55);
-        btn_entrar.setFont(new Font("Arial", Font.BOLD, 22));
-        btn_entrar.setBackground(Color.BLACK);
-        btn_entrar.setForeground(Color.WHITE);
-        btn_entrar.setFocusPainted(false);
-        btn_entrar.addActionListener(e -> {
-        	checador.pintar_vista(new Checador(checador).getPanel());
-        });
-        panel_inicio.add(btn_entrar);
-
-        btn_comentario = new JButton("Dejar comentario");
-        btn_comentario.setBounds(50, 350, 390, 55);
-        btn_comentario.setFont(new Font("Arial", Font.BOLD, 22));
-        btn_comentario.setForeground(Color.black);
-        btn_comentario.setContentAreaFilled(false);
-        btn_comentario.setFocusPainted(false);
-        btn_comentario.setBorderPainted(false);
-        panel_inicio.add(btn_comentario);
         
+        // ===================================================================================
 		// === Boton para volver al inicio
 		ImageIcon icono_noti = new ImageIcon(getClass().getResource("/files/volver.png"));
 		btn_volver = new JButton(icono_noti);
