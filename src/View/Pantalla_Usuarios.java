@@ -1,7 +1,9 @@
 package View;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -9,24 +11,29 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import Funciones_graficas.Graficos_fondo;
+
 public class Pantalla_Usuarios {
+
+	// === Creamos nuestra ventana de tipo Vista_GYM
+	private Vista_GYM menu_inicio;
+	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
-	// === Creamos nuestra ventana de tipo Vista_GYM.
-	private Vista_GYM usuarios;
+	public JPanel menu_user;
+	public Graficos_fondo panel_negro;
+	public JLabel text_inicio, img_logo;
+	public JButton btn_entrar, noti, confi;
+	public Color grisClaro = new Color(217, 217, 217);
 	
-	public JPanel menu_user, panel_negro;
-	public JLabel img, text_inicio, img_logo;
-	public JButton btn_entrar, btn_volver, noti, confi;
-	
-	// === Constructor de View_loginGYM.
+	// === Constructor de Pantalla_Inicio 
 	public Pantalla_Usuarios(Vista_GYM log) {
-		usuarios = log;
+		menu_inicio = log;
 	}
-	// === Metodo que construye y lo devuelve a la ventana principal.
+	
 	public JPanel getPanel() {
 		
 		menu_user = new JPanel();
-		menu_user.setBackground(Color.lightGray);
+		menu_user.setBackground(grisClaro);
 		menu_user.setLayout(null);
 		
 		text_inicio = new JLabel("USUARIOS");
@@ -35,121 +42,104 @@ public class Pantalla_Usuarios {
 		menu_user.add(text_inicio);
 		
 		// === Colocamos el panel negro este sera nuestro menu con los bontones.
-		panel_negro = new JPanel();
+		panel_negro = new Graficos_fondo();
 		panel_negro.setBackground(Color.BLACK);
-		panel_negro.setBounds(0, 0, 200, 832);
+		panel_negro.setBounds(0, 0, 250, screenSize.height);
 		panel_negro.setLayout(null);
+		panel_negro.agregarImagen("Files/logoATHLON_cb.png", 25, 40, 180, 75);
 		menu_user.add(panel_negro);
 		
-		ImageIcon fondo_logo = new ImageIcon(getClass().getResource("/files/logoATHLON_cb.png"));
-		img_logo = new JLabel(fondo_logo);
-		img_logo.setBounds(10, 25, 170, 67);
-		panel_negro.add(img_logo);
 		
 		// === Boton para el inicio.
         btn_entrar = new JButton("Inicio");
-        btn_entrar.setBounds(5, 130, 160, 45);
-        btn_entrar.setFont(new Font("Arial", Font.BOLD, 22));
+        btn_entrar.setBounds(10, 190, 225, 45);
+        btn_entrar.setFont(new Font("Arial", Font.BOLD, 33));
         btn_entrar.setHorizontalAlignment(SwingConstants.LEFT);
         btn_entrar.setBackground(Color.BLACK);
         btn_entrar.setForeground(Color.WHITE);
         btn_entrar.setBorderPainted(false);
         btn_entrar.setFocusPainted(false);
         btn_entrar.addActionListener(e -> {
-        	usuarios.pintar_vista(new Pantalla_Inicio(usuarios).getPanel());
+        	menu_inicio.pintar_vista(new Pantalla_Usuarios(menu_inicio).getPanel());
         });
         panel_negro.add(btn_entrar);
         
         // === Boton que nos llevara a la pantalla de usuarios.
         btn_entrar = new JButton("Usuarios");
-        btn_entrar.setBounds(5, 200, 160, 45);
-        btn_entrar.setFont(new Font("Arial", Font.BOLD, 22));
+        btn_entrar.setBounds(10, 260, 225, 45);
+        btn_entrar.setFont(new Font("Arial", Font.BOLD, 33));
         btn_entrar.setHorizontalAlignment(SwingConstants.LEFT);
         btn_entrar.setBackground(Color.BLACK);
         btn_entrar.setForeground(Color.WHITE);
         btn_entrar.setBorderPainted(false);
         btn_entrar.setFocusPainted(false);
         btn_entrar.addActionListener(e -> {
-        	usuarios.pintar_vista(new Pantalla_Usuarios(usuarios).getPanel());
+        	menu_inicio.pintar_vista(new Pantalla_Usuarios(menu_inicio).getPanel());
         });
         panel_negro.add(btn_entrar);
         
         // === Boton que nos lleva a la pantalla de instructores.
         btn_entrar = new JButton("Instructores");
-        btn_entrar.setBounds(5, 270, 160, 45);
-        btn_entrar.setFont(new Font("Arial", Font.BOLD, 22));
+        btn_entrar.setBounds(10, 330, 225, 45);
+        btn_entrar.setFont(new Font("Arial", Font.BOLD, 33));
         btn_entrar.setHorizontalAlignment(SwingConstants.LEFT);
         btn_entrar.setBackground(Color.BLACK);
         btn_entrar.setForeground(Color.WHITE);
         btn_entrar.setBorderPainted(false);
         btn_entrar.setFocusPainted(false);
         btn_entrar.addActionListener(e -> {
-        	usuarios.pintar_vista(new Pantalla_Instructores(usuarios).getPanel());
+        	menu_inicio.pintar_vista(new Pantalla_Instructores(menu_inicio).getPanel());
         });
         panel_negro.add(btn_entrar);
         
         // === Boton que nos lleva a la pantalla de planes.
         btn_entrar = new JButton("Planes");
-        btn_entrar.setBounds(5, 340, 160, 45);
-        btn_entrar.setFont(new Font("Arial", Font.BOLD, 22));
+        btn_entrar.setBounds(10, 400, 225, 45);
+        btn_entrar.setFont(new Font("Arial", Font.BOLD, 33));
         btn_entrar.setHorizontalAlignment(SwingConstants.LEFT);
         btn_entrar.setBackground(Color.BLACK);
         btn_entrar.setForeground(Color.WHITE);
         btn_entrar.setBorderPainted(false);
         btn_entrar.setFocusPainted(false);
         btn_entrar.addActionListener(e -> {
-        	usuarios.pintar_vista(new Pantalla_Planes(usuarios).getPanel());
+        	menu_inicio.pintar_vista(new Pantalla_Planes(menu_inicio).getPanel());
         });
         panel_negro.add(btn_entrar);
         
         // === Boton que nos lleva a la pantalla de checado.
         btn_entrar = new JButton("Checador");
-        btn_entrar.setBounds(5, 410, 160, 45);
-        btn_entrar.setFont(new Font("Arial", Font.BOLD, 22));
+        btn_entrar.setBounds(10, 470, 225, 45);
+        btn_entrar.setFont(new Font("Arial", Font.BOLD, 33));
         btn_entrar.setHorizontalAlignment(SwingConstants.LEFT);
         btn_entrar.setBackground(Color.BLACK);
         btn_entrar.setForeground(Color.WHITE);
         btn_entrar.setBorderPainted(false);
         btn_entrar.setFocusPainted(false);
         btn_entrar.addActionListener(e -> {
-        	usuarios.pintar_vista(new Pantalla_Checador(usuarios).getPanel());
+        	menu_inicio.pintar_vista(new Pantalla_Checador(menu_inicio).getPanel());
         });
         panel_negro.add(btn_entrar);
         
         // === Nos regresa a la pantalla de inicio de sesion.
         btn_entrar = new JButton("Cerrar sesion");
-        btn_entrar.setBounds(5, 590, 150, 25);
-        btn_entrar.setFont(new Font("Arial", Font.BOLD, 12));
+        btn_entrar.setBounds(10, 650, 220, 25);
+        btn_entrar.setFont(new Font("Arial", Font.BOLD, 25));
         btn_entrar.setHorizontalAlignment(SwingConstants.LEFT);
         btn_entrar.setBackground(Color.BLACK);
         btn_entrar.setForeground(Color.WHITE);
         btn_entrar.setBorderPainted(false);
         btn_entrar.setFocusPainted(false);
         btn_entrar.addActionListener(e -> {
-        	usuarios.pintar_vista(new View_loginGYM(usuarios).getPanel());
+        	menu_inicio.pintar_vista(new View_loginGYM(menu_inicio).getPanel());
         });
         panel_negro.add(btn_entrar);
-        
-		// === Boton para volver al inicio.
-//		btn_volver = new JButton("<- Volver");
-//		btn_volver.setBounds(690, 10, 160, 45);
-//		btn_volver.setFont(new Font("Arial", Font.BOLD, 22));
-//		btn_volver.setHorizontalAlignment(SwingConstants.LEFT);
-//		btn_volver.setBackground(Color.WHITE);
-//		btn_volver.setForeground(Color.BLACK);
-//		btn_volver.setBorderPainted(false);
-//		btn_volver.setFocusPainted(false);
-//        btn_volver.addActionListener(e -> {
-//        	usuarios.pintar_vista(new Pantalla_Inicio(usuarios).getPanel());
-//        });
-//        menu_user.add(btn_volver);
         
         // ========================================================================
         
         // === Iconoces de notificaciones y ajustes. 
 		ImageIcon icono_noti = new ImageIcon(getClass().getResource("/files/campana.png"));
 		noti = new JButton(icono_noti);
-		noti.setBounds(1090, 20, 57, 57);
+		noti.setBounds(1100, 20, 57, 57);
 		noti.setBorderPainted(false);
 		noti.setContentAreaFilled(false);
 		noti.setFocusPainted(false);
@@ -158,7 +148,7 @@ public class Pantalla_Usuarios {
 		
 		ImageIcon icono_ajuste = new ImageIcon(getClass().getResource("/files/configuracion.png"));
 		confi = new JButton(icono_ajuste);
-		confi.setBounds(1170, 20, 57, 57);
+		confi.setBounds(1200, 20, 57, 57);
 		confi.setBorderPainted(false);
 		confi.setContentAreaFilled(false);
 		confi.setFocusPainted(false);
@@ -167,4 +157,5 @@ public class Pantalla_Usuarios {
 		
 		return menu_user;
 	}
+
 }
