@@ -29,7 +29,6 @@ public class Pantalla_Usuarios {
 	public Pantalla_Usuarios(Vista_GYM log) {
 		menu_inicio = log;
 	}
-	
 	public JPanel getPanel() {
 		
 		menu_user = new JPanel();
