@@ -1,17 +1,19 @@
 package View;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+
 import java.awt.*;
 import Funciones_graficas.Graficos_fondo;
+import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
 
 public class Pantalla_Usuarios {
 
     private Vista_GYM menu_inicio;
-    private JPanel         menu_user;
-
-    private JPanel panel_botones;
-    private JButton noti, confi, btn_agg, btn_eliminar, btn_deta;
+    private JPanel menu_user, panel_tabla, panel_botones;
+    private JButton noti, confi, btn_agg, btn_eliminar, btn_deta, btn_edit, btn_buscar;
 
     public Pantalla_Usuarios(Vista_GYM log) {
         this.menu_inicio = log;
@@ -55,71 +57,144 @@ public class Pantalla_Usuarios {
         menu_user.add(confi);
         
         // ==
-        
         JSeparator separador = new JSeparator(SwingConstants.HORIZONTAL);
         separador.setBounds(250, 95, 1030, 2); 
         menu_user.add(separador);
 
-        // ==
+        // == boton agregar
+        ImageIcon agg = new ImageIcon(getClass().getResource("/files/aggUsuario_cn.png"));
+        Image modi = agg.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+        ImageIcon icono = new ImageIcon(modi);
 
+        btn_agg = new JButton("Agregar usuario");
+        btn_agg.setIcon(icono);
+        btn_agg.setBounds(300, 130, 420, 115);
+        btn_agg.setFont(new Font("Arial", Font.BOLD, 32));
+        btn_agg.setBorderPainted(false);
+        btn_agg.setHorizontalAlignment(SwingConstants.LEFT);
+        btn_agg.setIconTextGap(30);
+        btn_agg.setFocusPainted(false);
+        btn_agg.setOpaque(true);
+        btn_agg.setBackground(Color.WHITE);
+        btn_agg.setForeground(Color.BLACK);
+        btn_agg.addActionListener(e -> {
+            menu_inicio.pintar_vista(new Pantalla_Usuarios_Agregar(menu_inicio).getPanel());
+        });
+        menu_user.add(btn_agg);
+
+		// == boton editar 
+        ImageIcon edit = new ImageIcon(getClass().getResource("/files/user_edit.png"));
+        Image modi_edit = edit.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+        ImageIcon icono_edit = new ImageIcon(modi_edit);
+
+        btn_edit = new JButton("Editar usuario");
+        btn_edit.setIcon(icono_edit);
+        btn_edit.setBounds(775, 130, 420, 115);
+        btn_edit.setFont(new Font("Arial", Font.BOLD, 32));
+        btn_edit.setBorderPainted(false);
+        btn_edit.setHorizontalAlignment(SwingConstants.LEFT);
+        btn_edit.setIconTextGap(30);
+        btn_edit.setFocusPainted(false);
+        btn_edit.setOpaque(true);
+        btn_edit.setBackground(Color.WHITE);
+        btn_edit.setForeground(Color.BLACK);
+        btn_edit.addActionListener(e -> {
+            menu_inicio.pintar_vista(new Pantalla_Usuarios_Agregar(menu_inicio).getPanel());
+        });
+        menu_user.add(btn_edit);
+        
+		// == boton detalles 
+        ImageIcon deta = new ImageIcon(getClass().getResource("/files/buscar_registros.png"));
+        Image modi_deta = deta.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+        ImageIcon icono_deta = new ImageIcon(modi_deta);
+
+        btn_deta = new JButton("Detalles usuario");
+        btn_deta.setIcon(icono_deta);
+        btn_deta.setBounds(300, 270, 420, 115);
+        btn_deta.setFont(new Font("Arial", Font.BOLD, 32));
+        btn_deta.setBorderPainted(false);
+        btn_deta.setHorizontalAlignment(SwingConstants.LEFT);
+        btn_deta.setIconTextGap(30);
+        btn_deta.setFocusPainted(false);
+        btn_deta.setOpaque(true);
+        btn_deta.setBackground(Color.WHITE);
+        btn_deta.setForeground(Color.BLACK);
+        btn_deta.addActionListener(e -> {
+            menu_inicio.pintar_vista(new Pantalla_Usuarios_Agregar(menu_inicio).getPanel());
+        });
+        menu_user.add(btn_deta);
 		
-		// === Aqui se haran los botones del panel de usuario.
-//		btn_agg = new JButton("Agregar usuario  ");
-//		btn_agg.setBounds(360,160, 420, 130);
-//		btn_agg.setFont(new Font("Arial", Font.BOLD, 32));
-//		btn_agg.setBorderPainted(false);
-//		btn_agg.setHorizontalAlignment(SwingConstants.RIGHT);
-//		btn_agg.setFocusPainted(false);
-//		btn_agg.setOpaque(true);
-//		btn_agg.setBackground(Color.white);
-//		btn_agg.setForeground(Color.black);
-//		btn_agg.addActionListener(e -> {
-//        	menu_inicio.pintar_vista(new Pantalla_Usuarios_Agregar(menu_inicio).getPanel());
-//        });
-//		menu_user.add(btn_agg);
-//		
-//		btn_edit = new JButton("Editar usuario  ");
-//		btn_edit.setBounds(840, 160, 420, 130);
-//		btn_edit.setFont(new Font("Arial", Font.BOLD, 32));
-//		btn_edit.setBorderPainted(false);
-//		btn_edit.setHorizontalAlignment(SwingConstants.RIGHT);
-//		btn_edit.setFocusPainted(false);
-//		btn_edit.setOpaque(true);
-//		btn_edit.setBackground(Color.white);
-//		btn_edit.setForeground(Color.black);
-//		btn_edit.addActionListener(e -> {
-//        	menu_inicio.pintar_vista(new Pantalla_Usuarios_Editar(menu_inicio).getPanel());
-//        });
-//		menu_user.add(btn_edit);
-//		
-//		btn_detalles = new JButton("Detalles usuario  ");
-//		btn_detalles.setBounds(360, 350, 420, 130);
-//		btn_detalles.setFont(new Font("Arial", Font.BOLD, 32));
-//		btn_detalles.setBorderPainted(false);
-//		btn_detalles.setHorizontalAlignment(SwingConstants.RIGHT);
-//		btn_detalles.setFocusPainted(false);
-//		btn_detalles.setOpaque(true);
-//		btn_detalles.setBackground(Color.white);
-//		btn_detalles.setForeground(Color.black);
-//		btn_detalles.addActionListener(e -> {
-//        	menu_inicio.pintar_vista(new Pantalla_Usuarios_Detalles(menu_inicio).getPanel());
-//        });
-//		menu_user.add(btn_detalles);
-//		
-//		btn_eliminar= new JButton("Eliminar usuario  ");
-//		btn_eliminar.setBounds(840, 350, 420, 130);
-//		btn_eliminar.setFont(new Font("Arial", Font.BOLD, 32));
-//		btn_eliminar.setBorderPainted(false);
-//		btn_eliminar.setHorizontalAlignment(SwingConstants.RIGHT);
-//		btn_eliminar.setFocusPainted(false);
-//		btn_eliminar.setOpaque(true);
-//		btn_eliminar.setBackground(Color.white);
-//		btn_eliminar.setForeground(Color.black);
-//		btn_eliminar.addActionListener(e -> {
-//        	menu_inicio.pintar_vista(new Pantalla_Usuarios_Eliminar(menu_inicio).getPanel());
-//        });
-//		menu_user.add(btn_eliminar);
+		// == boton eliminar 
+        ImageIcon eliminar = new ImageIcon(getClass().getResource("/files/user_less.png"));
+        Image modi_eliminar = eliminar.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+        ImageIcon icono_eliminar = new ImageIcon(modi_eliminar);
+
+        btn_eliminar = new JButton("Eliminar usuario");
+        btn_eliminar.setIcon(icono_eliminar);
+        btn_eliminar.setBounds(775, 270, 420, 115);
+        btn_eliminar.setFont(new Font("Arial", Font.BOLD, 32));
+        btn_eliminar.setBorderPainted(false);
+        btn_eliminar.setHorizontalAlignment(SwingConstants.LEFT);
+        btn_eliminar.setIconTextGap(30);
+        btn_eliminar.setFocusPainted(false);
+        btn_eliminar.setOpaque(true);
+        btn_eliminar.setBackground(Color.WHITE);
+        btn_eliminar.setForeground(Color.BLACK);
+        btn_eliminar.addActionListener(e -> {
+            menu_inicio.pintar_vista(new Pantalla_Usuarios_Agregar(menu_inicio).getPanel());
+        });
+        menu_user.add(btn_eliminar);
 		
+        // === TABLA T.T
+		panel_tabla = new JPanel();
+		panel_tabla.setBackground(Color.WHITE);
+		panel_tabla.setBounds(300, 400, 900, 230);
+		panel_tabla.setLayout(null);
+		menu_user.add(panel_tabla);
+
+        Graficos_texto buscar = new Graficos_texto();
+        buscar.setPlaceholder(" Buscar usuario");
+        buscar.setBounds(100, 10, 400, 50);
+        buscar.setBackground(Color.lightGray);
+        buscar.setFont(new Font("Arial", Font.PLAIN, 18));
+        buscar.setBorder(null);
+        panel_tabla.add(buscar);
+
+        btn_buscar = new JButton("Buscar");
+        btn_buscar.setBounds(580, 10, 200, 50);
+        btn_buscar.setFont(new Font("Arial", Font.BOLD, 22));
+        btn_buscar.setBackground(Color.BLACK);
+        btn_buscar.setForeground(Color.WHITE);
+        btn_buscar.setFocusPainted(false);
+//        btn_buscar.addActionListener(e -> {
+//        	checador.pintar_vista(new Checador(checador).getPanel());
+//        });
+        panel_tabla.add(btn_buscar);
+		
+        String[] columnas = {"Nombre", "Apellido", "Telefono", "Cuota", "Dia de pago"};
+        Object[][] datos = {
+            {"Ian Karel", "De La Cruz", "612-230-9508", "470", "13 Abril"},
+            {"Ian Karel", "De La Cruz", "612-230-9508", "470", "13 Abril"},
+            {"Ian Karel", "De La Cruz", "612-230-9508", "470", "13 Abril"},
+            {"Ian Karel", "De La Cruz", "612-230-9508", "470", "13 Abril"},
+        };
+
+        DefaultTableModel modelo = new DefaultTableModel(datos, columnas);
+        JTable tabla = new JTable(modelo);
+        tabla.setFont(new Font("Arial", Font.PLAIN, 16));
+        tabla.setRowHeight(28);
+        tabla.setForeground(Color.BLACK);
+        tabla.setBackground(Color.WHITE);
+
+        JTableHeader header = tabla.getTableHeader();
+        header.setFont(new Font("Arial", Font.BOLD, 15));
+        header.setBackground(Color.BLACK);
+        header.setForeground(Color.WHITE);
+
+        JScrollPane scroll = new JScrollPane(tabla);
+        scroll.setBounds(50, 80, 800, 180);
+        panel_tabla.add(scroll);
+        
 		return menu_user;
 	}
 

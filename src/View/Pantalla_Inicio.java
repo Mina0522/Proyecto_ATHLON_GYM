@@ -76,7 +76,7 @@ public class Pantalla_Inicio {
         
         JLabel cant1 = new JLabel("743");
         cant1.setFont(new Font("Arial", Font.BOLD, 65));
-        cant1.setBounds(10, 125, 280, 50);
+        cant1.setBounds(20, 125, 280, 50);
         panel_w1.add(cant1);
         menu.add(panel_w1);
 

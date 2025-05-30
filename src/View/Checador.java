@@ -36,7 +36,7 @@ public class Checador {
 	public JPanel panel_inicio, panel_info, panel_info_dos, panel_negro, panel_nero;
 	public Graficos_fondo panel_login;
 	public JLabel img, text_inicio, img_logo, text_, text_clase, text_fecha;
-	public JButton btn_entrar, btn_comentario, btn_volver;
+	public JButton btn_entrar, btn_volver;
 	public JTextArea info_clase, info_fecha; 
 	
 	// === Constructor de View_loginGYM.
