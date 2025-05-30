@@ -49,12 +49,12 @@ public class Pantalla_Checador {
 		// === Panel que contendra nuestros elementos.
 		panel_login = new Graficos_fondo("files/fondo_logo.png");
 		panel_login.setLayout(null);
-		panel_login.agregarImagen("files/logoATHLON_cn.png",500, 55, 380,135);
+		panel_login.agregarImagen("files/logoATHLON_cn.png", 460, 40, 380, 135);
 
 		// === Colocamos el panel en  y lo añadimos al panel del login.
 		panel_inicio = new JPanel();
 		panel_inicio.setBackground(Color.WHITE);
-		panel_inicio.setBounds(445, 225, 500, 470);
+		panel_inicio.setBounds(402, 190, 500, 430);
 		panel_inicio.setLayout(null);
 		panel_login.add(panel_inicio);
 		
@@ -97,7 +97,7 @@ public class Pantalla_Checador {
 		// === Boton para volver al inicio
 		ImageIcon icono_noti = new ImageIcon(getClass().getResource("/files/volver.png"));
 		btn_volver = new JButton(icono_noti);
-		btn_volver.setBounds(20, 650, 51, 51);
+		btn_volver.setBounds(20, 580, 51, 51);
 		btn_volver.setBorderPainted(false);
 		btn_volver.setContentAreaFilled(false);
 		btn_volver.setFocusPainted(false);
