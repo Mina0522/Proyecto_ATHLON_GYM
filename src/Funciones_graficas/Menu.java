@@ -43,14 +43,15 @@ public class Menu {
             this.seccion = boton.getText(); 
             resetearEstilos();
             pintarBoton();
+            accion.actionPerformed(e);
         });
 
         listaBotones.add(boton);
         panelMenu.add(boton);
 
         pintarBoton();
-        
     }
+
 
     public void pintarBoton() {
         for (JButton boton : listaBotones) {
