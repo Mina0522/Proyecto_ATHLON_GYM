@@ -1,9 +1,8 @@
 package Model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -14,18 +13,13 @@ public class AuthModel {
 	
 	public boolean auth (String user, String password) {
 	    String query = "SELECT password FROM adminTable WHERE user = ?"; // Tomar la contraseña del usuario ingresado
-		Connection conn = null;
 		PreparedStatement pstmt = null; 
 		boolean flag = false;
 		String dbPassword = "";
 	    ResultSet rs = null;
 		
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://uigskisxj0v53vyz:F1kWnWnAf6GapZoen7Vl@bna0qopo8smun5oybrpg-mysql.services.clever-cloud.com:3306/bna0qopo8smun5oybrpg",
-				"uigskisxj0v53vyz",
-				"F1kWnWnAf6GapZoen7Vl");
-			pstmt = conn.prepareStatement(query);
+			pstmt = MyConnection.conect().prepareStatement(query);
 			pstmt.setString(1, user); // Establecer el valor "?" en el query
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -43,10 +37,11 @@ public class AuthModel {
 			e.printStackTrace();
 		} finally {
 			try {
-				rs.close();
-				pstmt.close();
-				conn.close();
-			} catch (Exception e) {}
+				MyConnection.getConn().close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return flag;
 	}
