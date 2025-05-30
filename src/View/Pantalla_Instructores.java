@@ -1,208 +1,234 @@
 package View;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Toolkit;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-
+import javax.swing.*;
+import java.awt.*;
 import Funciones_graficas.Graficos_fondo;
+import Funciones_graficas.Menu;
 
 public class Pantalla_Instructores {
 
-	// === Creamos nuestra ventana de tipo Vista_GYM
-	private Vista_GYM menu_inicio;
-	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	
-	public JPanel panel_instructor;
-	public Graficos_fondo panel_negro;
-	public JLabel text_inicio, img_logo;
-	public JButton btn_entrar, noti, confi, btn_crear;
-	public Color grisClaro = new Color(217, 217, 217);
-	
-	// === Constructor de Pantalla_Inicio 
-	public Pantalla_Instructores(Vista_GYM log) {
-		menu_inicio = log;
-	}
-	
-	public JPanel getPanel() {
-		
-		panel_instructor = new JPanel();
-		panel_instructor.setBackground(grisClaro);
-		panel_instructor.setLayout(null);
-		
-		text_inicio = new JLabel("INSTRUCTORES");
-		text_inicio.setFont(new Font("Arial", Font.BOLD, 32));
-		text_inicio.setBounds(255, 20, 290, 50);
-		panel_instructor.add(text_inicio);
-		
-		// === Panel contenedor.
-		JPanel panel_contenedor = new JPanel();
-		panel_contenedor.setBackground(grisClaro);
-		panel_contenedor.setBounds(270, 100, 950, 300);
-		panel_contenedor.setLayout(new GridLayout(2, 3, 40, 30)); 
+    private Vista_GYM menu_inicio;
+    private JPanel panel_instructor;
 
-		// === Datos de los instructores.
-		String[] nombres = {
-		    "Ryan Garcia", "Felipe Ramos", "Elen Barrera",
-		    "El Pepe", "Carlos Hernández", "Sarah Diaz"
-		};
+    private JPanel panel_botones, coach1, coach2, coach3, coach4, coach5, coach6, franja_negro;
+    private JButton noti, confi, crear_coach;
+    private JLabel text_coach;
 
-		// === Crear cada tarjeta y añadirla al panel contenedor.
-		for (String nombre_instructor : nombres) {
-		    JPanel tarjeta = new JPanel();
-		    tarjeta.setLayout(null);
-		    tarjeta.setBackground(Color.WHITE);
+    public Pantalla_Instructores(Vista_GYM log) {
+        this.menu_inicio = log;
+    }
 
-		    JPanel linea = new JPanel();
-		    linea.setBackground(Color.BLACK);
-		    linea.setBounds(0, 0, 300, 50);
-		    tarjeta.add(linea);
+    public JPanel getPanel() {
+    	panel_instructor = new JPanel();
+    	panel_instructor.setLayout(null);
+    	panel_instructor.setBackground(Color.LIGHT_GRAY);
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        panel_instructor.setSize(pantalla);
 
-		    // === Centrar nombre.
-		    JLabel nombre = new JLabel(nombre_instructor);
-		    nombre.setFont(new Font("Arial", Font.BOLD, 24));
-		    nombre.setForeground(Color.white);
-		    nombre.setBounds(0, 25, 200, 30);
-		    linea.add(nombre);
+        // === MENU ===
+        Menu botones = new Menu("Personal");
+        panel_botones = botones.obtenerPanel();
+        panel_botones.setBounds(0, 0, 250, 1080);
+        panel_instructor.add(panel_botones);
 
-		    panel_contenedor.add(tarjeta);
-		}
-		panel_instructor.add(panel_contenedor);
-		
-		// === 
-		btn_crear = new JButton("Crear instructor");
-		btn_crear.setFont(new Font("Arial", Font.BOLD, 18));
-		btn_crear.setBounds(1050, 650, 200, 40); 
-		btn_crear.setBackground(Color.BLACK);
-		btn_crear.setForeground(Color.WHITE);
-		btn_crear.setFocusPainted(false);
-		btn_crear.setBorderPainted(false);
-		btn_crear.addActionListener(e -> {
+        botones.configurarBotonMenu("Inicio", e -> menu_inicio.pintar_vista(new Pantalla_Inicio(menu_inicio).getPanel()));
+        botones.configurarBotonMenu("Usuarios", e -> menu_inicio.pintar_vista(new Pantalla_Usuarios(menu_inicio).getPanel()));
+        botones.configurarBotonMenu("Personal", e -> menu_inicio.pintar_vista(getPanel()));
+        botones.configurarBotonMenu("Planes", e -> menu_inicio.pintar_vista(new Pantalla_Planes(menu_inicio).getPanel()));
+        botones.configurarBotonMenu("Checador", e -> menu_inicio.pintar_vista(new Pantalla_Checador(menu_inicio).getPanel()));
+        botones.configurarBotonMenu("Salir", e -> menu_inicio.pintar_vista(new View_loginGYM(menu_inicio).getPanel()));
+
+        // === iconos de notificaciones
+        noti = new JButton(new ImageIcon(getClass().getResource("/files/campana.png")));
+        noti.setBounds(1100, 20, 57, 57);
+        noti.setBorderPainted(false);
+        noti.setContentAreaFilled(false);
+        noti.setFocusPainted(false);
+        noti.setOpaque(false);
+        panel_instructor.add(noti);
+
+        confi = new JButton(new ImageIcon(getClass().getResource("/files/configuracion.png")));
+        confi.setBounds(1190, 20, 57, 57);
+        confi.setBorderPainted(false);
+        confi.setContentAreaFilled(false);
+        confi.setFocusPainted(false);
+        confi.setOpaque(false);
+        panel_instructor.add(confi);
+        
+        // ==
+        JSeparator separador = new JSeparator(SwingConstants.HORIZONTAL);
+        separador.setBounds(250, 95, 1030, 2); 
+        panel_instructor.add(separador);
+
+        // === Panel 1
+        coach1 = new JPanel();
+        coach1.setBackground(Color.white);
+        coach1.setBounds(300, 150, 290, 170);
+        coach1.setLayout(null);
+        panel_instructor.add(coach1);
+
+        franja_negro = new JPanel();
+        franja_negro.setBackground(Color.black);
+        franja_negro.setBounds(0, 0, 290, 30);
+        coach1.add(franja_negro);
+        
+        text_coach = new JLabel("Ryan Garcia");
+        text_coach.setForeground(Color.white);
+        text_coach.setBounds(10, 5, 100, 20);
+        text_coach.setFont(new Font("Arial", Font.BOLD, 20));
+        franja_negro.add(text_coach);
+
+        ImageIcon icono_1 = new ImageIcon(getClass().getResource("/files/user.png"));
+        Image entrenador1 = icono_1.getImage().getScaledInstance(72, 72, Image.SCALE_SMOOTH);
+        ImageIcon icono_coach1 = new ImageIcon(entrenador1);
+
+        JLabel img1 = new JLabel(icono_coach1);
+        img1.setBounds(20, 80, 72, 72);
+        coach1.add(img1);
+        
+        // === Panel 2
+        coach2 = new JPanel();
+        coach2.setBackground(Color.white);
+        coach2.setBounds(600, 150, 290, 170);
+        coach2.setLayout(null);
+        panel_instructor.add(coach2);
+
+        franja_negro = new JPanel();
+        franja_negro.setBackground(Color.black);
+        franja_negro.setBounds(0, 0, 290, 30);
+        coach2.add(franja_negro);
+        
+        text_coach = new JLabel("Felipe Ramos");
+        text_coach.setForeground(Color.white);
+        text_coach.setBounds(10, 5, 100, 20);
+        text_coach.setFont(new Font("Arial", Font.BOLD, 20));
+        franja_negro.add(text_coach);
+
+        ImageIcon icono_2 = new ImageIcon(getClass().getResource("/files/user.png"));
+        Image entrenador2 = icono_2.getImage().getScaledInstance(72, 72, Image.SCALE_SMOOTH);
+        ImageIcon icono_coach2 = new ImageIcon(entrenador2);
+
+        JLabel img2 = new JLabel(icono_coach2);
+        img2.setBounds(20, 80, 72, 72);
+        coach2.add(img2);
+        
+        // === Panel 3
+        coach3 = new JPanel();
+        coach3.setBackground(Color.white);
+        coach3.setBounds(900, 150, 290, 170);
+        coach3.setLayout(null);
+        panel_instructor.add(coach3);
+
+        franja_negro = new JPanel();
+        franja_negro.setBackground(Color.black);
+        franja_negro.setBounds(0, 0, 290, 30);
+        coach3.add(franja_negro);
+        
+        text_coach = new JLabel("Elena Barrera");
+        text_coach.setForeground(Color.white);
+        text_coach.setBounds(10, 5, 100, 20);
+        text_coach.setFont(new Font("Arial", Font.BOLD, 20));
+        franja_negro.add(text_coach);
+
+        ImageIcon icono_3 = new ImageIcon(getClass().getResource("/files/user.png"));
+        Image entrenador3 = icono_3.getImage().getScaledInstance(72, 72, Image.SCALE_SMOOTH);
+        ImageIcon icono_coach3 = new ImageIcon(entrenador3);
+
+        JLabel img3 = new JLabel(icono_coach3);
+        img3.setBounds(20, 80, 72, 72);
+        coach3.add(img3);
+        
+        // === Panel 4
+        coach4 = new JPanel();
+        coach4.setBackground(Color.white);
+        coach4.setBounds(300, 350, 290, 170);
+        coach4.setLayout(null);
+        panel_instructor.add(coach4);
+
+        franja_negro = new JPanel();
+        franja_negro.setBackground(Color.black);
+        franja_negro.setBounds(0, 0, 290, 30);
+        coach4.add(franja_negro);
+        
+        text_coach = new JLabel("El pepe");
+        text_coach.setForeground(Color.white);
+        text_coach.setBounds(10, 5, 100, 20);
+        text_coach.setFont(new Font("Arial", Font.BOLD, 20));
+        franja_negro.add(text_coach);
+
+        ImageIcon icono_4 = new ImageIcon(getClass().getResource("/files/user.png"));
+        Image entrenador4 = icono_4.getImage().getScaledInstance(72, 72, Image.SCALE_SMOOTH);
+        ImageIcon icono_coach4 = new ImageIcon(entrenador4);
+
+        JLabel img4 = new JLabel(icono_coach4);
+        img4.setBounds(20, 80, 72, 72);
+        coach4.add(img4);
+        
+        // === Panel 5
+        coach5 = new JPanel();
+        coach5.setBackground(Color.white);
+        coach5.setBounds(600, 350, 290, 170);
+        coach5.setLayout(null);
+        panel_instructor.add(coach5);
+
+        franja_negro = new JPanel();
+        franja_negro.setBackground(Color.black);
+        franja_negro.setBounds(0, 0, 290, 30);
+        coach5.add(franja_negro);
+        
+        text_coach = new JLabel("Carlos Hernandes");
+        text_coach.setForeground(Color.white);
+        text_coach.setBounds(10, 5, 100, 20);
+        text_coach.setFont(new Font("Arial", Font.BOLD, 20));
+        franja_negro.add(text_coach);
+
+        ImageIcon icono_5 = new ImageIcon(getClass().getResource("/files/user.png"));
+        Image entrenador5 = icono_5.getImage().getScaledInstance(72, 72, Image.SCALE_SMOOTH);
+        ImageIcon icono_coach5 = new ImageIcon(entrenador5);
+
+        JLabel img5 = new JLabel(icono_coach5);
+        img5.setBounds(20, 80, 72, 72);
+        coach5.add(img5);
+        
+        // === Panel 6
+        coach6 = new JPanel();
+        coach6.setBackground(Color.white);
+        coach6.setBounds(900, 350, 290, 170);
+        coach6.setLayout(null);
+        panel_instructor.add(coach6);
+
+        franja_negro = new JPanel();
+        franja_negro.setBackground(Color.black);
+        franja_negro.setBounds(0, 0, 290, 30);
+        coach6.add(franja_negro);
+        
+        text_coach = new JLabel("Sarah Diaz");
+        text_coach.setForeground(Color.white);
+        text_coach.setBounds(10, 5, 100, 20);
+        text_coach.setFont(new Font("Arial", Font.BOLD, 20));
+        franja_negro.add(text_coach);
+
+        ImageIcon icono_6 = new ImageIcon(getClass().getResource("/files/user.png"));
+        Image entrenador6 = icono_6.getImage().getScaledInstance(72, 72, Image.SCALE_SMOOTH);
+        ImageIcon icono_coach6 = new ImageIcon(entrenador6);
+
+        JLabel img6 = new JLabel(icono_coach6);
+        img6.setBounds(20, 80, 72, 72);
+        coach6.add(img6);
+ 
+        // === 
+		crear_coach = new JButton("Crear instructor");
+		crear_coach.setFont(new Font("Arial", Font.BOLD, 20));
+		crear_coach.setBounds(1020, 560, 200, 50); 
+		crear_coach.setBackground(Color.BLACK);
+		crear_coach.setForeground(Color.WHITE);
+		crear_coach.setFocusPainted(false);
+		crear_coach.setBorderPainted(false);
+		crear_coach.addActionListener(e -> {
 		    menu_inicio.pintar_vista(new Crear_Instructor(menu_inicio).getPanel());
 		});
-		panel_instructor.add(btn_crear);
-		
-		// === Colocamos el panel negro este sera nuestro menu con los bontones.
-		panel_negro = new Graficos_fondo();
-		panel_negro.setBackground(Color.BLACK);
-		panel_negro.setBounds(0, 0, 250, screenSize.height);
-		panel_negro.setLayout(null);
-		panel_negro.agregarImagen("files/logoATHLON_cb.png", 25, 40, 180, 75);
-		panel_instructor.add(panel_negro);
-		
-		// === Boton para el inicio.
-        btn_entrar = new JButton("Inicio");
-        btn_entrar.setBounds(10, 190, 225, 45);
-        btn_entrar.setFont(new Font("Arial", Font.BOLD, 33));
-        btn_entrar.setHorizontalAlignment(SwingConstants.LEFT);
-        btn_entrar.setBackground(Color.BLACK);
-        btn_entrar.setForeground(Color.WHITE);
-        btn_entrar.setBorderPainted(false);
-        btn_entrar.setFocusPainted(false);
-        btn_entrar.addActionListener(e -> {
-        	menu_inicio.pintar_vista(new Pantalla_Instructores(menu_inicio).getPanel());
-        });
-        panel_negro.add(btn_entrar);
+		panel_instructor.add(crear_coach);
         
-        // === Boton que nos llevara a la pantalla de usuarios.
-        btn_entrar = new JButton("Usuarios");
-        btn_entrar.setBounds(10, 260, 225, 45);
-        btn_entrar.setFont(new Font("Arial", Font.BOLD, 33));
-        btn_entrar.setHorizontalAlignment(SwingConstants.LEFT);
-        btn_entrar.setBackground(Color.BLACK);
-        btn_entrar.setForeground(Color.WHITE);
-        btn_entrar.setBorderPainted(false);
-        btn_entrar.setFocusPainted(false);
-        btn_entrar.addActionListener(e -> {
-        	menu_inicio.pintar_vista(new Pantalla_Usuarios(menu_inicio).getPanel());
-        });
-        panel_negro.add(btn_entrar);
-        
-        // === Boton que nos lleva a la pantalla de instructores.
-        btn_entrar = new JButton("Instructores");
-        btn_entrar.setBounds(10, 330, 225, 45);
-        btn_entrar.setFont(new Font("Arial", Font.BOLD, 33));
-        btn_entrar.setHorizontalAlignment(SwingConstants.LEFT);
-        btn_entrar.setBackground(Color.BLACK);
-        btn_entrar.setForeground(Color.WHITE);
-        btn_entrar.setBorderPainted(false);
-        btn_entrar.setFocusPainted(false);
-        btn_entrar.addActionListener(e -> {
-        	menu_inicio.pintar_vista(new Pantalla_Instructores(menu_inicio).getPanel());
-        });
-        panel_negro.add(btn_entrar);
-        
-        // === Boton que nos lleva a la pantalla de planes.
-        btn_entrar = new JButton("Planes");
-        btn_entrar.setBounds(10, 400, 225, 45);
-        btn_entrar.setFont(new Font("Arial", Font.BOLD, 33));
-        btn_entrar.setHorizontalAlignment(SwingConstants.LEFT);
-        btn_entrar.setBackground(Color.BLACK);
-        btn_entrar.setForeground(Color.WHITE);
-        btn_entrar.setBorderPainted(false);
-        btn_entrar.setFocusPainted(false);
-        btn_entrar.addActionListener(e -> {
-        	menu_inicio.pintar_vista(new Pantalla_Planes(menu_inicio).getPanel());
-        });
-        panel_negro.add(btn_entrar);
-        
-        // === Boton que nos lleva a la pantalla de checado.
-        btn_entrar = new JButton("Checador");
-        btn_entrar.setBounds(10, 470, 225, 45);
-        btn_entrar.setFont(new Font("Arial", Font.BOLD, 33));
-        btn_entrar.setHorizontalAlignment(SwingConstants.LEFT);
-        btn_entrar.setBackground(Color.BLACK);
-        btn_entrar.setForeground(Color.WHITE);
-        btn_entrar.setBorderPainted(false);
-        btn_entrar.setFocusPainted(false);
-        btn_entrar.addActionListener(e -> {
-        	menu_inicio.pintar_vista(new Pantalla_Checador(menu_inicio).getPanel());
-        });
-        panel_negro.add(btn_entrar);
-        
-        // === Nos regresa a la pantalla de inicio de sesion.
-        btn_entrar = new JButton("Cerrar sesion");
-        btn_entrar.setBounds(10, 650, 220, 25);
-        btn_entrar.setFont(new Font("Arial", Font.BOLD, 25));
-        btn_entrar.setHorizontalAlignment(SwingConstants.LEFT);
-        btn_entrar.setBackground(Color.BLACK);
-        btn_entrar.setForeground(Color.WHITE);
-        btn_entrar.setBorderPainted(false);
-        btn_entrar.setFocusPainted(false);
-        btn_entrar.addActionListener(e -> {
-        	menu_inicio.pintar_vista(new View_loginGYM(menu_inicio).getPanel());
-        });
-        panel_negro.add(btn_entrar);
-        
-        // ========================================================================
-        
-        // === Iconos de notificaciones y ajustes. 
-		ImageIcon icono_noti = new ImageIcon(getClass().getResource("/files/campana.png"));
-		noti = new JButton(icono_noti);
-		noti.setBounds(1100, 20, 57, 57);
-		noti.setBorderPainted(false);
-		noti.setContentAreaFilled(false);
-		noti.setFocusPainted(false);
-		noti.setOpaque(false);
-		panel_instructor.add(noti);
-		
-		ImageIcon icono_ajuste = new ImageIcon(getClass().getResource("/files/configuracion.png"));
-		confi = new JButton(icono_ajuste);
-		confi.setBounds(1200, 20, 57, 57);
-		confi.setBorderPainted(false);
-		confi.setContentAreaFilled(false);
-		confi.setFocusPainted(false);
-		confi.setOpaque(false);
-		panel_instructor.add(confi);
-		
 		return panel_instructor;
 	}
 
