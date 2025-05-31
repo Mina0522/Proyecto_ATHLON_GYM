@@ -19,7 +19,7 @@ public class AuthModel {
 	    ResultSet rs = null;
 		
 		try {
-			pstmt = MyConnection.conect().prepareStatement(query);
+			pstmt = MyConnection.connect().prepareStatement(query);
 			pstmt.setString(1, user); // Establecer el valor "?" en el query
 			rs = pstmt.executeQuery();
 			if (rs.next()) {

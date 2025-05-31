@@ -15,7 +15,7 @@ public class MyConnection {
 	
 	static Connection conn = null;
 
-	public static Connection conect() {
+	public static Connection connect() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(url,user,pass);
