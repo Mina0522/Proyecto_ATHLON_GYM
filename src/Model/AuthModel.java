@@ -51,9 +51,5 @@ public class AuthModel {
 		return BCrypt.hashpw(plainPassword, BCrypt.gensalt(12));
 	}
 	
-//	public static void main(String[] args) {
-//		AuthModel model = new AuthModel();
-//		System.out.println(model.auth("", ""));
-//	}
 
 }
