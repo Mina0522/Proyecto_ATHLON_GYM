@@ -99,7 +99,7 @@ public class Pantalla_Usuarios {
         btn_edit.setBackground(Color.WHITE);
         btn_edit.setForeground(Color.BLACK);
         btn_edit.addActionListener(e -> {
-            menu_inicio.pintar_vista(new Pantalla_Usuarios_Agregar(menu_inicio).getPanel());
+            menu_inicio.pintar_vista(new Pantalla_Usuarios_Editar(menu_inicio).getPanel());
         });
         menu_user.add(btn_edit);
         
@@ -120,7 +120,7 @@ public class Pantalla_Usuarios {
         btn_deta.setBackground(Color.WHITE);
         btn_deta.setForeground(Color.BLACK);
         btn_deta.addActionListener(e -> {
-            menu_inicio.pintar_vista(new Pantalla_Usuarios_Agregar(menu_inicio).getPanel());
+            menu_inicio.pintar_vista(new Pantalla_Usuarios_Detalles(menu_inicio).getPanel());
         });
         menu_user.add(btn_deta);
 		
@@ -141,7 +141,7 @@ public class Pantalla_Usuarios {
         btn_eliminar.setBackground(Color.WHITE);
         btn_eliminar.setForeground(Color.BLACK);
         btn_eliminar.addActionListener(e -> {
-            menu_inicio.pintar_vista(new Pantalla_Usuarios_Agregar(menu_inicio).getPanel());
+            menu_inicio.pintar_vista(new Pantalla_Usuarios_Eliminar(menu_inicio).getPanel());
         });
         menu_user.add(btn_eliminar);
 		
