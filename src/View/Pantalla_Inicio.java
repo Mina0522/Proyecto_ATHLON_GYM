@@ -61,6 +61,7 @@ public class Pantalla_Inicio {
         
         JSeparator separador = new JSeparator(SwingConstants.HORIZONTAL);
         separador.setBounds(250, 95, 1030, 2); 
+        separador.setForeground(Color.BLACK);
         menu.add(separador);
 
         // ==

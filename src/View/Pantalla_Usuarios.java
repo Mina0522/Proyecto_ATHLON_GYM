@@ -59,6 +59,7 @@ public class Pantalla_Usuarios {
         // ==
         JSeparator separador = new JSeparator(SwingConstants.HORIZONTAL);
         separador.setBounds(250, 95, 1030, 2); 
+        separador.setForeground(Color.BLACK);
         menu_user.add(separador);
 
         // == boton agregar

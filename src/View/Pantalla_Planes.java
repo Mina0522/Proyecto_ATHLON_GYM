@@ -58,7 +58,8 @@ public class Pantalla_Planes {
         
         // ==
         JSeparator separador = new JSeparator(SwingConstants.HORIZONTAL);
-        separador.setBounds(250, 95, 1030, 2); 
+        separador.setBounds(250, 95, 1030, 2);
+        separador.setForeground(Color.BLACK);
         menu_user.add(separador);
 
         // == boton crear plan
