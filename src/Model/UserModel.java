@@ -195,6 +195,11 @@ public class UserModel {
 		return null; //Éxito
 	}
 	
+//	public Object[] userToArray (User user) {
+//		Object array[] = {user.getControl_number(), user.getFirst_name(), user.getLast_name(), user.getPhone_number()};
+//		return array;
+//	}
+	
 	//-----------------------------------------------------------------------------------------------
 	//PRUEBAS: método que regresa los usuarios registrados actualmente
 	private void showUsers () { 
@@ -235,10 +240,9 @@ public class UserModel {
 		}
 	}
 		
-	public static void main(String[] args) throws SQLException {
-		UserModel model = new UserModel();
-		model.deleteUsers();
-		model.showUsers();
-	}
+//	public static void main(String[] args) throws SQLException {
+//		UserModel model = new UserModel();
+//		model.showUsers();
+//	}
 
 }
