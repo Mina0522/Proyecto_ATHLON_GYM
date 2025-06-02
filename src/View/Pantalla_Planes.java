@@ -14,7 +14,8 @@ public class Pantalla_Planes {
     private Vista_GYM menu_inicio;
     private JPanel menu_user, panel_planB, panel_planP, panel_botones;
     private JButton noti, confi, btn_crear, btn_edit, btn_deta, btn_eliminar, plan_basico, plan_prem;
-
+    private JLabel textP, textB;
+    
     public Pantalla_Planes(Vista_GYM log) {
         this.menu_inicio = log;
     }
@@ -69,7 +70,7 @@ public class Pantalla_Planes {
 
         btn_crear = new JButton("Crear plan");
         btn_crear.setIcon(icono);
-        btn_crear.setBounds(300, 130, 420, 115);
+        btn_crear.setBounds(300, 120, 420, 90);
         btn_crear.setFont(new Font("Arial", Font.BOLD, 32));
         btn_crear.setBorderPainted(false);
         btn_crear.setHorizontalAlignment(SwingConstants.LEFT);
@@ -79,7 +80,7 @@ public class Pantalla_Planes {
         btn_crear.setBackground(Color.WHITE);
         btn_crear.setForeground(Color.BLACK);
         btn_crear.addActionListener(e -> {
-            menu_inicio.pintar_vista(new Pantalla_Usuarios_Agregar(menu_inicio).getPanel());
+            menu_inicio.pintar_vista(new Pantalla_Planes_Crear(menu_inicio).getPanel());
         });
         menu_user.add(btn_crear);
 
@@ -90,7 +91,7 @@ public class Pantalla_Planes {
 
         btn_edit = new JButton("Editar plan");
         btn_edit.setIcon(icono_edit);
-        btn_edit.setBounds(775, 130, 420, 115);
+        btn_edit.setBounds(775, 120, 420, 90);
         btn_edit.setFont(new Font("Arial", Font.BOLD, 32));
         btn_edit.setBorderPainted(false);
         btn_edit.setHorizontalAlignment(SwingConstants.LEFT);
@@ -100,7 +101,7 @@ public class Pantalla_Planes {
         btn_edit.setBackground(Color.WHITE);
         btn_edit.setForeground(Color.BLACK);
         btn_edit.addActionListener(e -> {
-            menu_inicio.pintar_vista(new Pantalla_Usuarios_Agregar(menu_inicio).getPanel());
+            menu_inicio.pintar_vista(new Pantalla_Planes_Editar(menu_inicio).getPanel());
         });
         menu_user.add(btn_edit);
         
@@ -111,7 +112,7 @@ public class Pantalla_Planes {
 
         btn_deta = new JButton("Consultar plan");
         btn_deta.setIcon(icono_deta);
-        btn_deta.setBounds(775, 270, 420, 115);
+        btn_deta.setBounds(775, 230, 420, 90);
         btn_deta.setFont(new Font("Arial", Font.BOLD, 32));
         btn_deta.setBorderPainted(false);
         btn_deta.setHorizontalAlignment(SwingConstants.LEFT);
@@ -121,7 +122,7 @@ public class Pantalla_Planes {
         btn_deta.setBackground(Color.WHITE);
         btn_deta.setForeground(Color.BLACK);
         btn_deta.addActionListener(e -> {
-            menu_inicio.pintar_vista(new Pantalla_Usuarios_Agregar(menu_inicio).getPanel());
+            menu_inicio.pintar_vista(new Pantalla_Planes_Consultar(menu_inicio).getPanel());
         });
         menu_user.add(btn_deta);
 		
@@ -132,7 +133,7 @@ public class Pantalla_Planes {
 
         btn_eliminar = new JButton("Eliminar plan");
         btn_eliminar.setIcon(icono_eliminar);
-        btn_eliminar.setBounds(300, 270, 420, 115);
+        btn_eliminar.setBounds(300, 230, 420, 90);
         btn_eliminar.setFont(new Font("Arial", Font.BOLD, 32));
         btn_eliminar.setBorderPainted(false);
         btn_eliminar.setHorizontalAlignment(SwingConstants.LEFT);
@@ -142,14 +143,14 @@ public class Pantalla_Planes {
         btn_eliminar.setBackground(Color.WHITE);
         btn_eliminar.setForeground(Color.BLACK);
         btn_eliminar.addActionListener(e -> {
-            menu_inicio.pintar_vista(new Pantalla_Usuarios_Agregar(menu_inicio).getPanel());
+            menu_inicio.pintar_vista(new Pantalla_Planes_Eliminar(menu_inicio).getPanel());
         });
         menu_user.add(btn_eliminar);
 		
         // === 
 		panel_planB = new JPanel();
 		panel_planB.setBackground(Color.WHITE);
-		panel_planB.setBounds(310, 400, 400, 230);
+		panel_planB.setBounds(310, 335, 400, 300);
 		panel_planB.setLayout(null);
 		menu_user.add(panel_planB);
 		
@@ -161,17 +162,28 @@ public class Pantalla_Planes {
         planbasico.setBounds(0, 0, 400, 134);
         panel_planB.add(planbasico);
         
+        textB = new JLabel("Plan basico");
+        textB.setFont(new Font("Arial", Font.BOLD, 35));
+        textB.setForeground(Color.black);
+        textB.setBounds(100, 150, 500, 50);
+        textB.setLayout(null);
+        panel_planB.add(textB);
+        
         plan_basico = new JButton("Detalles");
-        plan_basico.setBounds(50, 150, 290, 50);
+        plan_basico.setBounds(50, 230, 290, 50);
         plan_basico.setFont(new Font("Arial", Font.BOLD, 22));
         plan_basico.setBackground(Color.BLACK);
         plan_basico.setForeground(Color.WHITE);
         plan_basico.setFocusPainted(false);
+        plan_basico.addActionListener(e -> {
+            menu_inicio.pintar_vista(new Plan_Basico(menu_inicio).getPanel());
+        });
         panel_planB.add(plan_basico);
 		
+        // ===
 		panel_planP = new JPanel();
 		panel_planP.setBackground(Color.WHITE);
-		panel_planP.setBounds(787, 400, 400, 230);
+		panel_planP.setBounds(787, 335, 400, 300);
 		panel_planP.setLayout(null);
 		menu_user.add(panel_planP);
 		
@@ -182,13 +194,23 @@ public class Pantalla_Planes {
         JLabel planpre = new JLabel(icono_pre);
         planpre.setBounds(0, 0, 400, 134);
         panel_planP.add(planpre);
+        
+        textP = new JLabel("Plan premium");
+        textP.setFont(new Font("Arial", Font.BOLD, 35));
+        textP.setForeground(Color.black);
+        textP.setBounds(100, 150, 500, 50);
+        textP.setLayout(null);
+        panel_planP.add(textP);
 		
 		plan_prem = new JButton("Detalles");
-		plan_prem.setBounds(50, 150, 290, 50);
+		plan_prem.setBounds(50, 230, 290, 50);
 		plan_prem.setFont(new Font("Arial", Font.BOLD, 22));
 		plan_prem.setBackground(Color.BLACK);
 		plan_prem.setForeground(Color.WHITE);
 		plan_prem.setFocusPainted(false);
+		plan_prem.addActionListener(e -> {
+            menu_inicio.pintar_vista(new Plan_Premium(menu_inicio).getPanel());
+        });
 		panel_planP.add(plan_prem);
 
 		return menu_user;

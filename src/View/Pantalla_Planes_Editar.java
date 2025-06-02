@@ -1,161 +1,174 @@
 package View;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Toolkit;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-
+import java.awt.*;
 import Funciones_graficas.Graficos_fondo;
+import Funciones_graficas.Graficos_texto;
+import Funciones_graficas.Menu;
 
 public class Pantalla_Planes_Editar {
 
-	// === Creamos nuestra ventana de tipo Vista_GYM
-	private Vista_GYM menu_inicio;
-	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	
-	public JPanel panel_plan;
-	public Graficos_fondo panel_negro;
-	public JLabel text_inicio, img_logo;
-	public JButton btn_entrar, noti, confi;
-	public Color grisClaro = new Color(217, 217, 217);
-	
-	// === Constructor de Pantalla_Inicio 
-	public Pantalla_Planes_Editar(Vista_GYM log) {
-		menu_inicio = log;
-	}
-	
-	public JPanel getPanel() {
+    private Vista_GYM menu_inicio;
+    private JPanel menu_user, panel, panel_negro, panel_botones;
+    private JButton noti, confi, btn_crear, btn_edit, btn_deta, btn_eliminar, btn;
+    private JLabel text;
+    
+    public Pantalla_Planes_Editar(Vista_GYM log) {
+        this.menu_inicio = log;
+    }
+
+    public JPanel getPanel() {
+        menu_user = new JPanel();
+        menu_user.setLayout(null);
+        menu_user.setBackground(Color.LIGHT_GRAY);
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        menu_user.setSize(pantalla);
+
+        // === MENU ===
+        Menu botones = new Menu("Planes");
+        panel_botones = botones.obtenerPanel();
+        panel_botones.setBounds(0, 0, 250, 1080);
+        menu_user.add(panel_botones);
+
+        botones.configurarBotonMenu("Inicio", e -> menu_inicio.pintar_vista(new Pantalla_Inicio(menu_inicio).getPanel()));
+        botones.configurarBotonMenu("Usuarios", e -> menu_inicio.pintar_vista(new Pantalla_Usuarios(menu_inicio).getPanel()));
+        botones.configurarBotonMenu("Personal", e -> menu_inicio.pintar_vista(new Pantalla_Instructores(menu_inicio).getPanel()));
+        botones.configurarBotonMenu("Planes", e -> menu_inicio.pintar_vista(getPanel()));
+        botones.configurarBotonMenu("Checador", e -> menu_inicio.pintar_vista(new Pantalla_Checador(menu_inicio).getPanel()));
+        botones.configurarBotonMenu("Salir", e -> menu_inicio.pintar_vista(new View_loginGYM(menu_inicio).getPanel()));
+
+        // === iconos de notificaciones
+        noti = new JButton(new ImageIcon(getClass().getResource("/files/campana.png")));
+        noti.setBounds(1100, 20, 57, 57);
+        noti.setBorderPainted(false);
+        noti.setContentAreaFilled(false);
+        noti.setFocusPainted(false);
+        noti.setOpaque(false);
+        menu_user.add(noti);
+
+        confi = new JButton(new ImageIcon(getClass().getResource("/files/configuracion.png")));
+        confi.setBounds(1190, 20, 57, 57);
+        confi.setBorderPainted(false);
+        confi.setContentAreaFilled(false);
+        confi.setFocusPainted(false);
+        confi.setOpaque(false);
+        menu_user.add(confi);
+        
+        // ==
+        JSeparator separador = new JSeparator(SwingConstants.HORIZONTAL);
+        separador.setBounds(250, 95, 1030, 2);
+        separador.setForeground(Color.BLACK);
+        menu_user.add(separador);
+
+        // == boton crear plan
+        ImageIcon agg = new ImageIcon(getClass().getResource("/files/agregar.png"));
+        Image modi = agg.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+        ImageIcon icono = new ImageIcon(modi);
+
+        btn_crear = new JButton("Crear plan");
+        btn_crear.setIcon(icono);
+        btn_crear.setBounds(300, 120, 420, 90);
+        btn_crear.setFont(new Font("Arial", Font.BOLD, 32));
+        btn_crear.setBorderPainted(false);
+        btn_crear.setHorizontalAlignment(SwingConstants.LEFT);
+        btn_crear.setIconTextGap(30);
+        btn_crear.setFocusPainted(false);
+        btn_crear.setOpaque(true);
+        btn_crear.setBackground(Color.WHITE);
+        btn_crear.setForeground(Color.BLACK);
+        btn_crear.addActionListener(e -> {
+            menu_inicio.pintar_vista(new Pantalla_Planes_Crear(menu_inicio).getPanel());
+        });
+        menu_user.add(btn_crear);
+
+		// == boton editar plan
+        ImageIcon edit = new ImageIcon(getClass().getResource("/files/crear.png"));
+        Image modi_edit = edit.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+        ImageIcon icono_edit = new ImageIcon(modi_edit);
+
+        btn_edit = new JButton("Editar plan");
+        btn_edit.setIcon(icono_edit);
+        btn_edit.setBounds(775, 120, 420, 90);
+        btn_edit.setFont(new Font("Arial", Font.BOLD, 32));
+        btn_edit.setBorderPainted(false);
+        btn_edit.setHorizontalAlignment(SwingConstants.LEFT);
+        btn_edit.setIconTextGap(30);
+        btn_edit.setFocusPainted(false);
+        btn_edit.setOpaque(true);
+        btn_edit.setBackground(Color.WHITE);
+        btn_edit.setForeground(Color.BLACK);
+        btn_edit.addActionListener(e -> {
+            menu_inicio.pintar_vista(new Pantalla_Planes_Editar(menu_inicio).getPanel());
+        });
+        menu_user.add(btn_edit);
+        
+		// == boton consultar registro
+        ImageIcon deta = new ImageIcon(getClass().getResource("/files/buscar_usuario.png"));
+        Image modi_deta = deta.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+        ImageIcon icono_deta = new ImageIcon(modi_deta);
+
+        btn_deta = new JButton("Consultar plan");
+        btn_deta.setIcon(icono_deta);
+        btn_deta.setBounds(775, 230, 420, 90);
+        btn_deta.setFont(new Font("Arial", Font.BOLD, 32));
+        btn_deta.setBorderPainted(false);
+        btn_deta.setHorizontalAlignment(SwingConstants.LEFT);
+        btn_deta.setIconTextGap(30);
+        btn_deta.setFocusPainted(false);
+        btn_deta.setOpaque(true);
+        btn_deta.setBackground(Color.WHITE);
+        btn_deta.setForeground(Color.BLACK);
+        btn_deta.addActionListener(e -> {
+            menu_inicio.pintar_vista(new Pantalla_Planes_Consultar(menu_inicio).getPanel());
+        });
+        menu_user.add(btn_deta);
 		
-		panel_plan = new JPanel();
-		panel_plan.setBackground(grisClaro);
-		panel_plan.setLayout(null);
+		// == boton eliminar plan
+        ImageIcon eliminar = new ImageIcon(getClass().getResource("/files/basura.png"));
+        Image modi_eliminar = eliminar.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+        ImageIcon icono_eliminar = new ImageIcon(modi_eliminar);
+
+        btn_eliminar = new JButton("Eliminar plan");
+        btn_eliminar.setIcon(icono_eliminar);
+        btn_eliminar.setBounds(300, 230, 420, 90);
+        btn_eliminar.setFont(new Font("Arial", Font.BOLD, 32));
+        btn_eliminar.setBorderPainted(false);
+        btn_eliminar.setHorizontalAlignment(SwingConstants.LEFT);
+        btn_eliminar.setIconTextGap(30);
+        btn_eliminar.setFocusPainted(false);
+        btn_eliminar.setOpaque(true);
+        btn_eliminar.setBackground(Color.WHITE);
+        btn_eliminar.setForeground(Color.BLACK);
+        btn_eliminar.addActionListener(e -> {
+            menu_inicio.pintar_vista(new Pantalla_Planes_Eliminar(menu_inicio).getPanel());
+        });
+        menu_user.add(btn_eliminar);
 		
-		text_inicio = new JLabel("EDITAR PLANES");
-		text_inicio.setFont(new Font("Arial", Font.BOLD, 32));
-		text_inicio.setBounds(255, 20, 290, 50);
-		panel_plan.add(text_inicio);
+        // === 
+		panel = new JPanel();
+		panel.setBackground(Color.WHITE);
+		panel.setBounds(300, 335, 900, 300);
+		panel.setLayout(null);
+		menu_user.add(panel);
 		
-		// === Colocamos el panel negro este sera nuestro menu con los bontones.
-		panel_negro = new Graficos_fondo();
-		panel_negro.setBackground(Color.BLACK);
-		panel_negro.setBounds(0, 0, 250, screenSize.height);
+		panel_negro = new JPanel();
+		panel_negro.setBackground(Color.black);
+		panel_negro.setBounds(0, 0, 900, 60);
 		panel_negro.setLayout(null);
-		panel_negro.agregarImagen("files/logoATHLON_cb.png", 25, 40, 180, 75);
-		panel_plan.add(panel_negro);
+		panel.add(panel_negro);
 		
-		
-		// === Boton para el inicio.
-        btn_entrar = new JButton("Inicio");
-        btn_entrar.setBounds(10, 190, 225, 45);
-        btn_entrar.setFont(new Font("Arial", Font.BOLD, 33));
-        btn_entrar.setHorizontalAlignment(SwingConstants.LEFT);
-        btn_entrar.setBackground(Color.BLACK);
-        btn_entrar.setForeground(Color.WHITE);
-        btn_entrar.setBorderPainted(false);
-        btn_entrar.setFocusPainted(false);
-        btn_entrar.addActionListener(e -> {
-        	menu_inicio.pintar_vista(new Pantalla_Inicio(menu_inicio).getPanel());
-        });
-        panel_negro.add(btn_entrar);
-        
-        // === Boton que nos llevara a la pantalla de usuarios.
-        btn_entrar = new JButton("Usuarios");
-        btn_entrar.setBounds(10, 260, 225, 45);
-        btn_entrar.setFont(new Font("Arial", Font.BOLD, 33));
-        btn_entrar.setHorizontalAlignment(SwingConstants.LEFT);
-        btn_entrar.setBackground(Color.BLACK);
-        btn_entrar.setForeground(Color.WHITE);
-        btn_entrar.setBorderPainted(false);
-        btn_entrar.setFocusPainted(false);
-        btn_entrar.addActionListener(e -> {
-        	menu_inicio.pintar_vista(new Pantalla_Usuarios(menu_inicio).getPanel());
-        });
-        panel_negro.add(btn_entrar);
-        
-        // === Boton que nos lleva a la pantalla de instructores.
-        btn_entrar = new JButton("Instructores");
-        btn_entrar.setBounds(10, 330, 225, 45);
-        btn_entrar.setFont(new Font("Arial", Font.BOLD, 33));
-        btn_entrar.setHorizontalAlignment(SwingConstants.LEFT);
-        btn_entrar.setBackground(Color.BLACK);
-        btn_entrar.setForeground(Color.WHITE);
-        btn_entrar.setBorderPainted(false);
-        btn_entrar.setFocusPainted(false);
-        btn_entrar.addActionListener(e -> {
-        	menu_inicio.pintar_vista(new Pantalla_Instructores(menu_inicio).getPanel());
-        });
-        panel_negro.add(btn_entrar);
-        
-        // === Boton que nos lleva a la pantalla de planes.
-        btn_entrar = new JButton("Planes");
-        btn_entrar.setBounds(10, 400, 225, 45);
-        btn_entrar.setFont(new Font("Arial", Font.BOLD, 33));
-        btn_entrar.setHorizontalAlignment(SwingConstants.LEFT);
-        btn_entrar.setBackground(Color.BLACK);
-        btn_entrar.setForeground(Color.WHITE);
-        btn_entrar.setBorderPainted(false);
-        btn_entrar.setFocusPainted(false);
-        btn_entrar.addActionListener(e -> {
-        	menu_inicio.pintar_vista(new Pantalla_Planes(menu_inicio).getPanel());
-        });
-        panel_negro.add(btn_entrar);
-        
-        // === Boton que nos lleva a la pantalla de checado.
-        btn_entrar = new JButton("Checador");
-        btn_entrar.setBounds(10, 470, 225, 45);
-        btn_entrar.setFont(new Font("Arial", Font.BOLD, 33));
-        btn_entrar.setHorizontalAlignment(SwingConstants.LEFT);
-        btn_entrar.setBackground(Color.BLACK);
-        btn_entrar.setForeground(Color.WHITE);
-        btn_entrar.setBorderPainted(false);
-        btn_entrar.setFocusPainted(false);
-        btn_entrar.addActionListener(e -> {
-        	menu_inicio.pintar_vista(new Pantalla_Checador(menu_inicio).getPanel());
-        });
-        panel_negro.add(btn_entrar);
-        
-        // === Nos regresa a la pantalla de inicio de sesion.
-        btn_entrar = new JButton("Cerrar sesion");
-        btn_entrar.setBounds(10, 650, 220, 25);
-        btn_entrar.setFont(new Font("Arial", Font.BOLD, 25));
-        btn_entrar.setHorizontalAlignment(SwingConstants.LEFT);
-        btn_entrar.setBackground(Color.BLACK);
-        btn_entrar.setForeground(Color.WHITE);
-        btn_entrar.setBorderPainted(false);
-        btn_entrar.setFocusPainted(false);
-        btn_entrar.addActionListener(e -> {
-        	menu_inicio.pintar_vista(new View_loginGYM(menu_inicio).getPanel());
-        });
-        panel_negro.add(btn_entrar);
-        
-        // ========================================================================
-        
-        // === Iconoces de notificaciones y ajustes. 
-		ImageIcon icono_noti = new ImageIcon(getClass().getResource("/files/campana.png"));
-		noti = new JButton(icono_noti);
-		noti.setBounds(1100, 20, 57, 57);
-		noti.setBorderPainted(false);
-		noti.setContentAreaFilled(false);
-		noti.setFocusPainted(false);
-		noti.setOpaque(false);
-		panel_plan.add(noti);
-		
-		ImageIcon icono_ajuste = new ImageIcon(getClass().getResource("/files/configuracion.png"));
-		confi = new JButton(icono_ajuste);
-		confi.setBounds(1200, 20, 57, 57);
-		confi.setBorderPainted(false);
-		confi.setContentAreaFilled(false);
-		confi.setFocusPainted(false);
-		confi.setOpaque(false);
-		panel_plan.add(confi);
-		
-		return panel_plan;
+        text = new JLabel("Editar plan");
+        text.setFont(new Font("Arial", Font.BOLD, 35));
+        text.setForeground(Color.white);
+        text.setBounds(20, 5, 500, 50);
+        text.setLayout(null);
+        panel_negro.add(text);
+
+
+		return menu_user;
 	}
 
 }
