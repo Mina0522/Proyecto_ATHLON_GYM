@@ -166,7 +166,63 @@ public class Pantalla_Planes_Editar {
         text.setBounds(20, 5, 500, 50);
         text.setLayout(null);
         panel_negro.add(text);
-
+        
+        // ====
+        Graficos_texto tipo = new Graficos_texto();
+        tipo.setPlaceholder(" Tipo de plan");
+        tipo.setBounds(30, 80, 330, 35);
+        tipo.setBackground(Color.lightGray);
+        tipo.setFont(new Font("Arial", Font.PLAIN, 18));
+        tipo.setBorder(null);
+        panel.add(tipo);
+        
+        Graficos_texto sede1 = new Graficos_texto();
+        sede1.setPlaceholder(" Numero de sedes");
+        sede1.setBounds(30, 130, 330, 35);
+        sede1.setBackground(Color.lightGray);
+        sede1.setFont(new Font("Arial", Font.PLAIN, 18));
+        sede1.setBorder(null);
+        panel.add(sede1);
+        
+        Graficos_texto acceso2 = new Graficos_texto();
+        acceso2.setPlaceholder(" Clase de acceso");
+        acceso2.setBounds(30, 180, 330, 35);
+        acceso2.setBackground(Color.lightGray);
+        acceso2.setFont(new Font("Arial", Font.PLAIN, 18));
+        acceso2.setBorder(null);
+        panel.add(acceso2);
+        
+        Graficos_texto inst = new Graficos_texto();
+        inst.setPlaceholder(" Tipo de instructor");
+        inst.setBounds(30, 230, 330, 35);
+        inst.setBackground(Color.lightGray);
+        inst.setFont(new Font("Arial", Font.PLAIN, 18));
+        inst.setBorder(null);
+        panel.add(inst);
+        
+        Graficos_texto promo2 = new Graficos_texto();
+        promo2.setPlaceholder(" Tipo de promociones");
+        promo2.setBounds(500, 80, 330, 35);
+        promo2.setBackground(Color.lightGray);
+        promo2.setFont(new Font("Arial", Font.PLAIN, 18));
+        promo2.setBorder(null);
+        panel.add(promo2);
+        
+        Graficos_texto invi = new Graficos_texto();
+        invi.setPlaceholder(" Tarjeta de invitacion");
+        invi.setBounds(500, 130, 330, 35);
+        invi.setBackground(Color.lightGray);
+        invi.setFont(new Font("Arial", Font.PLAIN, 18));
+        invi.setBorder(null);
+        panel.add(invi);
+        
+        btn = new JButton("Enviar propuesta");
+        btn.setBounds(550, 230, 300, 50);
+        btn.setFont(new Font("Arial", Font.BOLD, 22));
+        btn.setBackground(Color.BLACK);
+        btn.setForeground(Color.WHITE);
+        btn.setFocusPainted(false);
+        panel.add(btn);
 
 		return menu_user;
 	}

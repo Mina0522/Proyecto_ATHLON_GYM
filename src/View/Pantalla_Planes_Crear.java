@@ -166,8 +166,56 @@ public class Pantalla_Planes_Crear {
         text.setBounds(20, 5, 500, 50);
         text.setLayout(null);
         panel_negro.add(text);
-
-
+        
+        // ====
+        Graficos_texto sede = new Graficos_texto();
+        sede.setPlaceholder(" Numero de sedes");
+        sede.setBounds(30, 80, 330, 50);
+        sede.setBackground(Color.lightGray);
+        sede.setFont(new Font("Arial", Font.PLAIN, 18));
+        sede.setBorder(null);
+        panel.add(sede);
+        
+        Graficos_texto acceso = new Graficos_texto();
+        acceso.setPlaceholder(" Clase de acceso");
+        acceso.setBounds(30, 150, 330, 50);
+        acceso.setBackground(Color.lightGray);
+        acceso.setFont(new Font("Arial", Font.PLAIN, 18));
+        acceso.setBorder(null);
+        panel.add(acceso);
+        
+        Graficos_texto instructor = new Graficos_texto();
+        instructor.setPlaceholder(" Tipo de instructor");
+        instructor.setBounds(30, 220, 330, 50);
+        instructor.setBackground(Color.lightGray);
+        instructor.setFont(new Font("Arial", Font.PLAIN, 18));
+        instructor.setBorder(null);
+        panel.add(instructor);
+        
+        Graficos_texto promo = new Graficos_texto();
+        promo.setPlaceholder(" Tipo de promociones");
+        promo.setBounds(500, 80, 330, 50);
+        promo.setBackground(Color.lightGray);
+        promo.setFont(new Font("Arial", Font.PLAIN, 18));
+        promo.setBorder(null);
+        panel.add(promo);
+        
+        Graficos_texto invitacion = new Graficos_texto();
+        invitacion.setPlaceholder(" Tarjeta de invitacion");
+        invitacion.setBounds(500, 150, 330, 50);
+        invitacion.setBackground(Color.lightGray);
+        invitacion.setFont(new Font("Arial", Font.PLAIN, 18));
+        invitacion.setBorder(null);
+        panel.add(invitacion);
+        
+        btn = new JButton("Enviar propuesta");
+        btn.setBounds(550, 230, 300, 50);
+        btn.setFont(new Font("Arial", Font.BOLD, 22));
+        btn.setBackground(Color.BLACK);
+        btn.setForeground(Color.WHITE);
+        btn.setFocusPainted(false);
+        panel.add(btn);
+        
 		return menu_user;
 	}
 
