@@ -12,9 +12,9 @@ import Funciones_graficas.Menu;
 public class Pantalla_Planes_Consultar {
 
     private Vista_GYM menu_inicio;
-    private JPanel menu_user, panel, panel_negro, panel_botones;
+    private JPanel menu_user, panel, panel_negro, panel_botones, panel_negro1;
     private JButton noti, confi, btn_crear, btn_edit, btn_deta, btn_eliminar, btn;
-    private JLabel text;
+    private JLabel text, text1, text2, text3, text4, text5, text_negro;
     
     public Pantalla_Planes_Consultar(Vista_GYM log) {
         this.menu_inicio = log;
@@ -150,7 +150,7 @@ public class Pantalla_Planes_Consultar {
         // === 
 		panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(300, 335, 900, 300);
+		panel.setBounds(300, 335, 900, 250);
 		panel.setLayout(null);
 		menu_user.add(panel);
 		
@@ -166,8 +166,56 @@ public class Pantalla_Planes_Consultar {
         text.setBounds(20, 5, 500, 50);
         text.setLayout(null);
         panel_negro.add(text);
-
-
+        
+        // ====
+        text1 = new JLabel("Nombre del plan             Duracion               Costo");
+        text1.setFont(new Font("Arial", Font.BOLD, 35));
+        text1.setForeground(Color.black);
+        text1.setBounds(20, 65, 900, 50);
+        text1.setLayout(null);
+        panel.add(text1);
+        
+        text2 = new JLabel("         Basico                    1 mes                     $350");
+        text2.setFont(new Font("Arial", Font.BOLD, 35));
+        text2.setForeground(Color.gray);
+        text2.setBounds(20, 95, 900, 50);
+        text2.setLayout(null);
+        panel.add(text2);
+        
+        text3 = new JLabel("         Basico                    1 mes                     $350");
+        text3.setFont(new Font("Arial", Font.BOLD, 35));
+        text3.setForeground(Color.gray);
+        text3.setBounds(20, 125, 900, 50);
+        text3.setLayout(null);
+        panel.add(text3);
+        
+        text4 = new JLabel("         Basico                    1 mes                     $350");
+        text4.setFont(new Font("Arial", Font.BOLD, 35));
+        text4.setForeground(Color.gray);
+        text4.setBounds(20, 155, 900, 50);
+        text4.setLayout(null);
+        panel.add(text4);
+        
+        text5 = new JLabel("         Basico                    1 mes                     $350");
+        text5.setFont(new Font("Arial", Font.BOLD, 35));
+        text5.setForeground(Color.gray);
+        text5.setBounds(20, 185, 900, 50);
+        text5.setLayout(null);
+        panel.add(text5);
+        
+		panel_negro1 = new JPanel();
+		panel_negro1.setBackground(Color.black);
+		panel_negro1.setBounds(900, 580, 300, 50);
+		panel_negro1.setLayout(null);
+		menu_user.add(panel_negro1);
+		
+        text_negro = new JLabel("Total     $12,230");
+        text_negro.setFont(new Font("Arial", Font.BOLD, 35));
+        text_negro.setForeground(Color.white);
+        text_negro.setBounds(10, 5, 500, 50);
+        text_negro.setLayout(null);
+        panel_negro1.add(text_negro);
+        
 		return menu_user;
 	}
 

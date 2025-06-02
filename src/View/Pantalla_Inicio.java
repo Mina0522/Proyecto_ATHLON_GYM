@@ -125,9 +125,6 @@ public class Pantalla_Inicio {
         crear.setForeground(Color.black);
         crear.setBorderPainted(false);
         crear.setFocusPainted(false);
-		crear.addActionListener(e -> {
-		    menu_inicio.pintar_vista(new Pantalla_Usuarios_Agregar(menu_inicio).getPanel());
-		});
 		panel_crearClase.add(crear);
         menu.add(panel_crearClase);
 
