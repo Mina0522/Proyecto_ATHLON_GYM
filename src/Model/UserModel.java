@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
-import com.mysql.cj.protocol.Resultset;
-
 public class UserModel {
 
 	
@@ -51,6 +49,7 @@ public class UserModel {
 	
 	//Método para crear un usuario nuevo, crea el número de control del usuario con el método createControlNum()
 	public int createUser(String first_name, String last_name, String phone_number) {
+		System.out.println("Registrando usuario...");
 		String query = "INSERT INTO member (control_num, first_name, last_name, phone_number) VALUES (?,?,?,?)";
 		int error = checkFields(first_name, last_name, phone_number); //Guardar el caso en una variable
 		if (error != 0)
@@ -79,6 +78,7 @@ public class UserModel {
 	
 	//Método para editar datos de un miembro
 	public int updateUser (int id, String first_name, String last_name, String phone_number) {
+		System.out.println("Actualizando usuario...");
 		ArrayList<Object> values = new ArrayList<>();
 		ArrayList<String> fields = new ArrayList<>();
 		StringBuilder query = new StringBuilder();
@@ -135,16 +135,15 @@ public class UserModel {
 			System.out.println(prepStatement);
 			prepStatement.execute();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		
 		return 0; //Éxito
 	}
 	
 	//Método que elimina al usuario con la id proporcionada
 	public int deleteUser (int id) {
+		System.out.println("Eliminando usuario...");
 		try (Connection conn = MyConnection.connect()){
 			try (PreparedStatement checkSt = conn.prepareStatement("SELECT 1 FROM member WHERE id = ?;")){
 				checkSt.setInt(1, id);
@@ -153,10 +152,13 @@ public class UserModel {
 						try (PreparedStatement delSt = conn.prepareStatement("DELETE FROM member WHERE id = ?")){
 							delSt.setInt(1, id);
 							delSt.execute();
+							System.out.println("Usuario eliminado");
 						}
 					}
-					else 
+					else {
+						System.out.println("Usuario no encontrado");
 						return 1; //No existe un usuario con esa id
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -168,19 +170,23 @@ public class UserModel {
 	
 	//Método para obtener los datos de un usuario, regresa un objeto tipo User
 	public User getUser (int control_num) { //No es seguro si se buscará con id o control_num
+		System.out.println("Buscando usuario...");
 		try (Connection conn = MyConnection.connect();
 		PreparedStatement prepSt = conn.prepareStatement("SELECT * FROM member WHERE control_num = ?")){
 			prepSt.setInt(1, control_num);
 			try (ResultSet rs = prepSt.executeQuery()){
 				if (rs.next()) {
+					System.out.println("Usuario encontrado");
 					User member = new User
 							(control_num,
 							rs.getString("first_name"),
 							rs.getString("last_name"),
 							rs.getString("phone_number"));
 					return member; //Regresar un objeto User con los datos del miembro encontrado
-				} else
+				} else {
+					System.out.println("Usuario no encontrado");
 					return null; //No se encontró al usuario
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
