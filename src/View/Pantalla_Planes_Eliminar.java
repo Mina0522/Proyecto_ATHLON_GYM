@@ -167,6 +167,35 @@ public class Pantalla_Planes_Eliminar {
         text.setLayout(null);
         panel_negro.add(text);
 
+        // ====
+        Graficos_texto delete = new Graficos_texto();
+        delete.setPlaceholder(" Plan a eleminar");
+        delete.setBounds(30, 80, 330, 50);
+        delete.setBackground(Color.lightGray);
+        delete.setFont(new Font("Arial", Font.PLAIN, 18));
+        delete.setBorder(null);
+        panel.add(delete);
+        
+        JTextArea text_area = new JTextArea();
+        text_area.setLineWrap(true);
+        text_area.setWrapStyleWord(true);
+        text_area.setBorder(null);
+        
+        JScrollPane scroll = new JScrollPane(text_area);
+        scroll.setBounds(30, 150, 330, 120);
+        text_area.setBackground(Color.lightGray);
+        text_area.setFont(new Font("Arial", Font.PLAIN, 18));
+        scroll.setBorder(null);
+        scroll.getViewport().setBackground(Color.lightGray);
+        panel.add(scroll);
+     
+        btn = new JButton("Eliminar plan");
+        btn.setBounds(550, 230, 300, 50);
+        btn.setFont(new Font("Arial", Font.BOLD, 22));
+        btn.setBackground(Color.BLACK);
+        btn.setForeground(Color.WHITE);
+        btn.setFocusPainted(false);
+        panel.add(btn);
 
 		return menu_user;
 	}
