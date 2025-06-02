@@ -13,7 +13,7 @@ public class Editar_Instructor {
     private JPanel menu;
 
     private JPanel panel_botones, panel_agg;
-    private JButton noti, confi, crear, cancelar;
+    private JButton noti, confi, editar, cancelar;
     private JLabel user, text;
 
 
@@ -74,57 +74,49 @@ public class Editar_Instructor {
 		
 		ImageIcon icono_user = new ImageIcon(getClass().getResource("/files/usuario.png"));
 		user = new JLabel(icono_user);
-		user.setBounds(175, 15, 128, 128);
+		user.setBounds(375, 15, 128, 128);
 		panel_agg.add(user);
 		
-		text = new JLabel("Datos personales");
-		text.setFont(new Font("Arial", Font.BOLD, 20));
+		text = new JLabel("Datos personales del instructor");
+		text.setFont(new Font("Arial", Font.BOLD, 22));
 		text.setForeground(Color.BLACK);
-		text.setBounds(50, 145, 500, 50);
+		text.setBounds(275, 145, 500, 50);
 		panel_agg.add(text);
 		
         Graficos_texto nombre = new Graficos_texto();
-        nombre.setPlaceholder(" Nombre");
-        nombre.setBounds(50, 195, 390, 40);
+        nombre.setPlaceholder(" Felipe Ramos");
+        nombre.setBounds(225, 200, 415, 40);
         nombre.setBackground(Color.lightGray);
         nombre.setFont(new Font("Arial", Font.PLAIN, 18));
         nombre.setBorder(null);
         panel_agg.add(nombre);
         
         Graficos_texto correo = new Graficos_texto();
-        correo.setPlaceholder(" Correo");
-        correo.setBounds(50, 245, 390, 40);
+        correo.setPlaceholder(" feliperamos@gmail.com");
+        correo.setBounds(225, 260, 415, 40);
         correo.setBackground(Color.lightGray);
         correo.setFont(new Font("Arial", Font.PLAIN, 18));
         correo.setBorder(null);
         panel_agg.add(correo);
         
         Graficos_texto tel = new Graficos_texto();
-        tel.setPlaceholder(" Telefono");
-        tel.setBounds(50, 300, 390, 40);
+        tel.setPlaceholder(" 6121231231");
+        tel.setBounds(225, 320, 415, 40);
         tel.setBackground(Color.lightGray);
         tel.setFont(new Font("Arial", Font.PLAIN, 18));
         tel.setBorder(null);
         panel_agg.add(tel);
         
         Graficos_texto especialidad = new Graficos_texto();
-        especialidad.setPlaceholder(" Especialidad");
-        especialidad.setBounds(50, 350, 390, 40);
+        especialidad.setPlaceholder(" Pesas");
+        especialidad.setBounds(225, 380, 415, 40);
         especialidad.setBackground(Color.lightGray);
         especialidad.setFont(new Font("Arial", Font.PLAIN, 18));
         especialidad.setBorder(null);
         panel_agg.add(especialidad);
         
-        crear = new JButton("Crear");
-        crear.setBounds(50, 400, 390, 40);
-        crear.setFont(new Font("Arial", Font.BOLD, 22));
-        crear.setBackground(Color.BLACK);
-        crear.setForeground(Color.WHITE);
-        crear.setFocusPainted(false);
-        panel_agg.add(crear);
-        
         cancelar = new JButton("Cancelar");
-        cancelar.setBounds(50, 450, 390, 40);
+        cancelar.setBounds(30, 450, 330, 40);
         cancelar.setFont(new Font("Arial", Font.BOLD, 22));
         cancelar.setBackground(Color.lightGray);
         cancelar.setForeground(Color.black);
@@ -133,6 +125,14 @@ public class Editar_Instructor {
         	menu_inicio.pintar_vista(new Pantalla_Instructores(menu_inicio).getPanel());
         });
         panel_agg.add(cancelar);
+        
+        editar = new JButton("Editar");
+        editar.setBounds(520, 450, 330, 40);
+        editar.setFont(new Font("Arial", Font.BOLD, 22));
+        editar.setBackground(Color.BLACK);
+        editar.setForeground(Color.WHITE);
+        editar.setFocusPainted(false);
+        panel_agg.add(editar);
         
         
 
