@@ -11,7 +11,7 @@ public class Pantalla_Instructores {
     private JPanel panel_instructor;
 
     private JPanel panel_botones, coach1, coach2, coach3, coach4, coach5, coach6, franja_negro;
-    private JButton noti, confi, crear_coach;
+    private JButton noti, confi, crear_coach, btn_ver, btn_ver1, btn_ver2,btn_ver3, btn_ver4, btn_ver5;
     private JLabel text_coach;
 
     public Pantalla_Instructores(Vista_GYM log) {
@@ -79,13 +79,17 @@ public class Pantalla_Instructores {
         text_coach.setFont(new Font("Arial", Font.BOLD, 20));
         franja_negro.add(text_coach);
 
-        ImageIcon icono_1 = new ImageIcon(getClass().getResource("/files/user.png"));
-        Image entrenador1 = icono_1.getImage().getScaledInstance(72, 72, Image.SCALE_SMOOTH);
-        ImageIcon icono_coach1 = new ImageIcon(entrenador1);
-
-        JLabel img1 = new JLabel(icono_coach1);
-        img1.setBounds(20, 80, 72, 72);
-        coach1.add(img1);
+		ImageIcon icono_noti = new ImageIcon(getClass().getResource("/files/user.png"));
+		btn_ver = new JButton(icono_noti);
+		btn_ver.setBounds(20, 90, 72, 72);
+		btn_ver.setBorderPainted(false);
+		btn_ver.setContentAreaFilled(false);
+		btn_ver.setFocusPainted(false);
+		btn_ver.setOpaque(false);
+		btn_ver.addActionListener(e -> {
+			menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel());
+        });
+		coach1.add(btn_ver);
         
         // === Panel 2
         coach2 = new JPanel();
@@ -105,13 +109,17 @@ public class Pantalla_Instructores {
         text_coach.setFont(new Font("Arial", Font.BOLD, 20));
         franja_negro.add(text_coach);
 
-        ImageIcon icono_2 = new ImageIcon(getClass().getResource("/files/user.png"));
-        Image entrenador2 = icono_2.getImage().getScaledInstance(72, 72, Image.SCALE_SMOOTH);
-        ImageIcon icono_coach2 = new ImageIcon(entrenador2);
-
-        JLabel img2 = new JLabel(icono_coach2);
-        img2.setBounds(20, 80, 72, 72);
-        coach2.add(img2);
+		ImageIcon icono_noti1 = new ImageIcon(getClass().getResource("/files/user.png"));
+		btn_ver1 = new JButton(icono_noti1);
+		btn_ver1.setBounds(20, 90, 72, 72);
+		btn_ver1.setBorderPainted(false);
+		btn_ver1.setContentAreaFilled(false);
+		btn_ver1.setFocusPainted(false);
+		btn_ver1.setOpaque(false);
+		btn_ver1.addActionListener(e -> {
+			menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel());
+        });
+		coach2.add(btn_ver1);
         
         // === Panel 3
         coach3 = new JPanel();
@@ -131,13 +139,17 @@ public class Pantalla_Instructores {
         text_coach.setFont(new Font("Arial", Font.BOLD, 20));
         franja_negro.add(text_coach);
 
-        ImageIcon icono_3 = new ImageIcon(getClass().getResource("/files/user.png"));
-        Image entrenador3 = icono_3.getImage().getScaledInstance(72, 72, Image.SCALE_SMOOTH);
-        ImageIcon icono_coach3 = new ImageIcon(entrenador3);
-
-        JLabel img3 = new JLabel(icono_coach3);
-        img3.setBounds(20, 80, 72, 72);
-        coach3.add(img3);
+		ImageIcon icono_noti2 = new ImageIcon(getClass().getResource("/files/user.png"));
+		btn_ver2 = new JButton(icono_noti2);
+		btn_ver2.setBounds(20, 90, 72, 72);
+		btn_ver2.setBorderPainted(false);
+		btn_ver2.setContentAreaFilled(false);
+		btn_ver2.setFocusPainted(false);
+		btn_ver2.setOpaque(false);
+		btn_ver2.addActionListener(e -> {
+			menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel());
+        });
+		coach3.add(btn_ver2);
         
         // === Panel 4
         coach4 = new JPanel();
@@ -157,13 +169,17 @@ public class Pantalla_Instructores {
         text_coach.setFont(new Font("Arial", Font.BOLD, 20));
         franja_negro.add(text_coach);
 
-        ImageIcon icono_4 = new ImageIcon(getClass().getResource("/files/user.png"));
-        Image entrenador4 = icono_4.getImage().getScaledInstance(72, 72, Image.SCALE_SMOOTH);
-        ImageIcon icono_coach4 = new ImageIcon(entrenador4);
-
-        JLabel img4 = new JLabel(icono_coach4);
-        img4.setBounds(20, 80, 72, 72);
-        coach4.add(img4);
+		ImageIcon icono_noti4 = new ImageIcon(getClass().getResource("/files/user.png"));
+		btn_ver3 = new JButton(icono_noti4);
+		btn_ver3.setBounds(20, 90, 72, 72);
+		btn_ver3.setBorderPainted(false);
+		btn_ver3.setContentAreaFilled(false);
+		btn_ver3.setFocusPainted(false);
+		btn_ver3.setOpaque(false);
+		btn_ver3.addActionListener(e -> {
+			menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel());
+        });
+		coach4.add(btn_ver3);
         
         // === Panel 5
         coach5 = new JPanel();
@@ -183,13 +199,17 @@ public class Pantalla_Instructores {
         text_coach.setFont(new Font("Arial", Font.BOLD, 20));
         franja_negro.add(text_coach);
 
-        ImageIcon icono_5 = new ImageIcon(getClass().getResource("/files/user.png"));
-        Image entrenador5 = icono_5.getImage().getScaledInstance(72, 72, Image.SCALE_SMOOTH);
-        ImageIcon icono_coach5 = new ImageIcon(entrenador5);
-
-        JLabel img5 = new JLabel(icono_coach5);
-        img5.setBounds(20, 80, 72, 72);
-        coach5.add(img5);
+		ImageIcon icono_noti5 = new ImageIcon(getClass().getResource("/files/user.png"));
+		btn_ver4 = new JButton(icono_noti5);
+		btn_ver4.setBounds(20, 90, 72, 72);
+		btn_ver4.setBorderPainted(false);
+		btn_ver4.setContentAreaFilled(false);
+		btn_ver4.setFocusPainted(false);
+		btn_ver4.setOpaque(false);
+		btn_ver4.addActionListener(e -> {
+			menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel());
+        });
+		coach5.add(btn_ver4);
         
         // === Panel 6
         coach6 = new JPanel();
@@ -209,13 +229,17 @@ public class Pantalla_Instructores {
         text_coach.setFont(new Font("Arial", Font.BOLD, 20));
         franja_negro.add(text_coach);
 
-        ImageIcon icono_6 = new ImageIcon(getClass().getResource("/files/user.png"));
-        Image entrenador6 = icono_6.getImage().getScaledInstance(72, 72, Image.SCALE_SMOOTH);
-        ImageIcon icono_coach6 = new ImageIcon(entrenador6);
-
-        JLabel img6 = new JLabel(icono_coach6);
-        img6.setBounds(20, 80, 72, 72);
-        coach6.add(img6);
+		ImageIcon icono_noti6 = new ImageIcon(getClass().getResource("/files/user.png"));
+		btn_ver5 = new JButton(icono_noti6);
+		btn_ver5.setBounds(20, 90, 72, 72);
+		btn_ver5.setBorderPainted(false);
+		btn_ver5.setContentAreaFilled(false);
+		btn_ver5.setFocusPainted(false);
+		btn_ver5.setOpaque(false);
+		btn_ver5.addActionListener(e -> {
+			menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel());
+        });
+		coach6.add(btn_ver5);
  
         // === 
 		crear_coach = new JButton("Crear instructor");

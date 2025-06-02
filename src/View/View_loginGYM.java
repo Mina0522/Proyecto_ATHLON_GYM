@@ -110,15 +110,6 @@ public class View_loginGYM {
         });
         panel_inicio.add(btn_entrar);
 
-        btn_olvido_contra = new JButton("¿Olvidaste tu contraseña? ");
-        btn_olvido_contra.setBounds(50, 360, 390, 55);
-        btn_olvido_contra.setFont(new Font("Arial", Font.BOLD, 22));
-        btn_olvido_contra.setForeground(Color.black);
-        btn_olvido_contra.setContentAreaFilled(false);
-        btn_olvido_contra.setFocusPainted(false);
-        btn_olvido_contra.setBorderPainted(false);
-        panel_inicio.add(btn_olvido_contra);
-        
         // Agregamos la imagen al panel principal.
 		return panel_login;
 	}

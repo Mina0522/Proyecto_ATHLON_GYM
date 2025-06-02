@@ -1,3 +1,4 @@
+
 package View;
 
 import javax.swing.*;
@@ -6,7 +7,7 @@ import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
 
-public class Crear_Instructor {
+public class Editar_Instructor {
 
     private Vista_GYM menu_inicio;
     private JPanel menu;
@@ -16,7 +17,7 @@ public class Crear_Instructor {
     private JLabel user, text;
 
 
-    public Crear_Instructor(Vista_GYM log) {
+    public Editar_Instructor(Vista_GYM log) {
         this.menu_inicio = log;
     }
 
@@ -67,7 +68,7 @@ public class Crear_Instructor {
         // ===
 		panel_agg = new JPanel();
 		panel_agg.setBackground(Color.WHITE);
-		panel_agg.setBounds(490, 125, 490, 510);
+		panel_agg.setBounds(300, 125, 900, 510);
 		panel_agg.setLayout(null);
 		menu.add(panel_agg);
 		
