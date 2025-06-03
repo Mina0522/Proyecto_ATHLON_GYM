@@ -67,8 +67,8 @@ public class UserController {
 		return 0; //Éxito
 	}
 	
-	public int deleteUser (int id) {
-		return userModel.deleteUser(id);
+	public int deleteUser (int control_num) {
+		return userModel.deleteUser(control_num);
 	}
 	
 	public User getUser(String first_name) {
@@ -95,8 +95,8 @@ public class UserController {
 		}
 	}
 	//Método que recibe el modelo de la tabla de usuarios general y si dios es muy grande la tabla se llenará de información correcta
-	public void fillUserHomeTable (DefaultTableModel tableModel) {
-		ArrayList<User> users = userModel.getAllUsers();
+	public void fillUserHomeTable (String first_name, DefaultTableModel tableModel) {
+		ArrayList<User> users = userModel.getUsersWithName(first_name);
 		for (User user : users) {
 			Payment lastPayment = paymentModel.getLastUserPayment(user.getId());
 			double price;
@@ -113,7 +113,8 @@ public class UserController {
 					user.getLast_name(),
 					user.getPhone_number(),
 					price,
-					date
+					date,
+					user.getControl_number()
 					});
 		}
 	}

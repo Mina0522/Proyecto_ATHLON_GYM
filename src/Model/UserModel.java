@@ -105,15 +105,15 @@ public class UserModel {
 	}
 	
 	//Método que elimina al usuario con la id proporcionada
-	public int deleteUser (int id) {
+	public int deleteUser (int control_num) {
 		System.out.println("Eliminando usuario...");
 		try (Connection conn = MyConnection.connect()){
-			try (PreparedStatement checkSt = conn.prepareStatement("SELECT 1 FROM member WHERE id = ?;")){
-				checkSt.setInt(1, id);
+			try (PreparedStatement checkSt = conn.prepareStatement("SELECT 1 FROM member WHERE control_num = ?;")){
+				checkSt.setInt(1, control_num);
 				try (ResultSet checkRs = checkSt.executeQuery()){
 					if (checkRs.next()) {
-						try (PreparedStatement delSt = conn.prepareStatement("DELETE FROM member WHERE id = ?")){
-							delSt.setInt(1, id);
+						try (PreparedStatement delSt = conn.prepareStatement("DELETE FROM member WHERE control_num = ?")){
+							delSt.setInt(1, control_num);
 							delSt.execute();
 							System.out.println("Usuario eliminado");
 						}
@@ -135,7 +135,7 @@ public class UserModel {
 	public User getUser (String first_name) {
 		System.out.println("Buscando usuario...");
 		try (Connection conn = MyConnection.connect();
-		PreparedStatement prepSt = conn.prepareStatement("SELECT * FROM member WHERE control_num = ?")){
+		PreparedStatement prepSt = conn.prepareStatement("SELECT * FROM member WHERE  first_name = ?")){
 			prepSt.setString(1, first_name);
 			try (ResultSet rs = prepSt.executeQuery()){
 				if (rs.next()) {
@@ -159,16 +159,18 @@ public class UserModel {
 		return null;
 	}
 	
-	public ArrayList<User> getAllUsers() {
+	public ArrayList<User> getUsersWithName(String first_name) {
 		ArrayList<User> list;
 		try (Connection conn = MyConnection.connect();
-		PreparedStatement prepSt = conn.prepareStatement("SELECT * FROM member");
-		ResultSet rs = prepSt.executeQuery()) {
-			list = new ArrayList<>();
-			while (rs.next()) {
-				list.add(new User(rs.getInt("id"), 0, rs.getString("first_name"), rs.getNString("last_name"), rs.getString("phone_number")));
-				System.out.println(rs.getInt("id"));
-				System.out.println(rs.getString("first_name"));
+		PreparedStatement prepSt = conn.prepareStatement("SELECT * FROM member WHERE first_name = ?")) {
+			prepSt.setString(1, first_name);
+			try (ResultSet rs = prepSt.executeQuery()) {				
+				list = new ArrayList<>();
+				while (rs.next()) {
+					list.add(new User(rs.getInt("id"), rs.getInt("control_num"), rs.getString("first_name"), rs.getNString("last_name"), rs.getString("phone_number")));
+					System.out.println(rs.getInt("id"));
+					System.out.println(rs.getString("first_name"));
+				}
 			}
 			return list;
 		} catch (Exception e) {

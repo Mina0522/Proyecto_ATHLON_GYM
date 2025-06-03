@@ -28,7 +28,7 @@ public class PaymentModel {
 		}
 		return (Payment[]) list.toArray();
 	}
-	
+	//Método que regresa el último pago de un user con el id proporcionado
 	public Payment getLastUserPayment (int id) {
 		Payment payment = null;
 		try (Connection conn = MyConnection.connect();
@@ -44,8 +44,8 @@ public class PaymentModel {
 		}
 		return payment;
 	}
-	public static void main(String[] args) {
-		PaymentModel model = new PaymentModel();
-		System.out.println(model.getLastUserPayment(1).getDate());
-	}
+//	public static void main(String[] args) {
+//		PaymentModel model = new PaymentModel();
+//		System.out.println(model.getLastUserPayment(1).getDate());
+//	}
 }
