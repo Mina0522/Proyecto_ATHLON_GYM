@@ -67,17 +67,17 @@ public class UserController {
 		return 0; //Éxito
 	}
 	
-	public int deleteUser (int control_num) {
+	public int deleteUser (int control_num) { //Eliminar el usuario con número de control
 		return userModel.deleteUser(control_num);
 	}
 	
-	public User getUser(int control_num) {
+	public User getUser(int control_num) { //Obtener objecto User con información del usuario con su número de control
 		return userModel.getUser(control_num);
 	}
 	
 //	Método que recibe el id del usuario y el modelo de la tabla a llenar (para llenar la tabla "Historial de pagos"
 	public void fillUserDetailsTable (int id, DefaultTableModel tableModel) {
-		ArrayList<Payment> list = paymentModel.getMemberPayments(id);
+		ArrayList<Payment> list = paymentModel.getMemberPayments(id); //Llama al método del modelo de pagos que regresa un objeto Payment
 		for (Payment payment : list) {
 			tableModel.addRow(new Object[] {
 					payment.getDate(),
@@ -87,7 +87,7 @@ public class UserController {
 	}
 	//Método que recibe el id del usuario y el modelo de la tabla a llenar (para llenar la tabla "Historial de clase"
 	public void fillUserClassTable (int id, DefaultTableModel tableModel) {
-		ArrayList<ClassDB> list = classModel.getClassDB(id);
+		ArrayList<ClassDB> list = classModel.getClassDB(id); //Llama al método de modelo de clases, que regresa un objeto ClaseDB
 		for (ClassDB classDB : list) {
 			tableModel.addRow(new Object[] {
 					classDB.getDate(),
@@ -98,12 +98,12 @@ public class UserController {
 	public void fillUserHomeTable (String first_name, DefaultTableModel tableModel) {
 		ArrayList<User> users;
 
-		if (!first_name.isBlank())
-			users = userModel.getUsersWithName(first_name);
+		if (!first_name.isBlank()) //Si el campo de no está en blanco
+			users = userModel.getUsersWithName(first_name); //Busca usuarios con ese nombre
 		else 
-			users = userModel.getAllUsers();
+			users = userModel.getAllUsers(); //Busca todos los usuarios
 		
-		for (User user : users) {
+		for (User user : users) { //Por cada usuario, añadir su información a una lista de usuarios
 			Payment lastPayment = paymentModel.getLastUserPayment(user.getId());
 			double price;
 			String date;
