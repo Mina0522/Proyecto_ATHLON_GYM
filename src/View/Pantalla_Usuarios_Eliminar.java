@@ -1,10 +1,17 @@
 package View;
 
 import javax.swing.*;
+
+import Controller.UserController;
+
 import java.awt.*;
 import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
+import Model.ClassModel;
+import Model.PaymentModel;
+import Model.User;
+import Model.UserModel;
 
 public class Pantalla_Usuarios_Eliminar {
 
@@ -13,6 +20,11 @@ public class Pantalla_Usuarios_Eliminar {
 
     private JPanel panel_botones, panel_delete;
     private JButton noti, confi, btn_agg, btn_eliminar, btn_deta, btn_edit, btn_buscar;
+    UserModel userModel = new UserModel() ;
+	PaymentModel paymentModel  = new PaymentModel() ;
+	ClassModel classModel  = new ClassModel() ;
+    
+    UserController controlador = new UserController(userModel,paymentModel,classModel);
 
 
     public Pantalla_Usuarios_Eliminar(Vista_GYM log) {
@@ -167,7 +179,41 @@ public class Pantalla_Usuarios_Eliminar {
         btn_buscar.setForeground(Color.WHITE);
         btn_buscar.setFocusPainted(false);
         btn_buscar.addActionListener(e -> {
-        	menu_inicio.pintar_vista(new Eliminar(menu_inicio).getPanel());
+            String texto = buscar.getText().trim();
+            if (texto.isEmpty()) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Por favor, ingresa el número de control.",
+                    "Campo vacío",
+                    JOptionPane.WARNING_MESSAGE
+                );
+                return;
+            }
+
+            int idUsuario;
+            try {
+                idUsuario = Integer.parseInt(texto);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "El número de control debe ser un valor numérico.",
+                    "Error de formato",
+                    JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+
+            User usuario = controlador.getUser(idUsuario);
+            if (usuario != null) {
+                menu_inicio.pintar_vista(new Eliminar(menu_inicio, usuario).getPanel());
+            } else {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Usuario no encontrado.",
+                    "Sin resultados",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
         });
         panel_delete.add(btn_buscar);
 
