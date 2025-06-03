@@ -56,7 +56,7 @@ public class UserController {
 		
 		if (!phone_number.isBlank()) {
 			if (phone_number.matches(".*[a-zA-Z].*"))
-				return 2; //Datos inválidos (el campo phone_number contiene letras)
+				return 3; //Datos inválidos (el campo phone_number contiene letras)
 		} else
 			pnempty = true;
 		

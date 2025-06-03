@@ -113,7 +113,7 @@ public class Detalles {
         edit.setForeground(Color.black);
         edit.setFocusPainted(false);
         edit.addActionListener(e -> {
-        	menu_inicio.pintar_vista(new Editar(menu_inicio).getPanel());
+        	menu_inicio.pintar_vista(new Editar(menu_inicio,usuario).getPanel());
         });
         panel.add(edit);
         

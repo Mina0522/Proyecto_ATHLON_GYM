@@ -1,10 +1,17 @@
 package View;
 
 import javax.swing.*;
+
+import Controller.UserController;
+
 import java.awt.*;
 import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
+import Model.ClassModel;
+import Model.PaymentModel;
+import Model.User;
+import Model.UserModel;
 
 public class Editar {
 
@@ -13,11 +20,25 @@ public class Editar {
 
     private JPanel panel_botones, panel, panelagg, nom, ape, fecha, nom2, ape2, fecha2;
     private JButton noti, confi, eliminar, volver;
-    private JLabel text_inicio, text_, user, text_nom, text_ape, text_fecha, text_nom2, text_ape2, text_fecha2;
+    private JLabel text_inicio, text_, user, text_clase;
+    private JTextField campoNombre;      
+    private JTextField campoApellido;    
+    private JTextField campoTelefono;    
+    
+    private JLabel text_nom2, text_ape2, text_fecha2;
+    public User usuario;
+    private UserController controlador;
+    
 
-    public Editar(Vista_GYM log) {
+    public Editar(Vista_GYM log,User usuario) {
         this.menu_inicio = log;
+        this.usuario=usuario;
+        UserModel userModel = new UserModel();
+        PaymentModel paymentModel = new PaymentModel();
+        ClassModel classModel = new ClassModel();
+        this.controlador = new UserController(userModel, paymentModel, classModel);
     }
+    
 
     public JPanel getPanel() {
         menu = new JPanel();
@@ -74,7 +95,8 @@ public class Editar {
 		user.setBounds(135, 15, 128, 128);
 		panel.add(user);
 		
-		text_inicio = new JLabel("Felipe Ramos");
+		text_inicio = new JLabel();
+		text_inicio.setText(usuario.getFirst_name());
 		text_inicio.setFont(new Font("Arial", Font.BOLD, 40));
 		text_inicio.setForeground(Color.BLACK);
 		text_inicio.setBounds(75, 145, 500, 50);
@@ -92,11 +114,14 @@ public class Editar {
 		nom.setLayout(null);
 		panel.add(nom);
 		
-        text_nom = new JLabel("Ian Karel");
-        text_nom.setFont(new Font("Arial", Font.BOLD, 25));
-        text_nom.setForeground(Color.black);
-        text_nom.setBounds(10, 5, 500, 50);
-        nom.add(text_nom);
+        
+        
+
+        campoNombre = new JTextField(usuario.getFirst_name());
+        campoNombre.setFont(new Font("Arial", Font.BOLD, 25));
+        campoNombre.setBackground(Color.LIGHT_GRAY);
+        campoNombre.setBounds(10, 5, 500, 50);
+        nom.add(campoNombre);
 		
 		ape = new JPanel();
 		ape.setBackground(Color.lightGray);
@@ -104,11 +129,13 @@ public class Editar {
 		ape.setLayout(null);
 		panel.add(ape);
 		
-        text_ape = new JLabel("De la Cruz Alvarado");
-        text_ape.setFont(new Font("Arial", Font.BOLD, 25));
-        text_ape.setForeground(Color.black);
-        text_ape.setBounds(10, 5, 500, 50);
-        ape.add(text_ape);
+		campoApellido = new JTextField(usuario.getLast_name());
+		campoApellido.setBackground(Color.LIGHT_GRAY);
+
+        campoApellido.setFont(new Font("Arial", Font.BOLD, 25));
+        campoApellido.setBounds(10, 5, 500, 50);
+        ape.add(campoApellido);
+        
 		
 		fecha = new JPanel();
 		fecha.setBackground(Color.lightGray);
@@ -116,11 +143,11 @@ public class Editar {
 		fecha.setLayout(null);
 		panel.add(fecha);
 		
-        text_fecha = new JLabel("10 / 15 / 2005");
-        text_fecha.setFont(new Font("Arial", Font.BOLD, 25));
-        text_fecha.setForeground(Color.black);
-        text_fecha.setBounds(10, 5, 500, 50);
-        fecha.add(text_fecha);
+        text_fecha2 = new JLabel("10 / 15 / 2005");
+        text_fecha2.setFont(new Font("Arial", Font.BOLD, 25));
+        text_fecha2.setForeground(Color.black);
+        text_fecha2.setBounds(10, 5, 500, 50);
+        fecha.add(text_fecha2);
         
 		// ===
 		panelagg = new JPanel();
@@ -159,11 +186,12 @@ public class Editar {
 		fecha2.setLayout(null);
 		panelagg.add(fecha2);
 		
-        text_fecha2 = new JLabel("6122309508");
-        text_fecha2.setFont(new Font("Arial", Font.BOLD, 25));
-        text_fecha2.setForeground(Color.black);
-        text_fecha2.setBounds(10, 5, 500, 50);
-        fecha2.add(text_fecha2);
+		campoTelefono = new JTextField(usuario.getPhone_number());
+		campoTelefono.setBackground(Color.LIGHT_GRAY);
+        campoTelefono.setFont(new Font("Arial", Font.BOLD, 25));
+        campoTelefono.setBounds(10, 5, 500, 50);
+        fecha2.add(campoTelefono);
+        
         
         eliminar = new JButton("Confirmar cambios");
         eliminar.setBounds(50, 350, 300, 50);
@@ -171,6 +199,38 @@ public class Editar {
         eliminar.setBackground(Color.BLACK);
         eliminar.setForeground(Color.WHITE);
         eliminar.setFocusPainted(false);
+        eliminar.addActionListener(e -> {
+        	 String nuevoNombre = campoNombre.getText().trim();
+             String nuevoApellido = campoApellido.getText().trim();
+             String nuevoTelefono = campoTelefono.getText().trim();
+
+             
+             
+             int controlNum = usuario.getControl_number();
+             int resultado = controlador.updateUser(controlNum, nuevoNombre, nuevoApellido, nuevoTelefono);
+             switch (resultado) {
+                 case 0:
+                     JOptionPane.showMessageDialog(null, "Usuarios actualizados con éxito.", "Éxito",
+                             JOptionPane.INFORMATION_MESSAGE);
+                     menu_inicio.pintar_vista(new Pantalla_Usuarios(menu_inicio).getPanel());
+                     break;
+                 case 1:
+                     JOptionPane.showMessageDialog(null, "No se han modificado los campos.", "Advertencia",
+                             JOptionPane.WARNING_MESSAGE);
+                     break;
+                 case 2:
+                     JOptionPane.showMessageDialog(null, "Datos inválidos: nombres no deben contener números.",
+                             "Error", JOptionPane.ERROR_MESSAGE);
+                     break;
+                 case 3:
+                     JOptionPane.showMessageDialog(null, "Datos inválidos: Numero no deben contener letras.",
+                             "Error", JOptionPane.ERROR_MESSAGE);
+                     break;
+                 default:
+                     JOptionPane.showMessageDialog(null, "Error desconocido al actualizar.", "Error",
+                             JOptionPane.ERROR_MESSAGE);
+             }
+        });
         panelagg.add(eliminar);
         
         volver = new JButton("Volver");
