@@ -4,11 +4,16 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import Controller.UserController;
+
 import java.awt.*;
 import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
+import Model.ClassModel;
+import Model.PaymentModel;
 import Model.User;
+import Model.UserModel;
 
 public class Detalles {
 
@@ -19,10 +24,17 @@ public class Detalles {
     private JButton noti, confi, eliminar, volver, edit, eli, pdf;
     private JLabel text_inicio, text_, user, text_clase;
     private User usuario;
+    
+    private UserController controlador;
 
     public Detalles(Vista_GYM log,User usuario) {
         this.menu_inicio = log;
         this.usuario = usuario;
+        
+        UserModel userModel = new UserModel();
+        PaymentModel paymentModel = new PaymentModel();
+        ClassModel classModel = new ClassModel();
+        controlador = new UserController(userModel, paymentModel, classModel);
     }
 
     public JPanel getPanel() {
@@ -159,28 +171,32 @@ public class Detalles {
         text_clase.setBounds(20, 20, 370, 25);
         panelagg.add(text_clase);
 
-        String[] columnas2 = {"Fecha", "Pagos", "Asistentes"};
-        Object[][] datos2 = {
-              {"12/04/2025", "Efectivo", "12"},
-              {"8/04/2025", "Tarjeta", "8"},
-              {"27/03/2025", "Efectivo", "15"}
-        };
+        String[] columnas2 = {"Fecha", "Pagos", "Plan"};
+        
+        
+        
+        DefaultTableModel modelo2 = new DefaultTableModel(null, columnas2);
+        this.modelo2=modelo2;
 
-        DefaultTableModel modelo2 = new DefaultTableModel(datos2, columnas2);
+        
         JTable tabla2 = new JTable(modelo2);
-        tabla2.setFont(new Font("Arial", Font.PLAIN, 16));
-        tabla2.setRowHeight(28);
+        tabla2.setFont(new Font("Arial", Font.PLAIN, 15));
+        tabla2.setRowHeight(39);
         tabla2.setForeground(Color.BLACK);
         tabla2.setBackground(Color.WHITE);
 
         JTableHeader header2 = tabla2.getTableHeader();
-        header2.setFont(new Font("Arial", Font.BOLD, 15));
-        header2.setBackground(Color.WHITE);
-        header2.setForeground(Color.BLACK);
+        header2.setPreferredSize(new Dimension(header.getWidth(), 30));
+        header2.setFont(new Font("Arial", Font.BOLD, 22));
+        header2.setBackground(Color.BLACK);
+        header2.setForeground(Color.WHITE);
 
         JScrollPane scroll2 = new JScrollPane(tabla2);
         scroll2.setBounds(20, 42, 370, 110);
         panelagg.add(scroll2);
+
+        controlador.fillUserDetailsTable(usuario.getId(), modelo2);
+        
         
         // ===
         eliminar = new JButton("Descargar reporte (PDF)");
@@ -212,4 +228,6 @@ public class Detalles {
         
         return menu;
     }
+    private DefaultTableModel modelo2;
+
 }

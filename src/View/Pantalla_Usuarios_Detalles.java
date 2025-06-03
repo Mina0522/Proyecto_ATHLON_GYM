@@ -180,20 +180,41 @@ public class Pantalla_Usuarios_Detalles {
         btn_buscar.setForeground(Color.WHITE);
         btn_buscar.setFocusPainted(false);
         btn_buscar.addActionListener(e -> {
-        	
-    	String nombre_Usuario = buscar.getText().trim();
+            String texto = buscar.getText().trim();
+            if (texto.isEmpty()) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Por favor, ingresa el número de control.",
+                    "Campo vacío",
+                    JOptionPane.WARNING_MESSAGE
+                );
+                return;
+            }
 
-    	if (nombre_Usuario.isEmpty()) {
-    	    JOptionPane.showMessageDialog(null, "Por favor, ingresa un nombre de usuario.", "Campo vacío", JOptionPane.WARNING_MESSAGE);
-    	} else {
-    	    User usuario = controlador.getUser(nombre_Usuario);
+            int idUsuario;
+            try {
+                idUsuario = Integer.parseInt(texto);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "El número de control debe ser un valor numérico.",
+                    "Error de formato",
+                    JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
 
-    	    if (usuario != null) {
-    	        menu_inicio.pintar_vista(new Detalles(menu_inicio, usuario).getPanel());
-    	    } else {
-    	        JOptionPane.showMessageDialog(null, "Usuario no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
-    	    }
-    	}
+            User usuario = controlador.getUser(idUsuario);
+            if (usuario != null) {
+                menu_inicio.pintar_vista(new Detalles(menu_inicio, usuario).getPanel());
+            } else {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Usuario no encontrado.",
+                    "Sin resultados",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
         });
         panel_delete.add(btn_buscar);
 
