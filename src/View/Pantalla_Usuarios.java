@@ -185,6 +185,8 @@ public class Pantalla_Usuarios {
             {"Ian Karel", "De La Cruz", "612-230-9508", "470", "13 Abril"},
             {"Ian Karel", "De La Cruz", "612-230-9508", "470", "13 Abril"},
             {"Ian Karel", "De La Cruz", "612-230-9508", "470", "13 Abril"},
+            {"Ian Karel", "De La Cruz", "612-230-9508", "470", "13 Abril"},
+            {"Ian Karel", "De La Cruz", "612-230-9508", "470", "13 Abril"},
 
         };
 

@@ -100,7 +100,7 @@ public class Pantalla_Usuarios_Detalles {
         btn_edit.setBackground(Color.WHITE);
         btn_edit.setForeground(Color.BLACK);
         btn_edit.addActionListener(e -> {
-            menu_inicio.pintar_vista(new Pantalla_Usuarios_Detalles(menu_inicio).getPanel());
+            menu_inicio.pintar_vista(new Pantalla_Usuarios_Editar(menu_inicio).getPanel());
         });
         menu.add(btn_edit);
         
@@ -118,8 +118,8 @@ public class Pantalla_Usuarios_Detalles {
         btn_deta.setIconTextGap(30);
         btn_deta.setFocusPainted(false);
         btn_deta.setOpaque(true);
-        btn_deta.setBackground(Color.WHITE);
-        btn_deta.setForeground(Color.BLACK);
+        btn_deta.setBackground(Color.black);
+        btn_deta.setForeground(Color.white);
         btn_deta.addActionListener(e -> {
             menu_inicio.pintar_vista(new Pantalla_Usuarios_Detalles(menu_inicio).getPanel());
         });
@@ -142,7 +142,7 @@ public class Pantalla_Usuarios_Detalles {
         btn_eliminar.setBackground(Color.WHITE);
         btn_eliminar.setForeground(Color.BLACK);
         btn_eliminar.addActionListener(e -> {
-            menu_inicio.pintar_vista(new Pantalla_Usuarios_Detalles(menu_inicio).getPanel());
+            menu_inicio.pintar_vista(new Pantalla_Usuarios_Eliminar(menu_inicio).getPanel());
         });
         menu.add(btn_eliminar);
         

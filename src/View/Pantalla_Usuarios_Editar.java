@@ -97,8 +97,8 @@ public class Pantalla_Usuarios_Editar {
         btn_edit.setIconTextGap(30);
         btn_edit.setFocusPainted(false);
         btn_edit.setOpaque(true);
-        btn_edit.setBackground(Color.WHITE);
-        btn_edit.setForeground(Color.BLACK);
+        btn_edit.setBackground(Color.black);
+        btn_edit.setForeground(Color.white);
         btn_edit.addActionListener(e -> {
             menu_inicio.pintar_vista(new Pantalla_Usuarios_Editar(menu_inicio).getPanel());
         });
@@ -142,7 +142,7 @@ public class Pantalla_Usuarios_Editar {
         btn_eliminar.setBackground(Color.WHITE);
         btn_eliminar.setForeground(Color.BLACK);
         btn_eliminar.addActionListener(e -> {
-            menu_inicio.pintar_vista(new Pantalla_Usuarios_Editar(menu_inicio).getPanel());
+            menu_inicio.pintar_vista(new Pantalla_Usuarios_Eliminar(menu_inicio).getPanel());
         });
         menu.add(btn_eliminar);
         

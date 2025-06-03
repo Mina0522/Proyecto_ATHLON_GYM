@@ -139,8 +139,8 @@ public class Pantalla_Usuarios_Eliminar {
         btn_eliminar.setIconTextGap(30);
         btn_eliminar.setFocusPainted(false);
         btn_eliminar.setOpaque(true);
-        btn_eliminar.setBackground(Color.WHITE);
-        btn_eliminar.setForeground(Color.BLACK);
+        btn_eliminar.setBackground(Color.black);
+        btn_eliminar.setForeground(Color.white);
         btn_eliminar.addActionListener(e -> {
             menu_inicio.pintar_vista(new Pantalla_Usuarios_Eliminar(menu_inicio).getPanel());
         });
