@@ -71,14 +71,14 @@ public class UserController {
 		return userModel.deleteUser(control_num);
 	}
 	
-	public User getUser(String first_name) {
-		return userModel.getUser(first_name);
+	public User getUser(int control_num) {
+		return userModel.getUser(control_num);
 	}
 	
-	//Método que recibe el id del usuario y el modelo de la tabla a llenar (para llenar la tabla "Historial de pagos"
+//	Método que recibe el id del usuario y el modelo de la tabla a llenar (para llenar la tabla "Historial de pagos"
 	public void fillUserDetailsTable (int id, DefaultTableModel tableModel) {
-		Payment array[] = paymentModel.getMemberPayments(id);
-		for (Payment payment : array) {
+		ArrayList<Payment> list = paymentModel.getMemberPayments(id);
+		for (Payment payment : list) {
 			tableModel.addRow(new Object[] {
 					payment.getDate(),
 					payment.getPrice(),

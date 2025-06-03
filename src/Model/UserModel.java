@@ -61,7 +61,7 @@ public class UserModel {
 	}
 	
 	//Método para editar datos de un miembro
-	public void updateUser (int id, String first_name, String last_name, String phone_number,
+	public void updateUser (int control_num, String first_name, String last_name, String phone_number,
 			boolean fnempty, boolean lnempty, boolean pnempty) {
 		System.out.println("Actualizando usuario...");
 		ArrayList<Object> values = new ArrayList<>();
@@ -85,9 +85,9 @@ public class UserModel {
 		}
 		
 		query.append(String.join(", ", fields));
-		query.append(" WHERE id = ?");
+		query.append(" WHERE control_num = ?");
 		
-		values.add(id);
+		values.add(control_num);
 		
 		System.out.println(query);
 		
@@ -132,11 +132,11 @@ public class UserModel {
 	}
 	
 	//Método para obtener los datos de un usuario consultandolo por su nombre, regresa un objeto tipo User
-	public User getUser (String first_name) {
+	public User getUser (int control_num) {
 		System.out.println("Buscando usuario...");
 		try (Connection conn = MyConnection.connect();
-		PreparedStatement prepSt = conn.prepareStatement("SELECT * FROM member WHERE  first_name = ?")){
-			prepSt.setString(1, first_name);
+		PreparedStatement prepSt = conn.prepareStatement("SELECT * FROM member WHERE  control_num = ?")){
+			prepSt.setInt(1, control_num);
 			try (ResultSet rs = prepSt.executeQuery()){
 				if (rs.next()) {
 					System.out.println("Usuario encontrado");
