@@ -184,18 +184,14 @@ public class Pantalla_Usuarios {
         btn_buscar.addActionListener(e -> {
             String nombreUsuario = buscar.getText().trim();
 
-            if (nombreUsuario.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Por favor, ingresa un nombre de usuario.", "Campo vacío",
-                        JOptionPane.WARNING_MESSAGE);
-            } else {
-                modelo.setRowCount(0);
-                controlador.fillUserHomeTable(nombreUsuario, modelo);
+            
+            controlador.fillUserHomeTable(nombreUsuario, modelo);
 
-                if (modelo.getRowCount() == 0) {
-                    JOptionPane.showMessageDialog(null, "No se encontraron usuarios con ese nombre.", "Sin resultados",
-                            JOptionPane.INFORMATION_MESSAGE);
-                }
+            if (modelo.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(null, "No se encontraron usuarios con ese nombre.", "Sin resultados",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
+            
         });
 
         panel_tabla.add(btn_buscar);
