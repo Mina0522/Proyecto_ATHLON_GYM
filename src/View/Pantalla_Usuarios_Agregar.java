@@ -157,6 +157,7 @@ public class Pantalla_Usuarios_Agregar {
         		break;
         	case 0:
         		JOptionPane.showMessageDialog(null, "¡Usuario agregado con éxito!");
+        		
         		break;
         	}
 
