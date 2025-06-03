@@ -53,14 +53,14 @@ public class View_loginGYM {
 		// === Colocamos el panel en  y lo añadimos al panel del login.
 		panel_inicio = new JPanel();
 		panel_inicio.setBackground(Color.WHITE);
-		panel_inicio.setBounds(402, 190, 500, 430);
+		panel_inicio.setBounds(402, 190, 490, 400);
 		panel_inicio.setLayout(null);
 		panel_login.add(panel_inicio);
 		
 		// === Elementos.
 		text_inicio = new JLabel("Iniciar sesion");
-		text_inicio.setFont(new Font("Arial", Font.BOLD, 32));
-		text_inicio.setBounds(155, 20, 290, 50);
+		text_inicio.setFont(new Font("Arial", Font.BOLD, 45));
+		text_inicio.setBounds(105, 28, 290, 50);
         panel_inicio.add(text_inicio);
         
         // === Campos de usuario y contraseña personalizados. 
@@ -83,8 +83,8 @@ public class View_loginGYM {
 
         // === Boton que nos lleva a la pantalla inicial.
         btn_entrar = new JButton("Iniciar sesión");
-        btn_entrar.setBounds(50, 290, 390, 55);
-        btn_entrar.setFont(new Font("Arial", Font.BOLD, 22));
+        btn_entrar.setBounds(50, 290, 390, 60);
+        btn_entrar.setFont(new Font("Arial", Font.BOLD, 28));
         btn_entrar.setBackground(Color.BLACK);
         btn_entrar.setForeground(Color.WHITE);
         btn_entrar.setFocusPainted(false);
