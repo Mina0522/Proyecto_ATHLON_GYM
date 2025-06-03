@@ -39,9 +39,9 @@ public class ClassModel {
 		return list;
 	}
 	
-	public static void main(String[] args) {
-		ClassModel model = new ClassModel();
-		System.out.println(model.getClassDB(226576));
-	}
+//	public static void main(String[] args) {
+//		ClassModel model = new ClassModel();
+//		System.out.println(model.getClassDB(226576));
+//	}
 	
 }

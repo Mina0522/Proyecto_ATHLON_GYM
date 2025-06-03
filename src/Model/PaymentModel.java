@@ -54,7 +54,7 @@ public class PaymentModel {
 		}
 		return payment;
 	}
-	public static void main(String[] args) {
-		PaymentModel model = new PaymentModel();
-	}
+//	public static void main(String[] args) {
+//		PaymentModel model = new PaymentModel();
+//	}
 }
