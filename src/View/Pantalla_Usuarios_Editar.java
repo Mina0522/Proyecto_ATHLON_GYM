@@ -84,7 +84,7 @@ public class Pantalla_Usuarios_Editar {
         menu.add(btn_agg);
 
 		// == boton editar 
-        ImageIcon edit = new ImageIcon(getClass().getResource("/files/user_edit.png"));
+        ImageIcon edit = new ImageIcon(getClass().getResource("/files/user_edit_cb.png"));
         Image modi_edit = edit.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon icono_edit = new ImageIcon(modi_edit);
 

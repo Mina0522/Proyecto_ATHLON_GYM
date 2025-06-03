@@ -126,7 +126,7 @@ public class Pantalla_Usuarios_Eliminar {
         menu.add(btn_deta);
 		
 		// == boton eliminar 
-        ImageIcon eliminar = new ImageIcon(getClass().getResource("/files/user_less.png"));
+        ImageIcon eliminar = new ImageIcon(getClass().getResource("/files/user_less_cb.png"));
         Image modi_eliminar = eliminar.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon icono_eliminar = new ImageIcon(modi_eliminar);
 

@@ -105,7 +105,7 @@ public class Pantalla_Usuarios_Detalles {
         menu.add(btn_edit);
         
 		// == boton detalles 
-        ImageIcon deta = new ImageIcon(getClass().getResource("/files/buscar_registros.png"));
+        ImageIcon deta = new ImageIcon(getClass().getResource("/files/buscar_registros_cb.png"));
         Image modi_deta = deta.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon icono_deta = new ImageIcon(modi_deta);
 
