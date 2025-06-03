@@ -34,26 +34,11 @@ public class UserModel {
 			return cnum;
 		}
 	}
-	//Método que verifica la consistencia de los datos ingresados para un miembro
-	private int checkFields (String first_name, String last_name, String phone_number) { 
-		//Verficar los datos y regresar un error si hubiera una inconsistencia de datos
-		if (first_name.isBlank() || last_name.isBlank() || phone_number.isBlank())
-			return 1; //Campo vacío detectado
-		else if (first_name.matches(".*\\d.*") || last_name.matches(".*\\d.*"))
-			return 2; //Datos inválidos (El nombre o apellido contienen números)
-		else if (phone_number.matches(".*[a-zA-Z].*"))
-			return 3; //El número de teléfono contiene letras
-		else
-			return 0; //Éxito (no hubo inconsistencia)
-	}
 	
 	//Método para crear un usuario nuevo, crea el número de control del usuario con el método createControlNum()
-	public int createUser(String first_name, String last_name, String phone_number) {
+	public void createUser(String first_name, String last_name, String phone_number) {
 		System.out.println("Registrando usuario...");
 		String query = "INSERT INTO member (control_num, first_name, last_name, phone_number) VALUES (?,?,?,?)";
-		int error = checkFields(first_name, last_name, phone_number); //Guardar el caso en una variable
-		if (error != 0)
-			return error; //Regresar inconsistencai de datos si la hubiera
 		
 		try (
 			Connection conn = MyConnection.connect();
@@ -73,52 +58,31 @@ public class UserModel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return 0; //Éxito
 	}
 	
 	//Método para editar datos de un miembro
-	public int updateUser (int id, String first_name, String last_name, String phone_number) {
+	public void updateUser (int id, String first_name, String last_name, String phone_number,
+			boolean fnempty, boolean lnempty, boolean pnempty) {
 		System.out.println("Actualizando usuario...");
 		ArrayList<Object> values = new ArrayList<>();
 		ArrayList<String> fields = new ArrayList<>();
 		StringBuilder query = new StringBuilder();
 		query.append("UPDATE member SET ");
-		boolean firstNameEmpty = false, lastNameEmpty = false, phoneNumberEmpty = false; 
 		
-		int error = checkFields(first_name, last_name, phone_number);
+		if (!fnempty){//Si el campo first_name no está vacío
+			fields.add("first_name = ?");
+			values.add(first_name);
+		}
 		
-		if (!first_name.isEmpty()) {
-			if (first_name.matches(".*\\d.*"))
-				return 2; //Datos inválidos (el campo first_name contiene números)
-			else {
-				fields.add("first_name = ?");
-				values.add(first_name);
-			}
-		} else
-			firstNameEmpty = true;
+		if (!lnempty){//Si el campo last_name no está vacío
+			fields.add("last_name = ?");
+			values.add(last_name);
+		}
 		
-		if (!last_name.isEmpty()) {
-			if (last_name.matches(".*\\d.*"))
-				return 2; //Datos inválidos (el campo last_name contiene números)
-			else {
-				fields.add("last_name = ?");
-				values.add(last_name);
-			}
-		} else
-			lastNameEmpty = true;
-		
-		if (!phone_number.isEmpty()) {
-			if (phone_number.matches(".*[a-zA-Z].*"))
-				return 2; //Datos inválidos (el campo phone_number contiene letras)
-			else {
-				fields.add("phone_number = ?");
-				values.add(phone_number);
-			}
-		} else
-			phoneNumberEmpty = true;
-		
-		if (firstNameEmpty && lastNameEmpty && phoneNumberEmpty)
-			return 1; //Todos los campos están vacíos
+		if (!pnempty){//Si el campo phone_number no está vacío
+			fields.add("phone_number = ?");
+			values.add(phone_number);
+		}
 		
 		query.append(String.join(", ", fields));
 		query.append(" WHERE id = ?");
@@ -138,7 +102,6 @@ public class UserModel {
 			e.printStackTrace();
 		}
 		
-		return 0; //Éxito
 	}
 	
 	//Método que elimina al usuario con la id proporcionada
@@ -178,7 +141,7 @@ public class UserModel {
 				if (rs.next()) {
 					System.out.println("Usuario encontrado");
 					User member = new User
-							(0,
+							(rs.getInt("id"),
 							control_num,
 							rs.getString("first_name"),
 							rs.getString("last_name"),
@@ -212,46 +175,46 @@ public class UserModel {
 		}
 	}
 	
-	//-----------------------------------------------------------------------------------------------
-	//PRUEBAS: método que regresa los usuarios registrados actualmente
-	private void showUsers () { 
-		boolean hasResults = false;
-		System.out.println("Consultando usuarios...");
-		try (Connection conn = MyConnection.connect();
-			PreparedStatement prepSt = conn.prepareStatement("SELECT * FROM member");
-			ResultSet rs = prepSt.executeQuery()){
-					while (rs.next()) {
-						System.out.println("id: " + rs.getString("id"));
-						System.out.println("control number: " + rs.getInt("control_num"));
-						System.out.println("name: " + rs.getString("first_name"));
-						System.out.println("last name: " + rs.getString("last_name"));
-						System.out.println("phone number: " + rs.getString("phone_number"));
-						hasResults = true;
-					}
-					if (!hasResults)
-						System.out.println("No hay usuarios registrados");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	}
-	
-	//PRUEBAS: Borrar los usuarios y resetear el AutoIncrement a 1
-	private void deleteUsers() { 
-		System.out.println("Eliminando usuarios...");
-		try (Connection conn = MyConnection.connect()) {
-			try (PreparedStatement del = conn.prepareStatement("DELETE FROM member")){
-				del.execute();
-			}
-			try (PreparedStatement resAI = conn.prepareStatement("ALTER TABLE member AUTO_INCREMENT = 1")){
-				resAI.execute();
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-		
+//	//-----------------------------------------------------------------------------------------------
+//	//PRUEBAS: método que regresa los usuarios registrados actualmente
+//	private void showUsers () { 
+//		boolean hasResults = false;
+//		System.out.println("Consultando usuarios...");
+//		try (Connection conn = MyConnection.connect();
+//			PreparedStatement prepSt = conn.prepareStatement("SELECT * FROM member");
+//			ResultSet rs = prepSt.executeQuery()){
+//					while (rs.next()) {
+//						System.out.println("id: " + rs.getString("id"));
+//						System.out.println("control number: " + rs.getInt("control_num"));
+//						System.out.println("name: " + rs.getString("first_name"));
+//						System.out.println("last name: " + rs.getString("last_name"));
+//						System.out.println("phone number: " + rs.getString("phone_number"));
+//						hasResults = true;
+//					}
+//					if (!hasResults)
+//						System.out.println("No hay usuarios registrados");
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//	}
+//	
+//	//PRUEBAS: Borrar los usuarios y resetear el AutoIncrement a 1
+//	private void deleteUsers() { 
+//		System.out.println("Eliminando usuarios...");
+//		try (Connection conn = MyConnection.connect()) {
+//			try (PreparedStatement del = conn.prepareStatement("DELETE FROM member")){
+//				del.execute();
+//			}
+//			try (PreparedStatement resAI = conn.prepareStatement("ALTER TABLE member AUTO_INCREMENT = 1")){
+//				resAI.execute();
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+//		
 //	public static void main(String[] args) throws SQLException {
 //		UserModel model = new UserModel();
 //		model.showUsers();
