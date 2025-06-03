@@ -106,7 +106,7 @@ public class Pantalla_Planes_Consultar {
         menu_user.add(btn_edit);
         
 		// == boton consultar registro
-        ImageIcon deta = new ImageIcon(getClass().getResource("/files/buscar_usuario.png"));
+        ImageIcon deta = new ImageIcon(getClass().getResource("/files/buscar_usuario_cb.png"));
         Image modi_deta = deta.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon icono_deta = new ImageIcon(modi_deta);
 
@@ -119,8 +119,8 @@ public class Pantalla_Planes_Consultar {
         btn_deta.setIconTextGap(30);
         btn_deta.setFocusPainted(false);
         btn_deta.setOpaque(true);
-        btn_deta.setBackground(Color.WHITE);
-        btn_deta.setForeground(Color.BLACK);
+        btn_deta.setBackground(Color.BLACK);
+        btn_deta.setForeground(Color.WHITE);
         btn_deta.addActionListener(e -> {
             menu_inicio.pintar_vista(new Pantalla_Planes_Consultar(menu_inicio).getPanel());
         });
