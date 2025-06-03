@@ -171,7 +171,7 @@ public class Pantalla_Usuarios {
         btn_buscar.setFocusPainted(false);
         btn_buscar.addActionListener(e -> {
         	String nombreUsuario = buscar.getText();
-        	if(nombreUsuario.isEmpty()) {
+        	if(nombreUsuario.isBlank()) {
         		JOptionPane.showMessageDialog(null, "Rellena el campo.");
         	}
         });

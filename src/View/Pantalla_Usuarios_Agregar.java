@@ -21,9 +21,10 @@ public class Pantalla_Usuarios_Agregar {
     }
 
     public JPanel getPanel() {
+    	Color colorGris = Color.decode("#D9D9D9");
         menu = new JPanel();
         menu.setLayout(null);
-        menu.setBackground(Color.LIGHT_GRAY);
+        menu.setBackground(colorGris);
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         menu.setSize(pantalla);
 
@@ -84,7 +85,7 @@ public class Pantalla_Usuarios_Agregar {
         Graficos_texto nombre = new Graficos_texto();
         nombre.setPlaceholder(" Nombre");
         nombre.setBounds(50, 195, 390, 40);
-        nombre.setBackground(Color.lightGray);
+        nombre.setBackground(colorGris);
         nombre.setFont(new Font("Arial", Font.PLAIN, 18));
         nombre.setBorder(null);
         panel_agg.add(nombre);
@@ -92,7 +93,7 @@ public class Pantalla_Usuarios_Agregar {
         Graficos_texto correo = new Graficos_texto();
         correo.setPlaceholder(" Correo");
         correo.setBounds(50, 245, 390, 40);
-        correo.setBackground(Color.lightGray);
+        correo.setBackground(colorGris);
         correo.setFont(new Font("Arial", Font.PLAIN, 18));
         correo.setBorder(null);
         panel_agg.add(correo);
@@ -100,7 +101,7 @@ public class Pantalla_Usuarios_Agregar {
         Graficos_texto tel = new Graficos_texto();
         tel.setPlaceholder(" Telefono");
         tel.setBounds(50, 300, 390, 40);
-        tel.setBackground(Color.lightGray);
+        tel.setBackground(colorGris);
         tel.setFont(new Font("Arial", Font.PLAIN, 18));
         tel.setBorder(null);
         panel_agg.add(tel);
@@ -108,7 +109,7 @@ public class Pantalla_Usuarios_Agregar {
         Graficos_texto especialidad = new Graficos_texto();
         especialidad.setPlaceholder(" Especialidad");
         especialidad.setBounds(50, 350, 390, 40);
-        especialidad.setBackground(Color.lightGray);
+        especialidad.setBackground(colorGris);
         especialidad.setFont(new Font("Arial", Font.PLAIN, 18));
         especialidad.setBorder(null);
         panel_agg.add(especialidad);
@@ -118,14 +119,26 @@ public class Pantalla_Usuarios_Agregar {
         crear.setFont(new Font("Arial", Font.BOLD, 22));
         crear.setBackground(Color.BLACK);
         crear.setForeground(Color.WHITE);
+        crear.setBorderPainted(false);
         crear.setFocusPainted(false);
         panel_agg.add(crear);
+        crear.addActionListener(e -> {
+        	String nombreUsuario = nombre.getText();
+        	String telUsuario = tel.getText();
+        	String correoUsuario = correo.getText();
+        	String especialidadUsuario = especialidad.getText();
+
+        	if(nombreUsuario.isBlank() || telUsuario.isBlank() || correoUsuario.isBlank() || especialidadUsuario.isEmpty() ) {
+        		JOptionPane.showMessageDialog(null, "Rellena todos los campos.");
+        	}
+        });
         
         cancelar = new JButton("Cancelar");
         cancelar.setBounds(50, 450, 390, 40);
         cancelar.setFont(new Font("Arial", Font.BOLD, 22));
-        cancelar.setBackground(Color.lightGray);
+        cancelar.setBackground(Color.GRAY);
         cancelar.setForeground(Color.black);
+        cancelar.setBorderPainted(false);
         cancelar.setFocusPainted(false);
         cancelar.addActionListener(e -> {
         	menu_inicio.pintar_vista(new Pantalla_Usuarios(menu_inicio).getPanel());
