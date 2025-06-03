@@ -20,9 +20,11 @@ public class Pantalla_Usuarios {
     }
 
     public JPanel getPanel() {
+    	
+    	Color colorGris = Color.decode("#D9D9D9");
         menu_user = new JPanel();
         menu_user.setLayout(null);
-        menu_user.setBackground(Color.LIGHT_GRAY);
+        menu_user.setBackground(colorGris);
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         menu_user.setSize(pantalla);
 
@@ -155,21 +157,24 @@ public class Pantalla_Usuarios {
 
         Graficos_texto buscar = new Graficos_texto();
         buscar.setPlaceholder(" Buscar usuario");
-        buscar.setBounds(100, 10, 400, 50);
-        buscar.setBackground(Color.lightGray);
+        buscar.setBounds(50, 18, 590, 45);
+        buscar.setBackground(colorGris);
         buscar.setFont(new Font("Arial", Font.PLAIN, 18));
         buscar.setBorder(null);
         panel_tabla.add(buscar);
 
         btn_buscar = new JButton("Buscar");
-        btn_buscar.setBounds(580, 10, 200, 50);
+        btn_buscar.setBounds(650, 18, 200, 45);
         btn_buscar.setFont(new Font("Arial", Font.BOLD, 22));
         btn_buscar.setBackground(Color.BLACK);
         btn_buscar.setForeground(Color.WHITE);
         btn_buscar.setFocusPainted(false);
-//        btn_buscar.addActionListener(e -> {
-//        	checador.pintar_vista(new Checador(checador).getPanel());
-//        });
+        btn_buscar.addActionListener(e -> {
+        	String nombreUsuario = buscar.getText();
+        	if(nombreUsuario.isEmpty()) {
+        		JOptionPane.showMessageDialog(null, "Rellena el campo.");
+        	}
+        });
         panel_tabla.add(btn_buscar);
 		
         String[] columnas = {"Nombre", "Apellido", "Telefono", "Cuota", "Dia de pago"};
@@ -178,23 +183,28 @@ public class Pantalla_Usuarios {
             {"Ian Karel", "De La Cruz", "612-230-9508", "470", "13 Abril"},
             {"Ian Karel", "De La Cruz", "612-230-9508", "470", "13 Abril"},
             {"Ian Karel", "De La Cruz", "612-230-9508", "470", "13 Abril"},
+            {"Ian Karel", "De La Cruz", "612-230-9508", "470", "13 Abril"},
+            {"Ian Karel", "De La Cruz", "612-230-9508", "470", "13 Abril"},
+
         };
 
         DefaultTableModel modelo = new DefaultTableModel(datos, columnas);
         JTable tabla = new JTable(modelo);
-        tabla.setFont(new Font("Arial", Font.PLAIN, 16));
-        tabla.setRowHeight(28);
+        tabla.setFont(new Font("Arial", Font.PLAIN, 17));
+        tabla.setRowHeight(39);
         tabla.setForeground(Color.BLACK);
         tabla.setBackground(Color.WHITE);
 
         JTableHeader header = tabla.getTableHeader();
-        header.setFont(new Font("Arial", Font.BOLD, 15));
+        header.setPreferredSize(new Dimension(header.getWidth(), 39));
+        header.setFont(new Font("Arial", Font.BOLD, 22));
         header.setBackground(Color.BLACK);
         header.setForeground(Color.WHITE);
 
         JScrollPane scroll = new JScrollPane(tabla);
-        scroll.setBounds(50, 80, 800, 180);
+        scroll.setBounds(50, 80, 800, 140);
         panel_tabla.add(scroll);
+
         
 		return menu_user;
 	}

@@ -40,6 +40,7 @@ public class Menu {
         boton.setHorizontalAlignment(SwingConstants.LEFT);
 
         boton.addActionListener(e -> {
+        	
             this.seccion = boton.getText(); 
             resetearEstilos();
             pintarBoton();
