@@ -131,18 +131,18 @@ public class UserModel {
 		return 0; //Éxito (usuario eliminado)
 	}
 	
-	//Método para obtener los datos de un usuario, regresa un objeto tipo User
-	public User getUser (int control_num) { //No es seguro si se buscará con id o control_num
+	//Método para obtener los datos de un usuario consultandolo por su nombre, regresa un objeto tipo User
+	public User getUser (String first_name) {
 		System.out.println("Buscando usuario...");
 		try (Connection conn = MyConnection.connect();
 		PreparedStatement prepSt = conn.prepareStatement("SELECT * FROM member WHERE control_num = ?")){
-			prepSt.setInt(1, control_num);
+			prepSt.setString(1, first_name);
 			try (ResultSet rs = prepSt.executeQuery()){
 				if (rs.next()) {
 					System.out.println("Usuario encontrado");
 					User member = new User
 							(rs.getInt("id"),
-							control_num,
+							rs.getInt("control_num"),
 							rs.getString("first_name"),
 							rs.getString("last_name"),
 							rs.getString("phone_number"));
@@ -156,7 +156,7 @@ public class UserModel {
 			e.printStackTrace();
 		}
 		
-		return null; //Éxito
+		return null;
 	}
 	
 	public ArrayList<User> getAllUsers() {
