@@ -21,6 +21,7 @@ public class Pantalla_Usuarios {
     private JPanel menu_user, panel_tabla, panel_botones;
     private JButton noti, confi, btn_agg, btn_eliminar, btn_deta, btn_edit, btn_buscar;
     private UserController controlador;
+    String nombreUsuario = " ";
 
     public Pantalla_Usuarios(Vista_GYM log) {
         this.menu_inicio = log;
@@ -32,6 +33,12 @@ public class Pantalla_Usuarios {
     }
 
     public JPanel getPanel() {
+    	
+    	try {
+    	    UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatLightLaf());
+    	} catch (UnsupportedLookAndFeelException e1) {
+    	    e1.printStackTrace();
+    	}
     	
     	Color colorGris = Color.decode("#D9D9D9");
         menu_user = new JPanel();
@@ -72,7 +79,7 @@ public class Pantalla_Usuarios {
         
         // ==
         JSeparator separador = new JSeparator(SwingConstants.HORIZONTAL);
-        separador.setBounds(250, 95, 1030, 2); 
+        separador.setBounds(250, 90, 1030, 2); 
         separador.setForeground(Color.BLACK);
         menu_user.add(separador);
 
@@ -83,7 +90,7 @@ public class Pantalla_Usuarios {
 
         btn_agg = new JButton("Agregar usuario");
         btn_agg.setIcon(icono);
-        btn_agg.setBounds(300, 130, 420, 115);
+        btn_agg.setBounds(300, 110, 420, 100);
         btn_agg.setFont(new Font("Arial", Font.BOLD, 32));
         btn_agg.setBorderPainted(false);
         btn_agg.setHorizontalAlignment(SwingConstants.LEFT);
@@ -104,7 +111,7 @@ public class Pantalla_Usuarios {
 
         btn_edit = new JButton("Editar usuario");
         btn_edit.setIcon(icono_edit);
-        btn_edit.setBounds(775, 130, 420, 115);
+        btn_edit.setBounds(775, 110, 420, 100);
         btn_edit.setFont(new Font("Arial", Font.BOLD, 32));
         btn_edit.setBorderPainted(false);
         btn_edit.setHorizontalAlignment(SwingConstants.LEFT);
@@ -125,7 +132,7 @@ public class Pantalla_Usuarios {
 
         btn_deta = new JButton("Detalles usuario");
         btn_deta.setIcon(icono_deta);
-        btn_deta.setBounds(300, 270, 420, 115);
+        btn_deta.setBounds(300, 235, 420, 100);
         btn_deta.setFont(new Font("Arial", Font.BOLD, 32));
         btn_deta.setBorderPainted(false);
         btn_deta.setHorizontalAlignment(SwingConstants.LEFT);
@@ -146,7 +153,7 @@ public class Pantalla_Usuarios {
 
         btn_eliminar = new JButton("Eliminar usuario");
         btn_eliminar.setIcon(icono_eliminar);
-        btn_eliminar.setBounds(775, 270, 420, 115);
+        btn_eliminar.setBounds(775, 235, 420, 100);
         btn_eliminar.setFont(new Font("Arial", Font.BOLD, 32));
         btn_eliminar.setBorderPainted(false);
         btn_eliminar.setHorizontalAlignment(SwingConstants.LEFT);
@@ -163,7 +170,7 @@ public class Pantalla_Usuarios {
         // === TABLA T.T
 		panel_tabla = new JPanel();
 		panel_tabla.setBackground(Color.WHITE);
-		panel_tabla.setBounds(300, 400, 900, 230);
+		panel_tabla.setBounds(300, 355, 900, 290);
 		panel_tabla.setLayout(null);
 		menu_user.add(panel_tabla);
 
@@ -181,10 +188,13 @@ public class Pantalla_Usuarios {
         btn_buscar.setBackground(Color.BLACK);
         btn_buscar.setForeground(Color.WHITE);
         btn_buscar.setFocusPainted(false);
+        
+        
+        
         btn_buscar.addActionListener(e -> {
-            String nombreUsuario = buscar.getText().trim();
+            nombreUsuario = buscar.getText().trim();
 
-            
+            modelo.setRowCount(0);
             controlador.fillUserHomeTable(nombreUsuario, modelo);
 
             if (modelo.getRowCount() == 0) {
@@ -199,8 +209,9 @@ public class Pantalla_Usuarios {
         String[] columnas = { "Nombre", "Apellido", "Teléfono", "Cuota", "Día de pago", "No. de control" };
 
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
-
-        this.modelo = modelo;
+        this.modelo=modelo;
+        controlador.fillUserHomeTable(nombreUsuario, modelo);
+        
 
         JTable tabla = new JTable(modelo);
         tabla.setFont(new Font("Arial", Font.PLAIN, 17));
@@ -215,10 +226,14 @@ public class Pantalla_Usuarios {
         header.setForeground(Color.WHITE);
 
         JScrollPane scroll = new JScrollPane(tabla);
-        scroll.setBounds(50, 80, 800, 140);
+        scroll.setBounds(50, 80, 800, 195);
         panel_tabla.add(scroll);
+        
+        scroll.setColumnHeaderView(tabla.getTableHeader());
+
 
         
+
 		return menu_user;
 	}
     private DefaultTableModel modelo;
