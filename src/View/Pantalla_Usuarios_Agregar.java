@@ -1,10 +1,16 @@
 package View;
 
 import javax.swing.*;
+
+import Controller.UserController;
+
 import java.awt.*;
 import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
+import Model.ClassModel;
+import Model.PaymentModel;
+import Model.UserModel;
 
 public class Pantalla_Usuarios_Agregar {
 
@@ -14,6 +20,12 @@ public class Pantalla_Usuarios_Agregar {
     private JPanel panel_botones, panel_agg;
     private JButton noti, confi, crear, cancelar;
     private JLabel user, text;
+    
+    UserModel userModel = new UserModel() ;
+	PaymentModel paymentModel  = new PaymentModel() ;
+	ClassModel classModel  = new ClassModel() ;
+    
+    UserController controlador = new UserController(userModel,paymentModel,classModel);
 
 
     public Pantalla_Usuarios_Agregar(Vista_GYM log) {
@@ -90,13 +102,13 @@ public class Pantalla_Usuarios_Agregar {
         nombre.setBorder(null);
         panel_agg.add(nombre);
         
-        Graficos_texto correo = new Graficos_texto();
-        correo.setPlaceholder(" Correo");
-        correo.setBounds(50, 245, 390, 40);
-        correo.setBackground(colorGris);
-        correo.setFont(new Font("Arial", Font.PLAIN, 18));
-        correo.setBorder(null);
-        panel_agg.add(correo);
+        Graficos_texto apellido = new Graficos_texto();
+        apellido.setPlaceholder(" Apellido");
+        apellido.setBounds(50, 245, 390, 40);
+        apellido.setBackground(colorGris);
+        apellido.setFont(new Font("Arial", Font.PLAIN, 18));
+        apellido.setBorder(null);
+        panel_agg.add(apellido);
         
         Graficos_texto tel = new Graficos_texto();
         tel.setPlaceholder(" Telefono");
@@ -106,13 +118,13 @@ public class Pantalla_Usuarios_Agregar {
         tel.setBorder(null);
         panel_agg.add(tel);
         
-        Graficos_texto especialidad = new Graficos_texto();
-        especialidad.setPlaceholder(" Especialidad");
-        especialidad.setBounds(50, 350, 390, 40);
-        especialidad.setBackground(colorGris);
-        especialidad.setFont(new Font("Arial", Font.PLAIN, 18));
-        especialidad.setBorder(null);
-        panel_agg.add(especialidad);
+        Graficos_texto correo = new Graficos_texto();
+        correo.setPlaceholder(" Correo");
+        correo.setBounds(50, 350, 390, 40);
+        correo.setBackground(colorGris);
+        correo.setFont(new Font("Arial", Font.PLAIN, 18));
+        correo.setBorder(null);
+        panel_agg.add(correo);
         
         crear = new JButton("Crear");
         crear.setBounds(50, 400, 390, 40);
@@ -126,11 +138,29 @@ public class Pantalla_Usuarios_Agregar {
         	String nombreUsuario = nombre.getText();
         	String telUsuario = tel.getText();
         	String correoUsuario = correo.getText();
-        	String especialidadUsuario = especialidad.getText();
-
-        	if(nombreUsuario.isBlank() || telUsuario.isBlank() || correoUsuario.isBlank() || especialidadUsuario.isEmpty() ) {
-        		JOptionPane.showMessageDialog(null, "Rellena todos los campos.");
+        	String apellidoUsuario = apellido.getText();
+        	
+        	int error = controlador.createUser(nombreUsuario, apellidoUsuario, telUsuario);
+        	
+        	switch(error) {
+        	case 1:
+        		
+        		JOptionPane.showMessageDialog(null, "Rellena todos los campos");
+        		break;
+        		
+        	case 2:
+        		
+        		JOptionPane.showMessageDialog(null, "Nombre o apellido con numeros");
+        		break;
+        	case 3:
+        		JOptionPane.showMessageDialog(null, "Telefono con letras");
+        		break;
+        	case 0:
+        		JOptionPane.showMessageDialog(null, "¡Usuario agregado con éxito!");
+        		break;
         	}
+
+        	
         });
         
         cancelar = new JButton("Cancelar");
