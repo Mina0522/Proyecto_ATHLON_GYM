@@ -19,7 +19,7 @@ public class PaymentModel {
 				while (rs.next()) {
 					list.add(new Payment(
 							rs.getString("transaction_date"),
-							rs.getInt("price"),
+							rs.getDouble("price"),
 							rs.getInt("id_membership")));
 				}
 			}
@@ -29,6 +29,18 @@ public class PaymentModel {
 		return (Payment[]) list.toArray();
 	}
 	
+	public Payment getLastUserPayment (int id) {
+		Payment payment;
+		try (Connection conn = MyConnection.connect();
+		PreparedStatement prepSt = conn.prepareStatement("SELECT * FROM pagos WHERE id_miembro = ? ORDER BY fecha_pago DESC LIMIT 1");
+		ResultSet rs = prepSt.executeQuery()) {
+			payment = new Payment(rs.getString("date"), rs.getDouble("price"), 0);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return payment;
+	}
 //	public static void main(String[] args) {
 //		PaymentModel model = new PaymentModel();
 //		ArrayList<Payment> array = model.getMemberPayments(3);

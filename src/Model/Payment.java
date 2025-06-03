@@ -2,10 +2,10 @@ package Model;
 
 public class Payment {
 	private String date;
-	private int price;
+	private double price;
 	private int id_membership;
 	
-	public Payment(String date, int price, int id_membership) {
+	public Payment(String date, double price, int id_membership) {
 		this.date = date;
 		this.price = price;
 		this.id_membership = id_membership;
@@ -15,7 +15,7 @@ public class Payment {
 		return date;
 	}
 
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
 

@@ -37,7 +37,7 @@ public class UserModel {
 	//Método que verifica la consistencia de los datos ingresados para un miembro
 	private int checkFields (String first_name, String last_name, String phone_number) { 
 		//Verficar los datos y regresar un error si hubiera una inconsistencia de datos
-		if (first_name.isEmpty() || last_name.isEmpty() || phone_number.isEmpty())
+		if (first_name.isBlank() || last_name.isBlank() || phone_number.isBlank())
 			return 1; //Campo vacío detectado
 		else if (first_name.matches(".*\\d.*") || last_name.matches(".*\\d.*"))
 			return 2; //Datos inválidos (El nombre o apellido contienen números)
@@ -178,7 +178,8 @@ public class UserModel {
 				if (rs.next()) {
 					System.out.println("Usuario encontrado");
 					User member = new User
-							(control_num,
+							(0,
+							control_num,
 							rs.getString("first_name"),
 							rs.getString("last_name"),
 							rs.getString("phone_number"));
@@ -195,10 +196,21 @@ public class UserModel {
 		return null; //Éxito
 	}
 	
-//	public Object[] userToArray (User user) {
-//		Object array[] = {user.getControl_number(), user.getFirst_name(), user.getLast_name(), user.getPhone_number()};
-//		return array;
-//	}
+	public ArrayList<User> getAllUsers() {
+		ArrayList<User> list;
+		try (Connection conn = MyConnection.connect();
+		PreparedStatement prepSt = conn.prepareStatement("SELECT * FROM member");
+		ResultSet rs = prepSt.executeQuery()) {
+			list = new ArrayList<>();
+			while (rs.next()) {
+				list.add(new User(rs.getInt("id"), 0, rs.getString("first_name"), rs.getNString("last_name"), rs.getString("phone_number")));
+			}
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	//-----------------------------------------------------------------------------------------------
 	//PRUEBAS: método que regresa los usuarios registrados actualmente

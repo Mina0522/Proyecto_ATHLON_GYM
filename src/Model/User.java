@@ -1,10 +1,11 @@
 package Model;
 
 public class User {
-	private int control_number;
+	private int id, control_number;
 	private String first_name, last_name, phone_number;
 	
-	public User(int control_number, String first_name, String last_name, String phone_number) {
+	public User(int id, int control_number, String first_name, String last_name, String phone_number) {
+		this.id = id;
 		this.control_number = control_number;
 		this.first_name = first_name;
 		this.last_name = last_name;
@@ -26,4 +27,9 @@ public class User {
 	public String getPhone_number() {
 		return phone_number;
 	}
+
+	public int getId() {
+		return id;
+	}
+	
 }

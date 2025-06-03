@@ -1,11 +1,14 @@
 package Controller;
 
+import java.util.ArrayList;
+
 import javax.swing.table.DefaultTableModel;
 
 import Model.ClassDB;
 import Model.ClassModel;
 import Model.Payment;
 import Model.PaymentModel;
+import Model.User;
 import Model.UserModel;
 import View.Pantalla_Usuarios_Agregar;
 
@@ -53,6 +56,29 @@ public class UserController {
 			tableModel.addRow(new Object[] {
 					classDB.getDate(),
 					classDB.getId_class_session()});
+		}
+	}
+	
+	public void fillUserHomeTable (DefaultTableModel tableModel) {
+		ArrayList<User> users = userModel.getAllUsers();
+		for (User user : users) {
+			Payment lastPayment = paymentModel.getLastUserPayment(user.getId());
+			double price;
+			String date;
+			if (lastPayment != null) {
+				price = lastPayment.getPrice();
+				date = lastPayment.getDate();
+			} else {
+				price = 0;
+				date = "No";
+			}
+			tableModel.addRow(new Object[] {
+					user.getFirst_name(),
+					user.getLast_name(),
+					user.getPhone_number(),
+					lastPayment.getPrice(),
+					lastPayment.getDate()
+					});
 		}
 	}
 }
