@@ -127,7 +127,7 @@ public class Pantalla_Planes_Eliminar {
         menu_user.add(btn_deta);
 		
 		// == boton eliminar plan
-        ImageIcon eliminar = new ImageIcon(getClass().getResource("/files/basura.png"));
+        ImageIcon eliminar = new ImageIcon(getClass().getResource("/files/basura_cb.png"));
         Image modi_eliminar = eliminar.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon icono_eliminar = new ImageIcon(modi_eliminar);
 
@@ -140,8 +140,8 @@ public class Pantalla_Planes_Eliminar {
         btn_eliminar.setIconTextGap(30);
         btn_eliminar.setFocusPainted(false);
         btn_eliminar.setOpaque(true);
-        btn_eliminar.setBackground(Color.WHITE);
-        btn_eliminar.setForeground(Color.BLACK);
+        btn_eliminar.setBackground(Color.BLACK);
+        btn_eliminar.setForeground(Color.WHITE);
         btn_eliminar.addActionListener(e -> {
             menu_inicio.pintar_vista(new Pantalla_Planes_Eliminar(menu_inicio).getPanel());
         });

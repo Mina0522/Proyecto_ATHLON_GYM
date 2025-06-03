@@ -64,7 +64,7 @@ public class Pantalla_Planes_Crear {
         menu_user.add(separador);
 
         // == boton crear plan
-        ImageIcon agg = new ImageIcon(getClass().getResource("/files/agregar.png"));
+        ImageIcon agg = new ImageIcon(getClass().getResource("/files/agregar_cb.png"));
         Image modi = agg.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon icono = new ImageIcon(modi);
 
@@ -77,8 +77,8 @@ public class Pantalla_Planes_Crear {
         btn_crear.setIconTextGap(30);
         btn_crear.setFocusPainted(false);
         btn_crear.setOpaque(true);
-        btn_crear.setBackground(Color.WHITE);
-        btn_crear.setForeground(Color.BLACK);
+        btn_crear.setBackground(Color.BLACK);
+        btn_crear.setForeground(Color.WHITE);
         btn_crear.addActionListener(e -> {
             menu_inicio.pintar_vista(new Pantalla_Planes_Crear(menu_inicio).getPanel());
         });

@@ -85,7 +85,7 @@ public class Pantalla_Planes_Editar {
         menu_user.add(btn_crear);
 
 		// == boton editar plan
-        ImageIcon edit = new ImageIcon(getClass().getResource("/files/crear.png"));
+        ImageIcon edit = new ImageIcon(getClass().getResource("/files/crear_cb.png"));
         Image modi_edit = edit.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon icono_edit = new ImageIcon(modi_edit);
 
@@ -98,8 +98,8 @@ public class Pantalla_Planes_Editar {
         btn_edit.setIconTextGap(30);
         btn_edit.setFocusPainted(false);
         btn_edit.setOpaque(true);
-        btn_edit.setBackground(Color.WHITE);
-        btn_edit.setForeground(Color.BLACK);
+        btn_edit.setBackground(Color.BLACK);
+        btn_edit.setForeground(Color.WHITE);
         btn_edit.addActionListener(e -> {
             menu_inicio.pintar_vista(new Pantalla_Planes_Editar(menu_inicio).getPanel());
         });

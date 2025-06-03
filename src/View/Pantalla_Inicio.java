@@ -116,7 +116,7 @@ public class Pantalla_Inicio {
         // ===
         panel_crearClase = new Graficos_fondo("files/fondo_inicio.png");
         panel_crearClase.setLayout(null);
-        panel_crearClase.setBounds(290, 340, 570, 300);
+        panel_crearClase.setBounds(290, 340, 613, 300);
         
         crear = new JButton("Crear clase");
         crear.setBounds(30, 230, 190, 45);
@@ -125,30 +125,33 @@ public class Pantalla_Inicio {
         crear.setForeground(Color.black);
         crear.setBorderPainted(false);
         crear.setFocusPainted(false);
+        crear.addActionListener(e -> {
+        	menu_inicio.pintar_vista(new Crear_Clase(menu_inicio).getPanel());
+        });
 		panel_crearClase.add(crear);
         menu.add(panel_crearClase);
 
         // ===
         panel_horario = new JPanel(null);
         panel_horario.setBackground(Color.white);
-        panel_horario.setBounds(885, 340, 350, 300);
+        panel_horario.setBounds(930, 340, 290, 300);
         
         horario = new JLabel("Horario");
         horario.setFont(new Font("Arial", Font.BOLD, 35));
-        horario.setBounds(126, 20, 180, 50);
+        horario.setBounds(86, 20, 180, 50);
         panel_horario.add(horario);
 
-        clase1 = new JLabel("     10:00 am          Yoga");
+        clase1 = new JLabel("  10:00 am        Yoga");
         clase1.setFont(new Font("Arial", Font.PLAIN, 28));
         clase1.setBounds(0, 80, 460, 50);
         panel_horario.add(clase1);
 
-        clase2 = new JLabel("     11:00 am          Gym");
+        clase2 = new JLabel("  11:00 am        Gym");
         clase2.setFont(new Font("Arial", Font.PLAIN, 28));
         clase2.setBounds(0, 150, 460, 50);
         panel_horario.add(clase2);
 
-        clase3 = new JLabel("     12:00 am          Box");
+        clase3 = new JLabel("  12:00 am        Box");
         clase3.setFont(new Font("Arial", Font.PLAIN, 28));
         clase3.setBounds(0, 220, 460, 50);
         panel_horario.add(clase3);
