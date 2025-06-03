@@ -8,6 +8,7 @@ import java.awt.*;
 import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
+import Model.User;
 
 public class Detalles {
 
@@ -17,9 +18,11 @@ public class Detalles {
     private JPanel panel_botones, panel, panelagg;
     private JButton noti, confi, eliminar, volver, edit, eli, pdf;
     private JLabel text_inicio, text_, user, text_clase;
+    private User usuario;
 
-    public Detalles(Vista_GYM log) {
+    public Detalles(Vista_GYM log,User usuario) {
         this.menu_inicio = log;
+        this.usuario = usuario;
     }
 
     public JPanel getPanel() {
@@ -77,7 +80,8 @@ public class Detalles {
 		user.setBounds(135, 15, 128, 128);
 		panel.add(user);
 		
-		text_inicio = new JLabel("Felipe Ramos");
+		text_inicio = new JLabel();
+		text_inicio.setText(usuario.getFirst_name());
 		text_inicio.setFont(new Font("Arial", Font.BOLD, 40));
 		text_inicio.setForeground(Color.BLACK);
 		text_inicio.setBounds(75, 145, 500, 50);

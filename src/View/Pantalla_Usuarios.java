@@ -4,19 +4,31 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import Controller.UserController;
+
 import java.awt.*;
+
 import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
+import Model.PaymentModel;
+import Model.UserModel;
+import Model.ClassModel;
 
 public class Pantalla_Usuarios {
 
     private Vista_GYM menu_inicio;
     private JPanel menu_user, panel_tabla, panel_botones;
     private JButton noti, confi, btn_agg, btn_eliminar, btn_deta, btn_edit, btn_buscar;
+    private UserController controlador;
 
     public Pantalla_Usuarios(Vista_GYM log) {
         this.menu_inicio = log;
+        
+        UserModel userModel = new UserModel();
+        PaymentModel paymentModel = new PaymentModel();
+        ClassModel classModel = new ClassModel();
+        controlador = new UserController(userModel, paymentModel, classModel);
     }
 
     public JPanel getPanel() {
@@ -170,27 +182,30 @@ public class Pantalla_Usuarios {
         btn_buscar.setForeground(Color.WHITE);
         btn_buscar.setFocusPainted(false);
         btn_buscar.addActionListener(e -> {
-        	String nombreUsuario = buscar.getText();
-        	if(nombreUsuario.isBlank()) {
-        		JOptionPane.showMessageDialog(null, "Rellena el campo.");
-        	}
+            String nombreUsuario = buscar.getText().trim();
+
+            if (nombreUsuario.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor, ingresa un nombre de usuario.", "Campo vacío",
+                        JOptionPane.WARNING_MESSAGE);
+            } else {
+                modelo.setRowCount(0);
+                controlador.fillUserHomeTable(nombreUsuario, modelo);
+
+                if (modelo.getRowCount() == 0) {
+                    JOptionPane.showMessageDialog(null, "No se encontraron usuarios con ese nombre.", "Sin resultados",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
         });
+
         panel_tabla.add(btn_buscar);
 		
-        String[] columnas = {"Nombre", "Apellido", "Telefono", "Cuota", "Dia de pago"};
-        Object[][] datos = {
-            {"Ian Karel", "De La Cruz", "612-230-9508", "470", "13 Abril"},
-            {"Ian Karel", "De La Cruz", "612-230-9508", "470", "13 Abril"},
-            {"Ian Karel", "De La Cruz", "612-230-9508", "470", "13 Abril"},
-            {"Ian Karel", "De La Cruz", "612-230-9508", "470", "13 Abril"},
-            {"Ian Karel", "De La Cruz", "612-230-9508", "470", "13 Abril"},
-            {"Ian Karel", "De La Cruz", "612-230-9508", "470", "13 Abril"},
-            {"Ian Karel", "De La Cruz", "612-230-9508", "470", "13 Abril"},
-            {"Ian Karel", "De La Cruz", "612-230-9508", "470", "13 Abril"},
+        String[] columnas = { "Nombre", "Apellido", "Teléfono", "Cuota", "Día de pago", "No. de control" };
 
-        };
+        DefaultTableModel modelo = new DefaultTableModel(null, columnas);
 
-        DefaultTableModel modelo = new DefaultTableModel(datos, columnas);
+        this.modelo = modelo;
+
         JTable tabla = new JTable(modelo);
         tabla.setFont(new Font("Arial", Font.PLAIN, 17));
         tabla.setRowHeight(39);
@@ -210,5 +225,6 @@ public class Pantalla_Usuarios {
         
 		return menu_user;
 	}
+    private DefaultTableModel modelo;
 
 }

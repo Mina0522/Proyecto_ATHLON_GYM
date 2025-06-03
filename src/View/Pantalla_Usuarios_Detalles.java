@@ -1,10 +1,17 @@
 package View;
 
 import javax.swing.*;
+
+import Controller.UserController;
+
 import java.awt.*;
 import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
+import Model.ClassModel;
+import Model.PaymentModel;
+import Model.User;
+import Model.UserModel;
 
 public class Pantalla_Usuarios_Detalles {
 
@@ -13,6 +20,12 @@ public class Pantalla_Usuarios_Detalles {
 
     private JPanel panel_botones, panel_delete;
     private JButton noti, confi, btn_agg, btn_eliminar, btn_deta, btn_edit, btn_buscar;
+
+    UserModel userModel = new UserModel() ;
+	PaymentModel paymentModel  = new PaymentModel() ;
+	ClassModel classModel  = new ClassModel() ;
+    
+    UserController controlador = new UserController(userModel,paymentModel,classModel);
 
 
     public Pantalla_Usuarios_Detalles(Vista_GYM log) {
@@ -167,7 +180,20 @@ public class Pantalla_Usuarios_Detalles {
         btn_buscar.setForeground(Color.WHITE);
         btn_buscar.setFocusPainted(false);
         btn_buscar.addActionListener(e -> {
-        	menu_inicio.pintar_vista(new Detalles(menu_inicio).getPanel());
+        	
+    	String nombre_Usuario = buscar.getText().trim();
+
+    	if (nombre_Usuario.isEmpty()) {
+    	    JOptionPane.showMessageDialog(null, "Por favor, ingresa un nombre de usuario.", "Campo vacío", JOptionPane.WARNING_MESSAGE);
+    	} else {
+    	    User usuario = controlador.getUser(nombre_Usuario);
+
+    	    if (usuario != null) {
+    	        menu_inicio.pintar_vista(new Detalles(menu_inicio, usuario).getPanel());
+    	    } else {
+    	        JOptionPane.showMessageDialog(null, "Usuario no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+    	    }
+    	}
         });
         panel_delete.add(btn_buscar);
 
