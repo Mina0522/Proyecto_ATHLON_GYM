@@ -71,8 +71,8 @@ public class UserController {
 		return userModel.deleteUser(id);
 	}
 	
-	public User getUser(int id) {
-		return userModel.getUser(id);
+	public User getUser(String first_name) {
+		return userModel.getUser(first_name);
 	}
 	
 	//Método que recibe el id del usuario y el modelo de la tabla a llenar (para llenar la tabla "Historial de pagos"
