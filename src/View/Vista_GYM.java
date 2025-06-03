@@ -1,5 +1,8 @@
 package View;
 
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -15,6 +18,10 @@ public class Vista_GYM extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        ImageIcon icono = new ImageIcon(getClass().getResource("/files/logoATHLON_cn.png"));
+        Image img = icono.getImage();
+        setIconImage(img);
+        
         panel_contenedor = new JPanel();
         panel_contenedor.setLayout(null);
         panel_contenedor.setBounds(0, 0, 1280, 700);

@@ -3,6 +3,7 @@ package View;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Panel;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -48,7 +49,9 @@ public class View_loginGYM {
 		// === Panel que contendra nuestros elementos.
 		panel_login = new Graficos_fondo("files/fondo_logo.png");
 		panel_login.setLayout(null);
+    	Color colorGris = Color.decode("#D9D9D9");
 		panel_login.agregarImagen("files/logoATHLON_cn.png",460, 40, 380,135);
+		
 
 		// === Colocamos el panel en  y lo añadimos al panel del login.
 		panel_inicio = new JPanel();
@@ -67,7 +70,7 @@ public class View_loginGYM {
         Graficos_texto campo_usuario = new Graficos_texto();
         campo_usuario.setPlaceholder(" Ingresa tu usuario");
         campo_usuario.setBounds(50,115, 390, 50);
-        campo_usuario.setBackground(Color.lightGray);
+        campo_usuario.setBackground(colorGris);
         campo_usuario.setFont(new Font("Arial", Font.PLAIN, 18));
         campo_usuario.setBorder(null);
         panel_inicio.add(campo_usuario);
@@ -78,7 +81,7 @@ public class View_loginGYM {
         campo_contra.setBounds(50, 195, 390, 50);
         campo_contra.setFont(new Font("Arial", Font.PLAIN, 18));
         campo_contra.setBorder(null);
-        campo_contra.setBackground(Color.lightGray);
+        campo_contra.setBackground(colorGris);
         panel_inicio.add(campo_contra);
 
         // === Boton que nos lleva a la pantalla inicial.
