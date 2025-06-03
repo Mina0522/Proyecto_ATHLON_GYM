@@ -87,8 +87,8 @@ public class UserController {
 	}
 	//Método que recibe el id del usuario y el modelo de la tabla a llenar (para llenar la tabla "Historial de clase"
 	public void fillUserClassTable (int id, DefaultTableModel tableModel) {
-		ClassDB array[] = classModel.getClassDB(id);
-		for (ClassDB classDB : array) {
+		ArrayList<ClassDB> list = classModel.getClassDB(id);
+		for (ClassDB classDB : list) {
 			tableModel.addRow(new Object[] {
 					classDB.getDate(),
 					classDB.getId_class_session()});
