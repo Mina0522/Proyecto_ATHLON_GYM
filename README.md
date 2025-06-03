@@ -7,7 +7,25 @@
 - Registrar asistencias (checador)
 
 ---
+## Funcionalidades implementadas
 
+Actualmente, se ha desarrollado un módulo CRUD funcional para usuarios, el cual permite:
+
+- Buscar usuarios (miembros del gym) desde una tabla general.
+
+  - Si no se introduce un nombre, se muestran todos los usuarios del sistema.
+
+  - Si se introduce un nombre, se filtran los usuarios por nombre.
+
+- Consultar detalles, editar y eliminar usuarios mediante su número de control.
+
+  - El número de control es visible en la tabla general y sirve como identificador principal para estas operaciones.
+- Crear nuevos usuarios.
+  - Se pueden crear nuevos usuraios con número de control generado automáticamente, introduciendo sus datos en el apartado "Crear usuario".
+
+Este módulo hace uso de formularios, validaciones básicas y alertas visuales para garantizar una experiencia clara y eficiente para el administrador.
+
+---
 ## Diseño
 
 El prototipo en Figma incluye:
