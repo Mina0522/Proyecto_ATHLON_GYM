@@ -133,14 +133,10 @@ public class Detalles {
         text_clase.setBounds(20, 337, 370, 25);
         panel.add(text_clase);
 
-        String[] columnas = {"Fecha", "Clase", "Asistentes"};
-        Object[][] datos = {
-              {"12/04/2025", "Zumba", "12"},
-              {"8/04/2025", "Pesas", "8"},
-              {"27/03/2025", "Pesas", "15"}
-        };
+        String[] columnas = {"Fecha", "Clase"};
+        
 
-        DefaultTableModel modelo = new DefaultTableModel(datos, columnas);
+        DefaultTableModel modelo = new DefaultTableModel(null, columnas);
         JTable tabla = new JTable(modelo);
         tabla.setFont(new Font("Arial", Font.PLAIN, 16));
         tabla.setRowHeight(28);
@@ -155,6 +151,9 @@ public class Detalles {
         JScrollPane scroll = new JScrollPane(tabla);
         scroll.setBounds(20, 360, 370, 110);
         panel.add(scroll);
+        
+        controlador.fillUserClassTable(usuario.getControl_number(), modelo);
+        
         
 		// ===
 		panelagg = new JPanel();
@@ -176,7 +175,6 @@ public class Detalles {
         
         
         DefaultTableModel modelo2 = new DefaultTableModel(null, columnas2);
-        this.modelo2=modelo2;
 
         
         JTable tabla2 = new JTable(modelo2);
@@ -195,7 +193,7 @@ public class Detalles {
         scroll2.setBounds(20, 42, 370, 110);
         panelagg.add(scroll2);
 
-        controlador.fillUserDetailsTable(usuario.getId(), modelo2);
+        controlador.fillUserDetailsTable(usuario.getControl_number(), modelo2);
         
         
         // ===
@@ -228,6 +226,5 @@ public class Detalles {
         
         return menu;
     }
-    private DefaultTableModel modelo2;
 
 }
