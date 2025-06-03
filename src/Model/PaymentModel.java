@@ -30,25 +30,22 @@ public class PaymentModel {
 	}
 	
 	public Payment getLastUserPayment (int id) {
-		Payment payment;
+		Payment payment = null;
 		try (Connection conn = MyConnection.connect();
-		PreparedStatement prepSt = conn.prepareStatement("SELECT * FROM pagos WHERE id_miembro = ? ORDER BY fecha_pago DESC LIMIT 1");
-		ResultSet rs = prepSt.executeQuery()) {
-			payment = new Payment(rs.getString("date"), rs.getDouble("price"), 0);
+		PreparedStatement prepSt = conn.prepareStatement("SELECT * FROM membership_payment WHERE id_member = ? ORDER BY transaction_date DESC LIMIT 1")) {
+			prepSt.setInt(1, id);
+			try (ResultSet rs = prepSt.executeQuery()) {
+				if (rs.next())
+					payment = new Payment(rs.getString("transaction_date"), rs.getDouble("price"), 0);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 		return payment;
 	}
-//	public static void main(String[] args) {
-//		PaymentModel model = new PaymentModel();
-//		ArrayList<Payment> array = model.getMemberPayments(3);
-//		for (Payment payment : array) {
-//			System.out.println("Fecha: " + payment.getDate());
-//			System.out.println("Membresía: " + payment.getId_membership());
-//			System.out.println("Monto: " + payment.getPrice());
-//
-//		}
-//	}
+	public static void main(String[] args) {
+		PaymentModel model = new PaymentModel();
+		System.out.println(model.getLastUserPayment(1).getDate());
+	}
 }

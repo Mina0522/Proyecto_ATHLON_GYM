@@ -167,6 +167,8 @@ public class UserModel {
 			list = new ArrayList<>();
 			while (rs.next()) {
 				list.add(new User(rs.getInt("id"), 0, rs.getString("first_name"), rs.getNString("last_name"), rs.getString("phone_number")));
+				System.out.println(rs.getInt("id"));
+				System.out.println(rs.getString("first_name"));
 			}
 			return list;
 		} catch (Exception e) {
@@ -217,7 +219,7 @@ public class UserModel {
 //		
 //	public static void main(String[] args) throws SQLException {
 //		UserModel model = new UserModel();
-//		model.showUsers();
+//		model.getAllUsers();
 //	}
 
 }
