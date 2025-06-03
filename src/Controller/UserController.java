@@ -96,7 +96,13 @@ public class UserController {
 	}
 	//Método que recibe el modelo de la tabla de usuarios general y si dios es muy grande la tabla se llenará de información correcta
 	public void fillUserHomeTable (String first_name, DefaultTableModel tableModel) {
-		ArrayList<User> users = userModel.getUsersWithName(first_name);
+		ArrayList<User> users;
+
+		if (!first_name.isBlank())
+			users = userModel.getUsersWithName(first_name);
+		else 
+			users = userModel.getAllUsers();
+		
 		for (User user : users) {
 			Payment lastPayment = paymentModel.getLastUserPayment(user.getId());
 			double price;
