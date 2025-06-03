@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class PaymentModel {
 	
 	//Método que regresa la fecha y el monto del pago
-	public ArrayList<Payment> getMemberPayments (int id_member) {
+	public Payment[] getMemberPayments (int id_member) {
 		ArrayList<Payment> list = new ArrayList<>();
 		try (Connection conn = MyConnection.connect();
 		PreparedStatement prepSt = conn.prepareStatement(
@@ -26,11 +26,7 @@ public class PaymentModel {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return list;
-	}
-	
-	public Object[] memberPaymentToArray (int id_member) {
-		return getMemberPayments(id_member).toArray();
+		return (Payment[]) list.toArray();
 	}
 	
 //	public static void main(String[] args) {
