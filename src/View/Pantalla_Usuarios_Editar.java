@@ -32,9 +32,12 @@ public class Pantalla_Usuarios_Editar {
     }
 
     public JPanel getPanel() {
+    	
+    	Color colorGris = Color.decode("#D9D9D9");
+
         menu = new JPanel();
         menu.setLayout(null);
-        menu.setBackground(Color.LIGHT_GRAY);
+        menu.setBackground(colorGris);
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         menu.setSize(pantalla);
 
@@ -160,20 +163,20 @@ public class Pantalla_Usuarios_Editar {
         
 		panel_delete = new JPanel();
 		panel_delete.setBackground(Color.WHITE);
-		panel_delete.setBounds(300, 400, 900, 100);
+		panel_delete.setBounds(300, 440, 900, 100);
 		panel_delete.setLayout(null);
 		menu.add(panel_delete);
 
-        Graficos_texto buscar = new Graficos_texto();
+		Graficos_texto buscar = new Graficos_texto();
         buscar.setPlaceholder(" Buscar usuario");
-        buscar.setBounds(100, 20, 400, 50);
-        buscar.setBackground(Color.lightGray);
-        buscar.setFont(new Font("Arial", Font.PLAIN, 20));
+        buscar.setBounds(47, 25, 590, 45);
+        buscar.setBackground(colorGris);
+        buscar.setFont(new Font("Arial", Font.PLAIN, 18));
         buscar.setBorder(null);
         panel_delete.add(buscar);
 
         btn_buscar = new JButton("Buscar");
-        btn_buscar.setBounds(580, 20, 200, 50);
+        btn_buscar.setBounds(650, 25, 200, 45);
         btn_buscar.setFont(new Font("Arial", Font.BOLD, 22));
         btn_buscar.setBackground(Color.BLACK);
         btn_buscar.setForeground(Color.WHITE);
