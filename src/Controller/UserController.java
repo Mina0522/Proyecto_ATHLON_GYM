@@ -10,6 +10,7 @@ import Model.Payment;
 import Model.PaymentModel;
 import Model.User;
 import Model.UserModel;
+import Model.UserWithLastPayment;
 import View.Pantalla_Usuarios_Agregar;
 
 public class UserController {
@@ -96,31 +97,21 @@ public class UserController {
 	}
 	//Método que recibe el modelo de la tabla de usuarios general y si dios es muy grande la tabla se llenará de información correcta
 	public void fillUserHomeTable (String first_name, DefaultTableModel tableModel) {
-		ArrayList<User> users;
+		ArrayList<UserWithLastPayment> users;
 
 		if (!first_name.isBlank()) //Si el campo de no está en blanco
-			users = userModel.getUsersWithName(first_name); //Busca usuarios con ese nombre
+			users = userModel.getUsersWithLastPaymentWithName(first_name); //Busca usuarios con ese nombre
 		else 
-			users = userModel.getAllUsers(); //Busca todos los usuarios
+			users = userModel.getUsersWithLastPayment(); //Busca todos los usuarios
 		
-		for (User user : users) { //Por cada usuario, añadir su información a una lista de usuarios
-			Payment lastPayment = paymentModel.getLastUserPayment(user.getId());
-			double price;
-			String date;
-			if (lastPayment != null) {
-				price = lastPayment.getPrice();
-				date = lastPayment.getDate();
-			} else {
-				price = 0;
-				date = "No";
-			}
+		for (UserWithLastPayment user : users) { //Por cada usuario, añadir su información a una lista de usuarios
 			tableModel.addRow(new Object[] {
 					user.getFirst_name(),
 					user.getLast_name(),
 					user.getPhone_number(),
-					price,
-					date,
-					user.getControl_number()
+					user.getPrice(),
+					user.getTransaction_date() == null? "N/A" : user.getTransaction_date(),
+					user.getControl_num()
 					});
 		}
 	}

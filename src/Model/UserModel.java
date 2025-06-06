@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
+import com.mysql.cj.protocol.Resultset;
+
 public class UserModel {
 
 	
@@ -159,40 +161,131 @@ public class UserModel {
 		return null;
 	}
 	
-	public ArrayList<User> getAllUsers () {
-		ArrayList<User> list;
+//	public ArrayList<User> getAllUsers () {
+//		ArrayList<User> list;
+//		try (Connection conn = MyConnection.connect();
+//		PreparedStatement prepSt = conn.prepareStatement("SELECT * FROM member")) {
+//			try (ResultSet rs = prepSt.executeQuery()) {				
+//				list = new ArrayList<>();
+//				while (rs.next()) {
+//					list.add(new User(rs.getInt("id"), rs.getInt("control_num"), rs.getString("first_name"), rs.getNString("last_name"), rs.getString("phone_number")));
+//					System.out.println(rs.getInt("id"));
+//					System.out.println(rs.getString("first_name"));
+//				}
+//			}
+//			return list;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//	}
+	
+//	public ArrayList<User> getUsersWithName(String first_name) {
+//		ArrayList<User> list;
+//		try (Connection conn = MyConnection.connect();
+//		PreparedStatement prepSt = conn.prepareStatement("SELECT * FROM member WHERE first_name = ?")) {
+//			prepSt.setString(1, first_name);
+//			try (ResultSet rs = prepSt.executeQuery()) {				
+//				list = new ArrayList<>();
+//				while (rs.next()) {
+//					list.add(new User(rs.getInt("id"), rs.getInt("control_num"), rs.getString("first_name"), rs.getNString("last_name"), rs.getString("phone_number")));
+//					System.out.println(rs.getInt("id"));
+//					System.out.println(rs.getString("first_name"));
+//				}
+//			}
+//			return list;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//	}
+	
+	public ArrayList<UserWithLastPayment> getUsersWithLastPaymentWithName (String text) {
+		ArrayList<UserWithLastPayment> list;
 		try (Connection conn = MyConnection.connect();
-		PreparedStatement prepSt = conn.prepareStatement("SELECT * FROM member")) {
-			try (ResultSet rs = prepSt.executeQuery()) {				
+		PreparedStatement prepSt = conn.prepareStatement(
+		"SELECT m.control_num, m.first_name, m.last_name, m.phone_number, p.price, p.transaction_date\r\n"
+		+ "FROM member m\r\n"
+		+ "LEFT JOIN (\r\n"
+		+ "	SELECT mp.id_member, mp.price, mp.transaction_date \r\n"
+		+ "	FROM membership_payment mp \r\n"
+		+ "	INNER JOIN (\r\n"
+		+ "		SELECT id_member, MAX(transaction_date) AS last_date\r\n"
+		+ "		FROM membership_payment\r\n"
+		+ "		GROUP BY id_member\r\n"
+		+ "	) p2 ON mp.id_member = p2.id_member AND mp.transaction_date = p2.last_date\r\n"
+		+ ") p ON m.id = p.id_member \r\n"
+		+ "WHERE m.first_name LIKE ? OR \r\n"
+		+ "m.control_num LIKE ? OR\r\n"
+		+ "m.last_name LIKE ? OR\r\n"
+		+ "m.first_name LIKE ? OR\r\n"
+		+ "m.phone_number LIKE ?")){
+			prepSt.setString(1, '%' + text + '%');
+			prepSt.setString(2, '%' + text + '%');
+			prepSt.setString(3, '%' + text + '%');
+			prepSt.setString(4, '%' + text + '%');
+			prepSt.setString(5, '%' + text + '%');
+			try (ResultSet rs = prepSt.executeQuery()){
 				list = new ArrayList<>();
 				while (rs.next()) {
-					list.add(new User(rs.getInt("id"), rs.getInt("control_num"), rs.getString("first_name"), rs.getNString("last_name"), rs.getString("phone_number")));
-					System.out.println(rs.getInt("id"));
-					System.out.println(rs.getString("first_name"));
-				}
+						UserWithLastPayment user = new UserWithLastPayment(
+						rs.getInt("control_num"),
+						rs.getString("first_name"),
+						rs.getString("last_name"),
+						rs.getString("phone_number"),
+						rs.getDouble("price"),
+						rs.getString("transaction_date"));		
+						
+						list.add(user);
+					}
+					
 			}
+			
 			return list;
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 	
-	public ArrayList<User> getUsersWithName(String first_name) {
-		ArrayList<User> list;
+	public ArrayList<UserWithLastPayment> getUsersWithLastPayment () {
+		ArrayList<UserWithLastPayment> list;
 		try (Connection conn = MyConnection.connect();
-		PreparedStatement prepSt = conn.prepareStatement("SELECT * FROM member WHERE first_name = ?")) {
-			prepSt.setString(1, first_name);
-			try (ResultSet rs = prepSt.executeQuery()) {				
-				list = new ArrayList<>();
-				while (rs.next()) {
-					list.add(new User(rs.getInt("id"), rs.getInt("control_num"), rs.getString("first_name"), rs.getNString("last_name"), rs.getString("phone_number")));
-					System.out.println(rs.getInt("id"));
-					System.out.println(rs.getString("first_name"));
-				}
+		PreparedStatement prepSt = conn.prepareStatement(
+		"SELECT m.control_num, m.first_name, m.last_name, m.phone_number, p.price, p.transaction_date\r\n"
+		+ "FROM member m\r\n"
+		+ "LEFT JOIN (\r\n"
+		+ "	SELECT mp.id_member, mp.price, mp.transaction_date \r\n"
+		+ "	FROM membership_payment mp \r\n"
+		+ "	INNER JOIN (\r\n"
+		+ "		SELECT id_member, MAX(transaction_date) AS last_date\r\n"
+		+ "		FROM membership_payment\r\n"
+		+ "		GROUP BY id_member\r\n"
+		+ "	) p2 ON mp.id_member = p2.id_member AND mp.transaction_date = p2.last_date\r\n"
+		+ ") p ON m.id = p.id_member");
+				ResultSet rs = prepSt.executeQuery()){
+			list = new ArrayList<>();
+			while (rs.next()) {
+//				System.out.println(rs.getString("control_num"));
+//				System.out.println(rs.getString("first_name"));
+//				System.out.println(rs.getString("last_name"));
+//				System.out.println(rs.getString("phone_number"));
+//				System.out.println(rs.getString("price"));
+//				System.out.println(rs.getString("transaction_date"));
+				
+				UserWithLastPayment user = new UserWithLastPayment(
+						rs.getInt("control_num"),
+						rs.getString("first_name"),
+						rs.getString("last_name"),
+						rs.getString("phone_number"),
+						rs.getDouble("price"),
+						rs.getString("transaction_date"));		
+				
+				list.add(user);
 			}
+			
 			return list;
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -240,7 +333,7 @@ public class UserModel {
 //		
 //	public static void main(String[] args) throws SQLException {
 //		UserModel model = new UserModel();
-//		model.getAllUsers();
+//		model.getUsersWithLastPayment();
 //	}
 
 }
