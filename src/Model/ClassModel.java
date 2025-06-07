@@ -13,14 +13,13 @@ public class ClassModel {
 		ArrayList<ClassDB> list = new ArrayList<>();
 		int id;
 		//Obtener la id del usuario con el número de control proporcionado
-		try (Connection conn = MyConnection.connect();
-		PreparedStatement prepSt = conn.prepareStatement("SELECT id FROM member WHERE control_num = ?" )){
+		try (PreparedStatement prepSt = MyConnection.getConn().prepareStatement("SELECT id FROM member WHERE control_num = ?" )){
 			prepSt.setInt(1, control_num);
 			try (ResultSet rs1 = prepSt.executeQuery()){
 				if (rs1.next()) {
 					id = rs1.getInt("id");
 					//Obtener las clases que haya con el id del usuario encontrado
-					try (PreparedStatement prepSt2 = conn.prepareStatement("SELECT"
+					try (PreparedStatement prepSt2 = MyConnection.getConn().prepareStatement("SELECT"
 						+ " registration_date, id_class_session"
 						+ " FROM member_class_registration WHERE id_member = ?")) {
 						prepSt2.setInt(1, id);

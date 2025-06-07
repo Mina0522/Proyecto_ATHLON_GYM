@@ -19,8 +19,7 @@ public class UserModel {
 		int cnum; //Número de control
 		HashSet<Integer> currentNums = new HashSet<>(); //Aquí se guardarán los números de control que ya existen
 		
-		try (Connection conn = MyConnection.connect();
-			PreparedStatement prepStatement = conn.prepareStatement("SELECT control_num FROM member") //Obtener todos los números de control existentes
+		try (PreparedStatement prepStatement = MyConnection.getConn().prepareStatement("SELECT control_num FROM member") //Obtener todos los números de control existentes
 			) {
 			ResultSet rs = prepStatement.executeQuery(); 
 			while (rs.next()) { //Este ciclo añadirá todos los números existentes al HashSet
@@ -42,10 +41,7 @@ public class UserModel {
 		System.out.println("Registrando usuario...");
 		String query = "INSERT INTO member (control_num, first_name, last_name, phone_number) VALUES (?,?,?,?)";
 		
-		try (
-			Connection conn = MyConnection.connect();
-			PreparedStatement prepStatement = conn.prepareStatement(query)
-			){
+		try (PreparedStatement prepStatement = MyConnection.getConn().prepareStatement(query)){
 			prepStatement.setString(2, first_name);
 			prepStatement.setString(3, last_name);
 			prepStatement.setString(4, phone_number);
@@ -93,8 +89,7 @@ public class UserModel {
 		
 		System.out.println(query);
 		
-		try (Connection conn = MyConnection.connect();
-			PreparedStatement prepStatement = conn.prepareStatement(query.toString())){
+		try (PreparedStatement prepStatement = MyConnection.getConn().prepareStatement(query.toString())){
 			for (int i = 0; i < values.size(); i++) {
 				prepStatement.setString(i+1, values.get(i).toString());
 			}
@@ -109,12 +104,11 @@ public class UserModel {
 	//Método que elimina al usuario con la id proporcionada
 	public int deleteUser (int control_num) {
 		System.out.println("Eliminando usuario...");
-		try (Connection conn = MyConnection.connect()){
-			try (PreparedStatement checkSt = conn.prepareStatement("SELECT 1 FROM member WHERE control_num = ?;")){
+			try (PreparedStatement checkSt = MyConnection.getConn().prepareStatement("SELECT 1 FROM member WHERE control_num = ?;")){
 				checkSt.setInt(1, control_num);
 				try (ResultSet checkRs = checkSt.executeQuery()){
 					if (checkRs.next()) {
-						try (PreparedStatement delSt = conn.prepareStatement("DELETE FROM member WHERE control_num = ?")){
+						try (PreparedStatement delSt = MyConnection.getConn().prepareStatement("DELETE FROM member WHERE control_num = ?")){
 							delSt.setInt(1, control_num);
 							delSt.execute();
 							System.out.println("Usuario eliminado");
@@ -125,10 +119,10 @@ public class UserModel {
 						return 1; //No existe un usuario con esa id
 					}
 				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		
 		return 0; //Éxito (usuario eliminado)
 	}
@@ -136,8 +130,7 @@ public class UserModel {
 	//Método para obtener los datos de un usuario consultandolo por su nombre, regresa un objeto tipo User
 	public User getUser (int control_num) {
 		System.out.println("Buscando usuario...");
-		try (Connection conn = MyConnection.connect();
-		PreparedStatement prepSt = conn.prepareStatement("SELECT * FROM member WHERE  control_num = ?")){
+		try (PreparedStatement prepSt = MyConnection.getConn().prepareStatement("SELECT * FROM member WHERE  control_num = ?")){
 			prepSt.setInt(1, control_num);
 			try (ResultSet rs = prepSt.executeQuery()){
 				if (rs.next()) {
@@ -202,8 +195,8 @@ public class UserModel {
 	
 	public ArrayList<UserWithLastPayment> getUsersWithLastPaymentWithName (String text) {
 		ArrayList<UserWithLastPayment> list;
-		try (Connection conn = MyConnection.connect();
-		PreparedStatement prepSt = conn.prepareStatement(
+		try (
+		PreparedStatement prepSt = MyConnection.getConn().prepareStatement(
 		"SELECT m.control_num, m.first_name, m.last_name, m.phone_number, p.price, p.transaction_date\r\n"
 		+ "FROM member m\r\n"
 		+ "LEFT JOIN (\r\n"
@@ -250,45 +243,43 @@ public class UserModel {
 	
 	public ArrayList<UserWithLastPayment> getUsersWithLastPayment () {
 		ArrayList<UserWithLastPayment> list;
-		try (Connection conn = MyConnection.connect();
-		PreparedStatement prepSt = conn.prepareStatement(
-		"SELECT m.control_num, m.first_name, m.last_name, m.phone_number, p.price, p.transaction_date\r\n"
-		+ "FROM member m\r\n"
-		+ "LEFT JOIN (\r\n"
-		+ "	SELECT mp.id_member, mp.price, mp.transaction_date \r\n"
-		+ "	FROM membership_payment mp \r\n"
-		+ "	INNER JOIN (\r\n"
-		+ "		SELECT id_member, MAX(transaction_date) AS last_date\r\n"
-		+ "		FROM membership_payment\r\n"
-		+ "		GROUP BY id_member\r\n"
-		+ "	) p2 ON mp.id_member = p2.id_member AND mp.transaction_date = p2.last_date\r\n"
-		+ ") p ON m.id = p.id_member");
-				ResultSet rs = prepSt.executeQuery()){
-			list = new ArrayList<>();
-			while (rs.next()) {
-//				System.out.println(rs.getString("control_num"));
-//				System.out.println(rs.getString("first_name"));
-//				System.out.println(rs.getString("last_name"));
-//				System.out.println(rs.getString("phone_number"));
-//				System.out.println(rs.getString("price"));
-//				System.out.println(rs.getString("transaction_date"));
-				
-				UserWithLastPayment user = new UserWithLastPayment(
-						rs.getInt("control_num"),
-						rs.getString("first_name"),
-						rs.getString("last_name"),
-						rs.getString("phone_number"),
-						rs.getDouble("price"),
-						rs.getString("transaction_date"));		
-				
-				list.add(user);
+		
+		try (PreparedStatement prepSt = MyConnection.getConn().prepareStatement(
+				"SELECT m.control_num, m.first_name, m.last_name, m.phone_number, p.price, p.transaction_date\r\n"
+						+ "FROM member m\r\n"
+						+ "LEFT JOIN (\r\n"
+						+ "	SELECT mp.id_member, mp.price, mp.transaction_date \r\n"
+						+ "	FROM membership_payment mp \r\n"
+						+ "	INNER JOIN (\r\n"
+						+ "		SELECT id_member, MAX(transaction_date) AS last_date\r\n"
+						+ "		FROM membership_payment\r\n"
+						+ "		GROUP BY id_member\r\n"
+						+ "	) p2 ON mp.id_member = p2.id_member AND mp.transaction_date = p2.last_date\r\n"
+						+ ") p ON m.id = p.id_member")) 
+		{
+			try (ResultSet rs = prepSt.executeQuery()) {
+				list = new ArrayList<>();
+				while (rs.next()) {
+					UserWithLastPayment user = new UserWithLastPayment(
+							rs.getInt("control_num"),
+							rs.getString("first_name"),
+							rs.getString("last_name"),
+							rs.getString("phone_number"),
+							rs.getDouble("price"),
+							rs.getString("transaction_date"));
+					list.add(user);
+				}
+				return list;
 			}
-			
-			return list;
-		} catch (SQLException e) {
+		} catch (Exception e) {
+			System.out.println("Error al obtener los usuarios con último pago");
 			e.printStackTrace();
 			return null;
 		}
+			
+			
+							
+				
 	}
 	
 //	//-----------------------------------------------------------------------------------------------

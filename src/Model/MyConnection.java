@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -15,20 +16,32 @@ public class MyConnection {
 	
 	static Connection conn = null;
 
-	public static Connection connect() {
+	public static void connect() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(url,user,pass);
+			
+			Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			    try {
+			        if (conn != null && !conn.isClosed()) {
+			        	conn.close();
+			            System.out.println("Conexión cerrada desde shutdown hook.");
+			        }
+			    } catch (SQLException e) {
+			        e.printStackTrace();
+			    }
+			}));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			try {
 			} catch (Exception e) {}
 		}
-		return conn;
 	}
 	
 	public static Connection getConn() {
+		if (conn == null)
+			connect();
 		return conn;
 	}
 	
