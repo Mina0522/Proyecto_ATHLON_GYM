@@ -154,45 +154,6 @@ public class UserModel {
 		return null;
 	}
 	
-//	public ArrayList<User> getAllUsers () {
-//		ArrayList<User> list;
-//		try (Connection conn = MyConnection.connect();
-//		PreparedStatement prepSt = conn.prepareStatement("SELECT * FROM member")) {
-//			try (ResultSet rs = prepSt.executeQuery()) {				
-//				list = new ArrayList<>();
-//				while (rs.next()) {
-//					list.add(new User(rs.getInt("id"), rs.getInt("control_num"), rs.getString("first_name"), rs.getNString("last_name"), rs.getString("phone_number")));
-//					System.out.println(rs.getInt("id"));
-//					System.out.println(rs.getString("first_name"));
-//				}
-//			}
-//			return list;
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return null;
-//		}
-//	}
-	
-//	public ArrayList<User> getUsersWithName(String first_name) {
-//		ArrayList<User> list;
-//		try (Connection conn = MyConnection.connect();
-//		PreparedStatement prepSt = conn.prepareStatement("SELECT * FROM member WHERE first_name = ?")) {
-//			prepSt.setString(1, first_name);
-//			try (ResultSet rs = prepSt.executeQuery()) {				
-//				list = new ArrayList<>();
-//				while (rs.next()) {
-//					list.add(new User(rs.getInt("id"), rs.getInt("control_num"), rs.getString("first_name"), rs.getNString("last_name"), rs.getString("phone_number")));
-//					System.out.println(rs.getInt("id"));
-//					System.out.println(rs.getString("first_name"));
-//				}
-//			}
-//			return list;
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return null;
-//		}
-//	}
-	
 	public ArrayList<UserWithLastPayment> getUsersWithLastPaymentWithName (String text) {
 		ArrayList<UserWithLastPayment> list;
 		try (
@@ -276,10 +237,6 @@ public class UserModel {
 			e.printStackTrace();
 			return null;
 		}
-			
-			
-							
-				
 	}
 	
 //	//-----------------------------------------------------------------------------------------------

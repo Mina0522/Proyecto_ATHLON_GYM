@@ -119,11 +119,10 @@ public class TrainerModel {
 		return list;
 	}
 
-	public static void main(String[] args) {
-		TrainerModel model = new TrainerModel();
-		model.deleteTrainer(8);
-		for (Trainer trainer : model.getAllTrainers()) {
-			System.out.println(trainer);
-		}
-	}
+//	public static void main(String[] args) {
+//		TrainerModel model = new TrainerModel();
+//		for (Trainer trainer : model.getAllTrainers()) {
+//			System.out.println(trainer);
+//		}
+//	}
 }

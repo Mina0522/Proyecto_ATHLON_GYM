@@ -1,20 +1,25 @@
 package Model;
 
 public class ClassDB {
-	private String date;
-	private int id_class_session;
+	private String date, type;
+//	private int id_class_session;
 	
-	public ClassDB(String date, int id_class_session) {
+	public ClassDB(String date, String type) {
 		this.date = date;
-		this.id_class_session = id_class_session;
+		this.type = type;
 	}
 
 	public String getDate() {
 		return date;
 	}
 
-	public int getId_class_session() {
-		return id_class_session;
+	public String getClassType() {
+		return type;
+	}
+
+	@Override
+	public String toString() {
+		return "ClassDB [date=" + date + ", class_type=" + type + "]";
 	}
 	
 }

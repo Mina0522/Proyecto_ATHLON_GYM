@@ -93,7 +93,7 @@ public class UserController {
 		for (ClassDB classDB : list) {
 			tableModel.addRow(new Object[] {
 					classDB.getDate(),
-					classDB.getId_class_session()});
+					classDB.getClassType()});
 		}
 	}
 	//Método que recibe el modelo de la tabla de usuarios general y si dios es muy grande la tabla se llenará de información correcta
