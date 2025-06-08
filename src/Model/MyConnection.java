@@ -25,7 +25,7 @@ public class MyConnection {
 			    try {
 			        if (conn != null && !conn.isClosed()) {
 			        	conn.close();
-			            System.out.println("Conexión cerrada desde shutdown hook.");
+			            System.out.println("Conexión cerrada desde shutdown hook");
 			        }
 			    } catch (SQLException e) {
 			        e.printStackTrace();
@@ -40,8 +40,13 @@ public class MyConnection {
 	}
 	
 	public static Connection getConn() {
-		if (conn == null)
-			connect();
+		try {
+			if (conn == null || conn.isClosed())
+				connect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return conn;
 	}
 	
