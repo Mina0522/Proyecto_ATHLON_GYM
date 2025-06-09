@@ -12,6 +12,7 @@ import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
 import Model.PaymentModel;
+import Model.User;
 import Model.UserModel;
 import Model.ClassModel;
 
@@ -21,6 +22,7 @@ public class Pantalla_Usuarios {
     private JPanel menu_user, panel_tabla, panel_botones;
     private JButton noti, confi, btn_agg, btn_eliminar, btn_deta, btn_edit, btn_buscar;
     private UserController controlador;
+    JTable tabla;
     String nombreUsuario = " ";
 
     public Pantalla_Usuarios(Vista_GYM log) {
@@ -121,7 +123,22 @@ public class Pantalla_Usuarios {
         btn_edit.setBackground(Color.WHITE);
         btn_edit.setForeground(Color.BLACK);
         btn_edit.addActionListener(e -> {
-            menu_inicio.pintar_vista(new Pantalla_Usuarios_Editar(menu_inicio).getPanel());
+            int fila = tabla.getSelectedRow();
+
+            if (fila == -1) {
+                JOptionPane.showMessageDialog(
+                    menu_user,
+                    "Selecciona primero un usuario de la tabla.",
+                    "Sin selección",
+                    JOptionPane.WARNING_MESSAGE
+                );
+                return;
+            }
+
+            int num_control = (int) modelo.getValueAt(fila, 5);
+
+            User usuario = controlador.getUser(num_control);
+            menu_inicio.pintar_vista(new Editar(menu_inicio, usuario).getPanel());
         });
         menu_user.add(btn_edit);
         
@@ -142,7 +159,22 @@ public class Pantalla_Usuarios {
         btn_deta.setBackground(Color.WHITE);
         btn_deta.setForeground(Color.BLACK);
         btn_deta.addActionListener(e -> {
-            menu_inicio.pintar_vista(new Pantalla_Usuarios_Detalles(menu_inicio).getPanel());
+            int fila = tabla.getSelectedRow();
+
+            if (fila == -1) {
+                JOptionPane.showMessageDialog(
+                    menu_user,
+                    "Selecciona primero un usuario de la tabla.",
+                    "Sin selección",
+                    JOptionPane.WARNING_MESSAGE
+                );
+                return;
+            }
+
+            int num_control = (int) modelo.getValueAt(fila, 5);
+
+            User usuario = controlador.getUser(num_control);
+            menu_inicio.pintar_vista(new Detalles(menu_inicio, usuario).getPanel());
         });
         menu_user.add(btn_deta);
 		
@@ -163,7 +195,22 @@ public class Pantalla_Usuarios {
         btn_eliminar.setBackground(Color.WHITE);
         btn_eliminar.setForeground(Color.BLACK);
         btn_eliminar.addActionListener(e -> {
-            menu_inicio.pintar_vista(new Pantalla_Usuarios_Eliminar(menu_inicio).getPanel());
+            int fila = tabla.getSelectedRow();
+
+            if (fila == -1) {
+                JOptionPane.showMessageDialog(
+                    menu_user,
+                    "Selecciona primero un usuario de la tabla.",
+                    "Sin selección",
+                    JOptionPane.WARNING_MESSAGE
+                );
+                return;
+            }
+
+            int num_control = (int) modelo.getValueAt(fila, 5);
+
+            User usuario = controlador.getUser(num_control);
+            menu_inicio.pintar_vista(new Eliminar(menu_inicio, usuario).getPanel());
         });
         menu_user.add(btn_eliminar);
 		
@@ -213,7 +260,7 @@ public class Pantalla_Usuarios {
         controlador.fillUserHomeTable(nombreUsuario, modelo);
         
 
-        JTable tabla = new JTable(modelo);
+        tabla = new JTable(modelo);
         tabla.setFont(new Font("Arial", Font.PLAIN, 17));
         tabla.setRowHeight(39);
         tabla.setForeground(Color.BLACK);
