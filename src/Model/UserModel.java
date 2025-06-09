@@ -11,7 +11,7 @@ public class UserModel {
 
 	
 	//Método que crea un número de control que no exista en la DB
-	private int createControlNum () throws SQLException  { 
+	private int createControlNum ()  { 
 		Random rand = new Random();
 		int cnum; //Número de control
 		HashSet<Integer> currentNums = new HashSet<>(); //Aquí se guardarán los números de control que ya existen
@@ -30,25 +30,28 @@ public class UserModel {
 			} while (currentNums.contains(cnum));
 			
 			return cnum;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
 		}
 	}
 	
 	//Método para crear un usuario nuevo, crea el número de control del usuario con el método createControlNum()
 	public int createUser(String first_name, String last_name, String phone_number) {
 		System.out.println("Registrando usuario...");
+		int cnum = createControlNum();
 		String query = "INSERT INTO member (control_num, first_name, last_name, phone_number) VALUES (?,?,?,?)";
-		int UserId = -1;
 		try (PreparedStatement prepStatement = MyConnection.getConn().prepareStatement(query)){
 			prepStatement.setString(2, first_name);
 			prepStatement.setString(3, last_name);
 			prepStatement.setString(4, phone_number);
 			
-			int cnum = createControlNum();
+			
 			prepStatement.setInt(1, cnum);
 			
 		    System.out.println("Usuario creado con número de control " + cnum);
-		    System.out.println("Id = " + UserId);
 		    
+		    prepStatement.execute();
 		    return cnum; //Regresa el número de control del usuario creado
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -282,5 +285,8 @@ public class UserModel {
 //		UserModel model = new UserModel();
 //		model.getUsersWithLastPayment();
 //	}
-
+	public static void main(String[] args) {
+		UserModel model = new UserModel();
+		model.createUser("asd", "fgh", "12321321");
+	}
 }
