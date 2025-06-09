@@ -209,6 +209,9 @@ public class Eliminar {
                     "Eliminación exitosa",
                     JOptionPane.INFORMATION_MESSAGE
                 );
+                
+                menu_inicio.pintar_vista(new Pantalla_Usuarios(menu_inicio).getPanel());
+
             } else {
                 JOptionPane.showMessageDialog(
                     null,
