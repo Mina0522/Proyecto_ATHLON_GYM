@@ -82,7 +82,7 @@ public class ClassModel {
 			+ "JOIN class_type ct ON cs.id_class_type = ct.id\r\n"
 			+ "LEFT JOIN member_class_registration mcr ON mcr.id_class_session = cs.id\r\n"
 			+ "WHERE cs.id_instructor = ?\r\n"
-			+ "  AND cs.session_date <= CURDATE()  -- o < para historial\r\n"
+			+ "  AND cs.session_date <= CURDATE()\r\n"
 			+ "GROUP BY cs.id, cs.session_date, ct.type_name\r\n"
 			+ "ORDER BY cs.session_date ASC;\r\n")) {
 				ps.setInt(1, id);
@@ -119,15 +119,25 @@ public class ClassModel {
 			}
 		}
 		
-		public ClassDB getClass (int id) {
-			try (PreparedStatement ps = MyConnection.getConn().prepareStatement(""
-					+ "SELECT * FROM class_session"
-					+ "WHERE id = ?")){
-				ps.setInt(1, id);
+		public ClassDB getTClass (int id_class) {
+			try (PreparedStatement ps = MyConnection.getConn().prepareStatement(
+					"SELECT \r\n"
+					+ "    cs.session_date,\r\n"
+					+ "    ct.type_name,\r\n"
+					+ "    COUNT(mcr.id_member) AS registrations\r\n"
+					+ "FROM class_session cs\r\n"
+					+ "JOIN class_type ct ON cs.id_class_type = ct.id\r\n"
+					+ "LEFT JOIN member_class_registration mcr ON mcr.id_class_session = cs.id\r\n"
+					+ "WHERE cs.id = ?\r\n"
+					+ "GROUP BY cs.id, cs.session_date, ct.type_name\r\n"
+					+ "ORDER BY cs.session_date ASC;")){
+				ps.setInt(1, id_class);
 				try (ResultSet rs = ps.executeQuery()){
 					if (rs.next()) {
 						return new ClassDB(
-								null, null,0 );
+								rs.getString("cs.session_date"),
+								rs.getString("ct.type_name"),
+								rs.getInt("registrations"));
 					}
 				}
 			} catch (Exception e) {
@@ -136,11 +146,12 @@ public class ClassModel {
 			return null;
 		}
 	
-	public static void main(String[] args) {
-		ClassModel model = new ClassModel();
+//	public static void main(String[] args) {
+//		ClassModel model = new ClassModel();
+//		System.out.println(model.getTClass(1));
 //		for (ClassDB clase : model.getTrainerClassHistory(1)) {
 //			System.out.println(clase);
 //		}
-	}
+//	}
 	
 }

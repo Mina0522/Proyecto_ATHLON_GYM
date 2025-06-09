@@ -24,7 +24,8 @@ public class UserController {
 		this.paymentModel = paymentModel;
 		this.classModel = classModel;
 	}
-
+	
+	//Crea un usuario y regresa el número de control del usuario creado
 	public int createUser (String first_name, String last_name, String phone_number) {
 		//Verficar los datos y regresar un error si hubiera una inconsistencia de datos
 		if (first_name.isBlank() || last_name.isBlank() || phone_number.isBlank())
@@ -34,6 +35,7 @@ public class UserController {
 		else if (phone_number.matches(".*[a-zA-Z].*"))
 			return 3; //El número de teléfono contiene letras
 		else {
+			//El método createUser en el modelo regresa el número de control del usuario
 			return userModel.createUser(first_name, last_name, phone_number);
 		}
 	}
