@@ -1,8 +1,10 @@
 package Model;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ClassModel {
@@ -100,13 +102,45 @@ public class ClassModel {
 			}
 			return list;
 		}
+		
+		// --- CRUD
+		//Crear una clase
+		public void createClass (int id_instructor, int id_class_type, Date session_date) {
+			try(PreparedStatement ps = MyConnection.getConn().prepareStatement(""
+					+ "INSERT INTO class_session (id_instructor, id_class_type, session_date)"
+					+ "VALUES (?, ?, ?)")){
+				ps.setInt(1, id_instructor);
+				ps.setInt(2, id_class_type);
+				ps.setDate(3, session_date);
+				
+				ps.execute(); //Ejecutar query
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		public ClassDB getClass (int id) {
+			try (PreparedStatement ps = MyConnection.getConn().prepareStatement(""
+					+ "SELECT * FROM class_session"
+					+ "WHERE id = ?")){
+				ps.setInt(1, id);
+				try (ResultSet rs = ps.executeQuery()){
+					if (rs.next()) {
+						return new ClassDB(
+								null, null,0 );
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
 	
 	public static void main(String[] args) {
 		ClassModel model = new ClassModel();
-		
-		for (ClassDB clase : model.getTrainerClassHistory(1)) {
-			System.out.println(clase);
-		}
+//		for (ClassDB clase : model.getTrainerClassHistory(1)) {
+//			System.out.println(clase);
+//		}
 	}
 	
 }

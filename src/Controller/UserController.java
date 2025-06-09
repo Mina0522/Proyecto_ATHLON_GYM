@@ -1,6 +1,5 @@
 package Controller;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableModel;
@@ -12,7 +11,6 @@ import Model.PaymentModel;
 import Model.User;
 import Model.UserModel;
 import Model.UserWithLastPayment;
-import View.Pantalla_Usuarios_Agregar;
 
 public class UserController {
 	
@@ -29,16 +27,15 @@ public class UserController {
 
 	public int createUser (String first_name, String last_name, String phone_number) {
 		//Verficar los datos y regresar un error si hubiera una inconsistencia de datos
-				if (first_name.isBlank() || last_name.isBlank() || phone_number.isBlank())
-					return 1; //Campo vacío detectado
-				else if (first_name.matches(".*\\d.*") || last_name.matches(".*\\d.*"))
-					return 2; //Datos inválidos (El nombre o apellido contienen números)
-				else if (phone_number.matches(".*[a-zA-Z].*"))
-					return 3; //El número de teléfono contiene letras
-				else {
-					userModel.createUser(first_name, last_name, phone_number);
-					return 0;
-				}
+		if (first_name.isBlank() || last_name.isBlank() || phone_number.isBlank())
+			return 1; //Campo vacío detectado
+		else if (first_name.matches(".*\\d.*") || last_name.matches(".*\\d.*"))
+			return 2; //Datos inválidos (El nombre o apellido contienen números)
+		else if (phone_number.matches(".*[a-zA-Z].*"))
+			return 3; //El número de teléfono contiene letras
+		else {
+			return userModel.createUser(first_name, last_name, phone_number);
+		}
 	}
 	
 	public int updateUser (int control_num, String first_name, String last_name, String phone_number) {

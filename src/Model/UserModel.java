@@ -37,10 +37,11 @@ public class UserModel {
 	}
 	
 	//Método para crear un usuario nuevo, crea el número de control del usuario con el método createControlNum()
-	public void createUser(String first_name, String last_name, String phone_number) {
+	public int createUser(String first_name, String last_name, String phone_number) {
 		System.out.println("Registrando usuario...");
 		String query = "INSERT INTO member (control_num, first_name, last_name, phone_number) VALUES (?,?,?,?)";
-		
+		int UserId = -1;
+		ResultSet rs = null;
 		try (PreparedStatement prepStatement = MyConnection.getConn().prepareStatement(query)){
 			prepStatement.setString(2, first_name);
 			prepStatement.setString(3, last_name);
@@ -49,12 +50,29 @@ public class UserModel {
 			int cnum = createControlNum();
 			prepStatement.setInt(1, cnum);
 			
-		    prepStatement.execute();
+		    int updated = prepStatement.executeUpdate();
+		    if (updated > 0) {
+		    	rs = prepStatement.getGeneratedKeys();
+		    	if (rs.next()) {
+		    		UserId = rs.getInt(1);
+		    	}
+		    	rs.close();
+		    }
 		    System.out.println("Usuario creado con número de control " + cnum);
-		    
+		    System.out.println("Id = " + UserId);
+		    return UserId;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return 0;
+		} finally {
+			try {
+				if (rs != null && !rs.isClosed())
+					rs.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	

@@ -18,6 +18,10 @@ public class ClassDB {
 	public String getClassType() {
 		return type;
 	}
+	
+	public int getRegistrations() {
+		return registrations;
+	}
 
 	@Override
 	public String toString() {
