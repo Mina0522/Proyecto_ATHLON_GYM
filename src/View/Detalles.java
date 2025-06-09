@@ -40,7 +40,8 @@ public class Detalles {
     public JPanel getPanel() {
         menu = new JPanel();
         menu.setLayout(null);
-        menu.setBackground(Color.LIGHT_GRAY);
+        Color colorGris = Color.decode("#D9D9D9");
+        menu.setBackground(colorGris);
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         menu.setSize(pantalla);
 
@@ -89,25 +90,28 @@ public class Detalles {
 		
 		ImageIcon icono_user = new ImageIcon(getClass().getResource("/files/usuario.png"));
 		user = new JLabel(icono_user);
-		user.setBounds(135, 15, 128, 128);
+		user.setBounds(135, 25, 128, 128);
 		panel.add(user);
 		
 		text_inicio = new JLabel();
 		text_inicio.setText(usuario.getFirst_name());
 		text_inicio.setFont(new Font("Arial", Font.BOLD, 40));
 		text_inicio.setForeground(Color.BLACK);
-		text_inicio.setBounds(75, 145, 500, 50);
+		text_inicio.setHorizontalAlignment(SwingConstants.CENTER);
+		text_inicio.setBounds(0, 155, 400, 50);
 		panel.add(text_inicio);
         
-        text_ = new JLabel("C l i e n t e");
+        text_ = new JLabel("C L I E N T E");
         text_.setFont(new Font("Arial", Font.BOLD, 20));
         text_.setForeground(Color.GRAY);
-        text_.setBounds(155, 180, 500, 50);
+		text_.setHorizontalAlignment(SwingConstants.CENTER);
+
+        text_.setBounds(0, 190, 400, 50);
         panel.add(text_);
         
         //
         edit = new JButton("Editar");
-        edit.setBounds(20, 230, 150, 40);
+        edit.setBounds(20, 240, 150, 40);
         edit.setFont(new Font("Arial", Font.BOLD, 22));
         edit.setBackground(Color.lightGray);
         edit.setForeground(Color.black);
@@ -118,7 +122,7 @@ public class Detalles {
         panel.add(edit);
         
         eli = new JButton("Eliminar");
-        eli.setBounds(220, 230, 150, 40);
+        eli.setBounds(220, 240, 150, 40);
         eli.setFont(new Font("Arial", Font.BOLD, 22));
         eli.setBackground(Color.BLACK);
         eli.setForeground(Color.WHITE);
@@ -129,29 +133,35 @@ public class Detalles {
         text_clase.setOpaque(true);
         text_clase.setBackground(Color.BLACK);
         text_clase.setForeground(Color.WHITE);
-        text_clase.setFont(new Font("Arial", Font.BOLD, 18));
-        text_clase.setBounds(20, 337, 370, 25);
+        text_clase.setFont(new Font("Arial", Font.BOLD, 22));
+        text_clase.setBounds(20, 315, 370, 35);
         panel.add(text_clase);
 
         String[] columnas = {"Fecha", "Clase"};
         
 
-        DefaultTableModel modelo = new DefaultTableModel(null, columnas);
+        DefaultTableModel modelo = new DefaultTableModel(null, columnas) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         JTable tabla = new JTable(modelo);
         tabla.setFont(new Font("Arial", Font.PLAIN, 16));
         tabla.setRowHeight(28);
+        
         tabla.setForeground(Color.BLACK);
         tabla.setBackground(Color.WHITE);
 
         JTableHeader header = tabla.getTableHeader();
-        header.setFont(new Font("Arial", Font.BOLD, 15));
-        header.setBackground(Color.WHITE);
-        header.setForeground(Color.BLACK);
+        header.setPreferredSize(new Dimension(header.getWidth(), 30));
+        header.setFont(new Font("Arial", Font.BOLD, 20));
+        header.setBackground(Color.BLACK);
+        header.setForeground(Color.WHITE);
 
         JScrollPane scroll = new JScrollPane(tabla);
-        scroll.setBounds(20, 360, 370, 110);
+        scroll.setBounds(20, 350, 370, 130);
         panel.add(scroll);
-        
         controlador.fillUserClassTable(usuario.getControl_number(), modelo);
         
         
@@ -166,31 +176,35 @@ public class Detalles {
         text_clase.setOpaque(true);
         text_clase.setBackground(Color.BLACK);
         text_clase.setForeground(Color.WHITE);
-        text_clase.setFont(new Font("Arial", Font.BOLD, 18));
-        text_clase.setBounds(20, 20, 370, 25);
+        text_clase.setFont(new Font("Arial", Font.BOLD, 22));
+        text_clase.setBounds(20, 13, 370, 35);
         panelagg.add(text_clase);
 
         String[] columnas2 = {"Fecha", "Pagos", "Plan"};
         
         
         
-        DefaultTableModel modelo2 = new DefaultTableModel(null, columnas2);
-
+        DefaultTableModel modelo2 = new DefaultTableModel(null, columnas2) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         
         JTable tabla2 = new JTable(modelo2);
-        tabla2.setFont(new Font("Arial", Font.PLAIN, 15));
+        tabla2.setFont(new Font("Arial", Font.PLAIN, 16));
         tabla2.setRowHeight(39);
         tabla2.setForeground(Color.BLACK);
         tabla2.setBackground(Color.WHITE);
 
         JTableHeader header2 = tabla2.getTableHeader();
         header2.setPreferredSize(new Dimension(header.getWidth(), 30));
-        header2.setFont(new Font("Arial", Font.BOLD, 22));
+        header2.setFont(new Font("Arial", Font.BOLD, 20));
         header2.setBackground(Color.BLACK);
         header2.setForeground(Color.WHITE);
 
         JScrollPane scroll2 = new JScrollPane(tabla2);
-        scroll2.setBounds(20, 42, 370, 110);
+        scroll2.setBounds(20, 49, 370, 130);
         panelagg.add(scroll2);
 
         controlador.fillUserDetailsTable(usuario.getControl_number(), modelo2);
