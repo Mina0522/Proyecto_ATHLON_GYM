@@ -4,10 +4,15 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import Controller.UserController;
+
 import java.awt.*;
 import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
+import Model.ClassModel;
+import Model.PaymentModel;
+import Model.UserModel;
 
 public class Pantalla_Planes {
 
@@ -15,6 +20,12 @@ public class Pantalla_Planes {
     private JPanel menu_user, panel_planB, panel_planP, panel_botones;
     private JButton noti, confi, btn_crear, btn_edit, btn_deta, btn_eliminar, plan_basico, plan_prem;
     private JLabel textP, textB;
+    
+    UserModel userModel = new UserModel() ;
+	PaymentModel paymentModel  = new PaymentModel() ;
+	ClassModel classModel  = new ClassModel() ;
+    
+    UserController controlador = new UserController(userModel,paymentModel,classModel);
     
     public Pantalla_Planes(Vista_GYM log) {
         this.menu_inicio = log;

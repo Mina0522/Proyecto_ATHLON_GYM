@@ -20,15 +20,15 @@ public class Pantalla_Usuarios_Editar {
 
     private JPanel panel_botones, panel_delete;
     private JButton noti, confi, btn_agg, btn_eliminar, btn_deta, btn_edit, btn_buscar;
-    private UserController controlador;
 
-
+    UserModel userModel = new UserModel() ;
+	PaymentModel paymentModel  = new PaymentModel() ;
+	ClassModel classModel  = new ClassModel() ;
+    
+    UserController controlador = new UserController(userModel,paymentModel,classModel);
+    
     public Pantalla_Usuarios_Editar(Vista_GYM log) {
         this.menu_inicio = log;
-        UserModel userModel = new UserModel();
-        PaymentModel paymentModel = new PaymentModel();
-        ClassModel classModel = new ClassModel();
-        controlador = new UserController(userModel, paymentModel, classModel);
     }
 
     public JPanel getPanel() {

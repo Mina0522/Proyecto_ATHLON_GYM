@@ -13,7 +13,7 @@ public class Pantalla_Planes_Editar {
 
     private Vista_GYM menu_inicio;
     private JPanel menu_user, panel, panel_negro, panel_botones;
-    private JButton noti, confi, btn_crear, btn_edit, btn_deta, btn_eliminar, btn;
+    private JButton noti, confi, btn_crear, btn_edit, btn_deta, btn_eliminar, btn, volver;
     private JLabel text;
     
     public Pantalla_Planes_Editar(Vista_GYM log) {
@@ -216,8 +216,20 @@ public class Pantalla_Planes_Editar {
         invi.setBorder(null);
         panel.add(invi);
         
-        btn = new JButton("Enviar propuesta");
-        btn.setBounds(550, 230, 300, 50);
+        volver = new JButton("Volver");
+        volver.setBounds(500, 230, 150, 50);
+        volver.setFont(new Font("Arial", Font.BOLD, 22));
+        volver.setBackground(Color.GRAY);
+        volver.setForeground(Color.black);
+        volver.setBorderPainted(false);
+        volver.setFocusPainted(false);
+        volver.addActionListener(e -> {
+        	menu_inicio.pintar_vista(new Pantalla_Planes(menu_inicio).getPanel());
+        });
+        panel.add(volver);
+        
+        btn = new JButton("Enviar");
+        btn.setBounds(680, 230, 150, 50);
         btn.setFont(new Font("Arial", Font.BOLD, 22));
         btn.setBackground(Color.BLACK);
         btn.setForeground(Color.WHITE);
