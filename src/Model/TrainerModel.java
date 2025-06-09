@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class TrainerModel {
 	
-	public void createTrainer (String name, String email, String phone_number, int type) {
+	public int createTrainer (String name, String email, String phone_number, int type) {
 		try (PreparedStatement ps = MyConnection.getConn().prepareStatement(
 		"INSERT INTO instructor (name, email, phone_number, id_instructor_type) VALUES (?, ?, ?, ?)")) {
 			ps.setString(1, name);
@@ -15,11 +15,17 @@ public class TrainerModel {
 			ps.setString(3, phone_number);
 			ps.setInt(4, type);
 			
-			ps.execute();
-
+			int updtRows = ps.executeUpdate();
+			if (updtRows > 0) {
+				 try (ResultSet rs = ps.getGeneratedKeys()){
+					 if (rs.next())
+						 return rs.getInt(1);
+				 }
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return -1;
 	}
 	
 	public Trainer getTrainer (int id) {

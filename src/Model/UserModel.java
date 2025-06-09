@@ -60,7 +60,7 @@ public class UserModel {
 		}
 	}
 	
-	//Método para editar datos de un miembro
+	//Método para editar datos de un miembro, busca el usuario a actualizar con el control_num del usuario
 	public void updateUser (int control_num, String first_name, String last_name, String phone_number,
 			boolean fnempty, boolean lnempty, boolean pnempty) {
 		System.out.println("Actualizando usuario...");

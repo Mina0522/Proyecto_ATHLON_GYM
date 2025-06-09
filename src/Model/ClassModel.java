@@ -145,6 +145,39 @@ public class ClassModel {
 			}
 			return null;
 		}
+		
+		//Actualiza el tipo de clase y la fecha de la clase
+		public void updateClass (int id, int id_class_type, Date session_date) {
+			System.out.println("Actualizando clase...");
+			
+			try (PreparedStatement ps = MyConnection.getConn().prepareStatement(
+			"UPDATE class_session "
+			+ "SET id_class_type = ?, session_date = ? "
+			+ "WHERE id = ?")){
+				ps.setInt(1, id_class_type);
+				ps.setDate(2, session_date);
+				ps.setInt(3, id);
+				
+				ps.execute();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			System.out.println("Clase actualizada.");
+		}
+		
+		public boolean deleteClass (int id) {
+			try (PreparedStatement ps = MyConnection.getConn().prepareStatement("DELETE FROM class_session WHERE id = ?")){
+				ps.setInt(1, id);
+				
+				ps.execute();
+				return true; //Clase eliminada exitosamente
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false; //Error al eliminar la clase
+			}
+		}
 	
 //	public static void main(String[] args) {
 //		ClassModel model = new ClassModel();
