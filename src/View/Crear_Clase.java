@@ -143,9 +143,12 @@ public class Crear_Clase {
                 String campo4 = nom.getText().trim();
 
                 if (campo1.isEmpty() || campo2.isEmpty() || campo3.isEmpty() || campo4.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "¡Rellena los campos vacios!");
+    	            JOptionPane.showMessageDialog(menu,
+        	                "Rellena todos los campos.",
+        	                "Datos incompletos", JOptionPane.WARNING_MESSAGE);
                 } else {
-                    JOptionPane.showMessageDialog( null, "¡Se guardo correctamente la clase!");
+                    JOptionPane.showMessageDialog(null, "¡Clase guardada corrrectamente!");
+                    menu_inicio.pintar_vista(new Pantalla_Inicio(menu_inicio).getPanel());
                 }
             }
         });
