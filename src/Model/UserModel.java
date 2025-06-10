@@ -37,14 +37,15 @@ public class UserModel {
 	}
 	
 	//Método para crear un usuario nuevo, crea el número de control del usuario con el método createControlNum()
-	public int createUser(String first_name, String last_name, String phone_number) {
+	public int createUser(String first_name, String last_name, String phone_number, String email) {
 		System.out.println("Registrando usuario...");
 		int cnum = createControlNum();
-		String query = "INSERT INTO member (control_num, first_name, last_name, phone_number) VALUES (?,?,?,?)";
+		String query = "INSERT INTO member (control_num, first_name, last_name, phone_number, email) VALUES (?,?,?,?,?)";
 		try (PreparedStatement prepStatement = MyConnection.getConn().prepareStatement(query)){
 			prepStatement.setString(2, first_name);
 			prepStatement.setString(3, last_name);
 			prepStatement.setString(4, phone_number);
+			prepStatement.setString(5, email);
 			
 			
 			prepStatement.setInt(1, cnum);
@@ -61,8 +62,8 @@ public class UserModel {
 	}
 	
 	//Método para editar datos de un miembro, busca el usuario a actualizar con el control_num del usuario
-	public void updateUser (int control_num, String first_name, String last_name, String phone_number,
-			boolean fnempty, boolean lnempty, boolean pnempty) {
+	public void updateUser (int control_num, String first_name, String last_name, String phone_number, String email,
+			boolean fnempty, boolean lnempty, boolean pnempty, boolean emailempty) {
 		System.out.println("Actualizando usuario...");
 		ArrayList<Object> values = new ArrayList<>();
 		ArrayList<String> fields = new ArrayList<>();
@@ -82,6 +83,11 @@ public class UserModel {
 		if (!pnempty){//Si el campo phone_number no está vacío
 			fields.add("phone_number = ?");
 			values.add(phone_number);
+		}
+		
+		if (!emailempty) {
+			fields.add("email = ?");
+			values.add(email);
 		}
 		
 		query.append(String.join(", ", fields));
@@ -256,6 +262,47 @@ public class UserModel {
 		}
 	}
 	
+	public UserWithLastPayment getUserDetails (int id) {
+		try (PreparedStatement ps = MyConnection.getConn().prepareStatement(
+				"SELECT \r\n"
+				+ "    m.*, \r\n"
+				+ "    ms.name AS membership_name,\r\n"
+				+ "    p.transaction_date,\r\n"
+				+ "    DATE_ADD(p.transaction_date, INTERVAL ms.duration_days DAY) AS next_transaction_date,\r\n"
+				+ "    p.price\r\n"
+				+ "FROM member m\r\n"
+				+ "LEFT JOIN (\r\n"
+				+ "    SELECT mp.*\r\n"
+				+ "    FROM membership_payment mp\r\n"
+				+ "    INNER JOIN (\r\n"
+				+ "        SELECT id_member, MAX(transaction_date) AS last_date\r\n"
+				+ "        FROM membership_payment\r\n"
+				+ "        GROUP BY id_member\r\n"
+				+ "    ) latest ON mp.id_member = latest.id_member AND mp.transaction_date = latest.last_date\r\n"
+				+ ") p ON m.id = p.id_member\r\n"
+				+ "LEFT JOIN membership ms ON p.id_membership = ms.id\r\n"
+				+ "WHERE m.id = ?")) {
+			ps.setInt(1, id);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					return new UserWithLastPayment(
+							rs.getString("first_name"),
+							rs.getString("last_name"),
+							rs.getString("membership_name"),
+							rs.getString("transaction_date"),
+							rs.getString("next_transaction_date"),
+							rs.getInt("control_num"),
+							rs.getString("phone_number"),
+							rs.getString("email"));
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null; //Error
+	}
+	
 //	//-----------------------------------------------------------------------------------------------
 //	//PRUEBAS: método que regresa los usuarios registrados actualmente
 //	private void showUsers () { 
@@ -300,8 +347,8 @@ public class UserModel {
 //		UserModel model = new UserModel();
 //		model.getUsersWithLastPayment();
 //	}
-//	public static void main(String[] args) {
-//		UserModel model = new UserModel();
-//		model.createUser("asd", "fgh", "12321321");
-//	}
+	public static void main(String[] args) {
+		UserModel model = new UserModel();
+		System.out.println(model.getUserDetails(1));
+	}
 }

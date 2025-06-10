@@ -26,7 +26,7 @@ public class UserController {
 	}
 	
 	//Crea un usuario y regresa el número de control del usuario creado
-	public int createUser (String first_name, String last_name, String phone_number) {
+	public int createUser (String first_name, String last_name, String phone_number, String email) {
 		//Verficar los datos y regresar un error si hubiera una inconsistencia de datos
 		if (first_name.isBlank() || last_name.isBlank() || phone_number.isBlank())
 			return 1; //Campo vacío detectado
@@ -36,12 +36,12 @@ public class UserController {
 			return 3; //El número de teléfono contiene letras
 		else {
 			//El método createUser en el modelo regresa el número de control del usuario
-			return userModel.createUser(first_name, last_name, phone_number);
+			return userModel.createUser(first_name, last_name, phone_number, email);
 		}
 	}
 	
-	public int updateUser (int control_num, String first_name, String last_name, String phone_number) {
-		boolean fnempty = false, lnempty = false, pnempty = false;
+	public int updateUser (int control_num, String first_name, String last_name, String phone_number, String email) {
+		boolean fnempty = false, lnempty = false, pnempty = false, emailempty = false;
 
 		if (!first_name.isBlank()) {
 			if (first_name.matches(".*\\d.*"))
@@ -61,10 +61,13 @@ public class UserController {
 		} else
 			pnempty = true;
 		
+		if (email.isBlank())
+			emailempty = true;
+		
 		if (fnempty && lnempty && pnempty)
 			return 1; //Todos los campos están vacíos
 		
-		userModel.updateUser(control_num, first_name, last_name, phone_number, fnempty, lnempty, pnempty);
+		userModel.updateUser(control_num, first_name, last_name, phone_number, email, fnempty, lnempty, pnempty, emailempty);
 		return 0; //Éxito
 	}
 	

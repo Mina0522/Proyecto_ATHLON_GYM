@@ -14,6 +14,21 @@ public class UserWithLastPayment {
 		this.next_transaction_date = next_transaction_date;
 		this.control_num = control_num;
 	}
+	
+	String phone_number, email;
+	
+	public UserWithLastPayment(String first_name, String last_name, String membership_name, String transaction_date,
+			String next_transaction_date, int control_num, String phone_number, String email) {
+		super();
+		this.first_name = first_name;
+		this.last_name = last_name;
+		this.membership_name = membership_name;
+		this.transaction_date = transaction_date;
+		this.next_transaction_date = next_transaction_date;
+		this.control_num = control_num;
+		this.phone_number = phone_number;
+		this.email = email;
+	}
 
 	public String getFirst_name() {
 		return first_name;
@@ -37,6 +52,14 @@ public class UserWithLastPayment {
 
 	public int getControl_num() {
 		return control_num;
+	}
+
+	@Override
+	public String toString() {
+		return "UserWithLastPayment [first_name=" + first_name + ", last_name=" + last_name + ", membership_name="
+				+ membership_name + ", transaction_date=" + transaction_date + ", next_transaction_date="
+				+ next_transaction_date + ", control_num=" + control_num + ", phone_number=" + phone_number + ", email="
+				+ email + "]";
 	}
 	
 }
