@@ -125,11 +125,11 @@ public class PaymentModel {
 		return null;
 	}
 	
-	public static void main(String[] args) {
-		PaymentModel model = new PaymentModel();
-		
-		for (Payment pago : model.getAllPayments()) {
-			System.out.println(pago);
-		}
-	}
+//	public static void main(String[] args) {
+//		PaymentModel model = new PaymentModel();
+//		
+//		for (Payment pago : model.getAllPayments()) {
+//			System.out.println(pago);
+//		}
+//	}
 }

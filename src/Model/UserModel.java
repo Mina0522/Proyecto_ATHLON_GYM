@@ -62,7 +62,7 @@ public class UserModel {
 	}
 	
 	//Método para editar datos de un miembro, busca el usuario a actualizar con el control_num del usuario
-	public void updateUser (int control_num, String first_name, String last_name, String phone_number, String email,
+	public void updateUser (int control_num, String first_name, String last_name, String phone_number, String email, int id_membership,
 			boolean fnempty, boolean lnempty, boolean pnempty, boolean emailempty) {
 		System.out.println("Actualizando usuario...");
 		ArrayList<Object> values = new ArrayList<>();
@@ -104,6 +104,14 @@ public class UserModel {
 			System.out.println(prepStatement);
 			prepStatement.execute();
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		try (PreparedStatement ps = MyConnection.getConn().prepareStatement("UPDATE membership_payment SET id_membership = ?")) {
+			ps.setInt(1, id_membership);
+			ps.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -347,8 +355,8 @@ public class UserModel {
 //		UserModel model = new UserModel();
 //		model.getUsersWithLastPayment();
 //	}
-	public static void main(String[] args) {
-		UserModel model = new UserModel();
-		System.out.println(model.getUserDetails(1));
-	}
+//	public static void main(String[] args) {
+//		UserModel model = new UserModel();
+//		System.out.println(model.getUserDetails(1));
+//	}
 }

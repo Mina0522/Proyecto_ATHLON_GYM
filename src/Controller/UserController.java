@@ -1,11 +1,17 @@
 package Controller;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 
 import Model.ClassDB;
 import Model.ClassModel;
+import Model.ComboObject;
+import Model.MyConnection;
 import Model.Payment;
 import Model.PaymentModel;
 import Model.User;
@@ -40,7 +46,7 @@ public class UserController {
 		}
 	}
 	
-	public int updateUser (int control_num, String first_name, String last_name, String phone_number, String email) {
+	public int updateUser (int control_num, String first_name, String last_name, String phone_number, String email, int id_membership) {
 		boolean fnempty = false, lnempty = false, pnempty = false, emailempty = false;
 
 		if (!first_name.isBlank()) {
@@ -64,10 +70,7 @@ public class UserController {
 		if (email.isBlank())
 			emailempty = true;
 		
-		if (fnempty && lnempty && pnempty)
-			return 1; //Todos los campos están vacíos
-		
-		userModel.updateUser(control_num, first_name, last_name, phone_number, email, fnempty, lnempty, pnempty, emailempty);
+		userModel.updateUser(control_num, first_name, last_name, phone_number, email, id_membership, fnempty, lnempty, pnempty, emailempty);
 		return 0; //Éxito
 	}
 	
@@ -118,8 +121,69 @@ public class UserController {
 					});
 		}
 	}
+	//Genera un combobox con todos los planes que haya registradoes en el sistema y el default es el plan que tenga el usuario
+		public JComboBox<ComboObject> generateMembershipComboId (int id) {
+			JComboBox<ComboObject> combo = new JComboBox<>();
+			int id_current_membership = 0;
+			try (PreparedStatement ps = MyConnection.getConn().prepareStatement(
+					"SELECT m.id, m.name, p.id_membership\r\n"
+					+ "FROM membership m\r\n"
+					+ "LEFT JOIN (\r\n"
+					+ "    SELECT id_membership\r\n"
+					+ "    FROM membership_payment\r\n"
+					+ "    WHERE id_member = ?\r\n"
+					+ "    ORDER BY transaction_date DESC\r\n"
+					+ "    LIMIT 1\r\n"
+					+ ") p ON m.id = p.id_membership;\r\n"
+					+ "");
+					){
+				ps.setInt(1, id);
+				try (ResultSet rs = ps.executeQuery()){
+					while (rs.next()) {
+						combo.addItem(new ComboObject(rs.getInt("m.id"), rs.getString("m.name")));
+						id_current_membership = rs.getInt("p.id_membership");
+						if (id_current_membership == 0)
+							id_current_membership = rs.getInt("id");
+					}
+					for (int i = 0; i < combo.getItemCount(); i++) {
+						ComboObject cObject = combo.getItemAt(i);
+						if (cObject.getId() == id_current_membership)
+							combo.setSelectedIndex(i);
+					}
+					return combo;
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+	
+	//Genera un combobox con todos los planes que haya registradoes en el sistema
+	public JComboBox<ComboObject> generateMembershipCombo () {
+		JComboBox<ComboObject> combo = new JComboBox<>();
+		try (PreparedStatement ps = MyConnection.getConn().prepareStatement("SELECT id, name FROM membership");
+				ResultSet rs = ps.executeQuery()){
+			while (rs.next()) {
+				combo.addItem(new ComboObject(rs.getInt("id"), rs.getString("name")));
+			}
+			return combo;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	public UserWithLastPayment getUserDetails (int id) {
 		return userModel.getUserDetails(id);
+	}
+	
+	public static void main(String[] args) {
+		UserController con = new UserController(new UserModel(), new PaymentModel(), new ClassModel());
+		JComboBox<ComboObject> combo = con.generateMembershipComboId(24);
+		System.out.println(combo.getItemAt(0).getText());
+		System.out.println(combo.getItemAt(1).getText());
 	}
 }
