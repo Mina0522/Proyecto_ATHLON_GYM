@@ -141,7 +141,7 @@ public class Pantalla_Usuarios_Agregar {
     	    String telU  = tel.getText();
     	    String corrU = correo.getText(); 
 
-    	    int controlNum = controlador.createUser(nomU, apeU, telU);
+    	    int controlNum = controlador.createUser(nomU, apeU, telU,corrU);
 
     	    switch (controlNum) {
     	        case 0:

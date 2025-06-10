@@ -138,8 +138,8 @@ public class Eliminar {
 		fecha.setLayout(null);
 		panel_delete.add(fecha);
 		
-        text_fecha = new JLabel("10 / 15 / 2005");
-        text_fecha.setText(usuario.getPhone_number());
+        text_fecha = new JLabel();
+        text_fecha.setText(usuario.getEmail());
         text_fecha.setFont(new Font("Arial", Font.BOLD, 25));
         text_fecha.setForeground(Color.black);
         text_fecha.setBounds(10, 5, 500, 50);

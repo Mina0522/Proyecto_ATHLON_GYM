@@ -23,9 +23,10 @@ public class Editar {
     private JLabel text_inicio, text_, user, text_clase;
     private JTextField campoNombre;      
     private JTextField campoApellido;    
-    private JTextField campoTelefono;    
+    private JTextField campoTelefono;
+    private JTextField text_fecha2;
     
-    private JLabel text_nom2, text_ape2, text_fecha2;
+    private JLabel text_nom2, text_ape2;
     public User usuario;
     private UserController controlador;
     
@@ -114,7 +115,7 @@ public class Editar {
       
 
         campoNombre = new JTextField(usuario.getFirst_name());
-        campoNombre.setForeground(Color.GRAY);
+        campoNombre.setForeground(Color.BLACK);
         campoNombre.setFont(new Font("Arial", Font.BOLD, 25));
         campoNombre.setBackground(colorGris);
         campoNombre.setBounds(50, 270, 300, 50);
@@ -124,23 +125,21 @@ public class Editar {
 		
 		campoApellido = new JTextField(usuario.getLast_name());
 		campoApellido.setBackground(colorGris);
-		campoApellido.setForeground(Color.GRAY);
+		campoApellido.setForeground(Color.BLACK);
 		campoApellido.setFont(new Font("Arial", Font.BOLD, 25));
         campoApellido.setBounds(50, 330, 300, 50);
         panel.add(campoApellido);
         
 		
-		fecha = new JPanel();
-		fecha.setBackground(colorGris);
-		fecha.setBounds(50, 390, 300, 50);
-		fecha.setLayout(null);
-		panel.add(fecha);
 		
-        text_fecha2 = new JLabel("10 / 15 / 2005");
+		
+        text_fecha2 = new JTextField(usuario.getEmail());
+        text_fecha2.setBackground(colorGris);
+        text_fecha2.setForeground(Color.BLACK);
         text_fecha2.setFont(new Font("Arial", Font.BOLD, 25));
         text_fecha2.setForeground(Color.black);
-        text_fecha2.setBounds(10, 5, 500, 50);
-        fecha.add(text_fecha2);
+        text_fecha2.setBounds(50, 390, 300, 50);
+        panel.add(text_fecha2);
         
 		// ===
 		panelagg = new JPanel();
@@ -149,17 +148,14 @@ public class Editar {
 		panelagg.setLayout(null);
 		menu.add(panelagg);
 
-		nom2 = new JPanel();
-		nom2.setBackground(colorGris);
-		nom2.setBounds(50, 50, 300, 50);
-		nom2.setLayout(null);
-		panelagg.add(nom2);
 		
-        text_nom2 = new JLabel("Basico");
-        text_nom2.setFont(new Font("Arial", Font.BOLD, 25));
-        text_nom2.setForeground(Color.black);
-        text_nom2.setBounds(10, 5, 500, 50);
-        nom2.add(text_nom2);
+		String[] opciones = {"Premium", "Básico"};
+		JComboBox<String> comboBox = new JComboBox<>(opciones);
+		comboBox.setBounds(50, 50, 300, 50);
+		comboBox.setBackground(colorGris);
+		comboBox.setFont(new Font("Arial", Font.BOLD, 25));
+		panelagg.add(comboBox);
+
 		
 		ape2 = new JPanel();
 		ape2.setBackground(colorGris);
@@ -169,7 +165,7 @@ public class Editar {
 		
         text_ape2 = new JLabel("10 / 04 / 2025");
         text_ape2.setFont(new Font("Arial", Font.BOLD, 25));
-        text_ape2.setForeground(Color.black);
+        text_ape2.setForeground(Color.gray);
         text_ape2.setBounds(10, 5, 500, 50);
         ape2.add(text_ape2);
 		
@@ -177,7 +173,7 @@ public class Editar {
 		
 		campoTelefono = new JTextField(usuario.getPhone_number());
 		campoTelefono.setBackground(colorGris);
-		campoTelefono.setForeground(Color.GRAY);
+		campoTelefono.setForeground(Color.black);
 
         campoTelefono.setFont(new Font("Arial", Font.BOLD, 25));
         campoTelefono.setBounds(50, 170, 300, 50);
@@ -194,11 +190,13 @@ public class Editar {
         	 String nuevoNombre = campoNombre.getText().trim();
              String nuevoApellido = campoApellido.getText().trim();
              String nuevoTelefono = campoTelefono.getText().trim();
+             String nuevoCorreo = text_fecha2.getText().trim();
+             
 
              
              
              int controlNum = usuario.getControl_number();
-             int resultado = controlador.updateUser(controlNum, nuevoNombre, nuevoApellido, nuevoTelefono);
+             int resultado = controlador.updateUser(controlNum, nuevoNombre, nuevoApellido, nuevoTelefono,nuevoCorreo);
              switch (resultado) {
                  case 0:
                      JOptionPane.showMessageDialog(null, "Usuarios actualizados con éxito.", "Éxito",

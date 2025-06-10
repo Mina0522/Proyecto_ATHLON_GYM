@@ -1,9 +1,15 @@
 package View;
 
 import javax.swing.*;
+
+import Controller.UserController;
+
 import java.awt.*;
 import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Menu;
+import Model.ClassModel;
+import Model.PaymentModel;
+import Model.UserModel;
 
 public class Pantalla_Inicio {
 
@@ -15,9 +21,16 @@ public class Pantalla_Inicio {
     private JButton noti, confi, crear;
     private JLabel miembros_activos, nuevos_registros, pagos_pendientes, horario;
     private JLabel clase1, clase2, clase3;
+    private UserController controlador;
+
 
     public Pantalla_Inicio(Vista_GYM log) {
         this.menu_inicio = log;
+        
+        UserModel userModel = new UserModel();
+        PaymentModel paymentModel = new PaymentModel();
+        ClassModel classModel = new ClassModel();
+        controlador = new UserController(userModel, paymentModel, classModel);
     }
 
     public JPanel getPanel() {
