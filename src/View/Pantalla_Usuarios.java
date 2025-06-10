@@ -255,7 +255,12 @@ public class Pantalla_Usuarios {
 		
         String[] columnas = { "Nombre", "Apellido", "Teléfono", "Cuota", "Día de pago", "No. de control" };
 
-        DefaultTableModel modelo = new DefaultTableModel(null, columnas);
+        DefaultTableModel modelo = new DefaultTableModel(null, columnas) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };  
         this.modelo=modelo;
         controlador.fillUserHomeTable(nombreUsuario, modelo);
         

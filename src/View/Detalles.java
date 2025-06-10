@@ -101,7 +101,7 @@ public class Detalles {
 		text_inicio.setBounds(0, 155, 400, 50);
 		panel.add(text_inicio);
         
-        text_ = new JLabel("C L I E N T E");
+		text_ = new JLabel("C L I E N T E");
         text_.setFont(new Font("Arial", Font.BOLD, 20));
         text_.setForeground(Color.GRAY);
 		text_.setHorizontalAlignment(SwingConstants.CENTER);
@@ -204,7 +204,7 @@ public class Detalles {
         header2.setForeground(Color.WHITE);
 
         JScrollPane scroll2 = new JScrollPane(tabla2);
-        scroll2.setBounds(20, 49, 370, 130);
+        scroll2.setBounds(20, 49, 370, 150);
         panelagg.add(scroll2);
 
         controlador.fillUserDetailsTable(usuario.getControl_number(), modelo2);
