@@ -107,7 +107,7 @@ public class Eliminar {
         
 		nom = new JPanel();
 		nom.setBackground(colorGris);
-		nom.setBounds(50, 265, 300, 50);
+		nom.setBounds(50, 270, 300, 50);
 		nom.setLayout(null);
 		panel_delete.add(nom);
 		
@@ -121,7 +121,7 @@ public class Eliminar {
 		
 		ape = new JPanel();
 		ape.setBackground(colorGris);
-		ape.setBounds(50, 325, 300, 50);
+		ape.setBounds(50, 330, 300, 50);
 		ape.setLayout(null);
 		panel_delete.add(ape);
 		

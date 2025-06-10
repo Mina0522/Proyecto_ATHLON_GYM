@@ -43,7 +43,8 @@ public class Editar {
     public JPanel getPanel() {
         menu = new JPanel();
         menu.setLayout(null);
-        menu.setBackground(Color.LIGHT_GRAY);
+        Color colorGris = Color.decode("#D9D9D9");
+        menu.setBackground(colorGris);
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         menu.setSize(pantalla);
 
@@ -92,54 +93,46 @@ public class Editar {
 		
 		ImageIcon icono_user = new ImageIcon(getClass().getResource("/files/usuario.png"));
 		user = new JLabel(icono_user);
-		user.setBounds(135, 15, 128, 128);
+		user.setBounds(135, 25, 128, 128);
 		panel.add(user);
 		
 		text_inicio = new JLabel();
 		text_inicio.setText(usuario.getFirst_name());
 		text_inicio.setFont(new Font("Arial", Font.BOLD, 40));
+        text_inicio.setHorizontalAlignment(SwingConstants.CENTER);
+
 		text_inicio.setForeground(Color.BLACK);
-		text_inicio.setBounds(75, 145, 500, 50);
+		text_inicio.setBounds(0, 155, 400, 50);
 		panel.add(text_inicio);
         
-        text_ = new JLabel("C l i e n t e");
+        text_ = new JLabel("C L I E N T E");
+        text_.setHorizontalAlignment(SwingConstants.CENTER);
         text_.setFont(new Font("Arial", Font.BOLD, 20));
         text_.setForeground(Color.GRAY);
-        text_.setBounds(155, 180, 500, 50);
+        text_.setBounds(0, 190, 400, 50);
         panel.add(text_);
-        
-		nom = new JPanel();
-		nom.setBackground(Color.lightGray);
-		nom.setBounds(50, 250, 300, 50);
-		nom.setLayout(null);
-		panel.add(nom);
-		
-        
-        
+      
 
         campoNombre = new JTextField(usuario.getFirst_name());
+        campoNombre.setForeground(Color.GRAY);
         campoNombre.setFont(new Font("Arial", Font.BOLD, 25));
-        campoNombre.setBackground(Color.LIGHT_GRAY);
-        campoNombre.setBounds(10, 5, 500, 50);
-        nom.add(campoNombre);
+        campoNombre.setBackground(colorGris);
+        campoNombre.setBounds(50, 270, 300, 50);
+        panel.add(campoNombre);
 		
-		ape = new JPanel();
-		ape.setBackground(Color.lightGray);
-		ape.setBounds(50, 310, 300, 50);
-		ape.setLayout(null);
-		panel.add(ape);
+		
 		
 		campoApellido = new JTextField(usuario.getLast_name());
-		campoApellido.setBackground(Color.LIGHT_GRAY);
-
-        campoApellido.setFont(new Font("Arial", Font.BOLD, 25));
-        campoApellido.setBounds(10, 5, 500, 50);
-        ape.add(campoApellido);
+		campoApellido.setBackground(colorGris);
+		campoApellido.setForeground(Color.GRAY);
+		campoApellido.setFont(new Font("Arial", Font.BOLD, 25));
+        campoApellido.setBounds(50, 330, 300, 50);
+        panel.add(campoApellido);
         
 		
 		fecha = new JPanel();
-		fecha.setBackground(Color.lightGray);
-		fecha.setBounds(50, 370, 300, 50);
+		fecha.setBackground(colorGris);
+		fecha.setBounds(50, 390, 300, 50);
 		fecha.setLayout(null);
 		panel.add(fecha);
 		
@@ -157,8 +150,8 @@ public class Editar {
 		menu.add(panelagg);
 
 		nom2 = new JPanel();
-		nom2.setBackground(Color.lightGray);
-		nom2.setBounds(50, 30, 300, 50);
+		nom2.setBackground(colorGris);
+		nom2.setBounds(50, 50, 300, 50);
 		nom2.setLayout(null);
 		panelagg.add(nom2);
 		
@@ -169,8 +162,8 @@ public class Editar {
         nom2.add(text_nom2);
 		
 		ape2 = new JPanel();
-		ape2.setBackground(Color.lightGray);
-		ape2.setBounds(50, 90, 300, 50);
+		ape2.setBackground(colorGris);
+		ape2.setBounds(50, 110, 300, 50);
 		ape2.setLayout(null);
 		panelagg.add(ape2);
 		
@@ -180,21 +173,19 @@ public class Editar {
         text_ape2.setBounds(10, 5, 500, 50);
         ape2.add(text_ape2);
 		
-		fecha2 = new JPanel();
-		fecha2.setBackground(Color.lightGray);
-		fecha2.setBounds(50, 150, 300, 50);
-		fecha2.setLayout(null);
-		panelagg.add(fecha2);
+		
 		
 		campoTelefono = new JTextField(usuario.getPhone_number());
-		campoTelefono.setBackground(Color.LIGHT_GRAY);
+		campoTelefono.setBackground(colorGris);
+		campoTelefono.setForeground(Color.GRAY);
+
         campoTelefono.setFont(new Font("Arial", Font.BOLD, 25));
-        campoTelefono.setBounds(10, 5, 500, 50);
-        fecha2.add(campoTelefono);
+        campoTelefono.setBounds(50, 170, 300, 50);
+        panelagg.add(campoTelefono);
         
         
         eliminar = new JButton("Confirmar cambios");
-        eliminar.setBounds(50, 350, 300, 50);
+        eliminar.setBounds(50, 320, 300, 50);
         eliminar.setFont(new Font("Arial", Font.BOLD, 22));
         eliminar.setBackground(Color.BLACK);
         eliminar.setForeground(Color.WHITE);
@@ -234,7 +225,7 @@ public class Editar {
         panelagg.add(eliminar);
         
         volver = new JButton("Volver");
-        volver.setBounds(50, 420, 300, 50);
+        volver.setBounds(50, 390, 300, 50);
         volver.setFont(new Font("Arial", Font.BOLD, 22));
         volver.setBackground(Color.lightGray);
         volver.setForeground(Color.black);
