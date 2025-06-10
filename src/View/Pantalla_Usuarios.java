@@ -253,7 +253,7 @@ public class Pantalla_Usuarios {
 
         panel_tabla.add(btn_buscar);
 		
-        String[] columnas = { "Nombre", "Apellido", "Teléfono", "Cuota", "Día de pago", "No. de control" };
+        String[] columnas = { "Nombre", "Apellido", "Plan", "Fecha pago", "Fecha prox. pago", "No. de control" };
 
         DefaultTableModel modelo = new DefaultTableModel(null, columnas) {
             @Override
