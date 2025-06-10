@@ -15,7 +15,7 @@ public class Info_Instructor {
     private JPanel menu;
 
     private JPanel panel_botones, panel_info, panelinfo, panelimg, panelinfo2;
-    private JButton noti, confi, report, credencial, edit_info2, eli_info2, edit_info, eli_info, agregar;
+    private JButton noti, confi, report, credencial, edit_info2, eli_info2, edit_info, eli_info, agregar, back;
     private JLabel text_inicio, text_, user, date, text_info, text_nom2, text;
 
     public Info_Instructor(Vista_GYM log) {
@@ -23,9 +23,11 @@ public class Info_Instructor {
     }
 
     public JPanel getPanel() {
+    	
+    	Color colorGris = Color.decode("#D9D9D9");
         menu = new JPanel();
         menu.setLayout(null);
-        menu.setBackground(Color.LIGHT_GRAY);
+        menu.setBackground(colorGris);
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         menu.setSize(pantalla);
 
@@ -58,6 +60,17 @@ public class Info_Instructor {
         confi.setFocusPainted(false);
         confi.setOpaque(false);
         menu.add(confi);
+        
+        back = new JButton("Volver");
+        back.setBounds(300, 20, 150, 50);
+        back.setFont(new Font("Arial", Font.BOLD, 22));
+        back.setBackground(Color.BLACK);
+        back.setForeground(Color.WHITE);
+        back.setFocusPainted(false);
+        back.addActionListener(e -> {
+            menu_inicio.pintar_vista(new Pantalla_Instructores(menu_inicio).getPanel());
+        });
+        menu.add(back);
         
         // ==
         

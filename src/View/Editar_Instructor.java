@@ -22,9 +22,11 @@ public class Editar_Instructor {
     }
 
     public JPanel getPanel() {
+    	
+    	Color colorGris = Color.decode("#D9D9D9");
         menu = new JPanel();
         menu.setLayout(null);
-        menu.setBackground(Color.LIGHT_GRAY);
+        menu.setBackground(colorGris);
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         menu.setSize(pantalla);
 

@@ -10,8 +10,9 @@ public class Pantalla_Instructores {
     private Vista_GYM menu_inicio;
     private JPanel panel_instructor;
 
-    private JPanel panel_botones, coach1, coach2, coach3, coach4, coach5, coach6, franja_negro;
+    private JPanel panel_botones, franja_negro;
     private JButton noti, confi, crear_coach, btn_ver, btn_ver1, btn_ver2,btn_ver3, btn_ver4, btn_ver5;
+    private JButton coach1, coach2, coach3, coach4, coach5,coach6;
     private JLabel text_coach;
 
     public Pantalla_Instructores(Vista_GYM log) {
@@ -19,9 +20,11 @@ public class Pantalla_Instructores {
     }
 
     public JPanel getPanel() {
+    	
+    	Color colorGris = Color.decode("#D9D9D9");
     	panel_instructor = new JPanel();
     	panel_instructor.setLayout(null);
-    	panel_instructor.setBackground(Color.LIGHT_GRAY);
+    	panel_instructor.setBackground(colorGris);
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         panel_instructor.setSize(pantalla);
 
@@ -62,10 +65,14 @@ public class Pantalla_Instructores {
         panel_instructor.add(separador);
 
         // === Panel 1
-        coach1 = new JPanel();
+        coach1 = new JButton();
         coach1.setBackground(Color.white);
         coach1.setBounds(300, 150, 290, 170);
         coach1.setLayout(null);
+        coach1.setBorderPainted(false);
+        coach1.addActionListener(e -> {
+			menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel());
+        });
         panel_instructor.add(coach1);
 
         franja_negro = new JPanel();
@@ -92,10 +99,14 @@ public class Pantalla_Instructores {
 		coach1.add(btn_ver);
         
         // === Panel 2
-        coach2 = new JPanel();
+        coach2 = new JButton();
         coach2.setBackground(Color.white);
         coach2.setBounds(600, 150, 290, 170);
         coach2.setLayout(null);
+        coach2.setBorderPainted(false);
+        coach2.addActionListener(e -> {
+			menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel());
+        });
         panel_instructor.add(coach2);
 
         franja_negro = new JPanel();
@@ -122,10 +133,14 @@ public class Pantalla_Instructores {
 		coach2.add(btn_ver1);
         
         // === Panel 3
-        coach3 = new JPanel();
+        coach3 = new JButton();
         coach3.setBackground(Color.white);
         coach3.setBounds(900, 150, 290, 170);
         coach3.setLayout(null);
+        coach3.setBorderPainted(false);
+        coach3.addActionListener(e -> {
+			menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel());
+        });
         panel_instructor.add(coach3);
 
         franja_negro = new JPanel();
@@ -152,10 +167,14 @@ public class Pantalla_Instructores {
 		coach3.add(btn_ver2);
         
         // === Panel 4
-        coach4 = new JPanel();
+        coach4 = new JButton();
         coach4.setBackground(Color.white);
         coach4.setBounds(300, 350, 290, 170);
         coach4.setLayout(null);
+        coach4.setBorderPainted(false);
+        coach4.addActionListener(e -> {
+			menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel());
+        });
         panel_instructor.add(coach4);
 
         franja_negro = new JPanel();
@@ -182,10 +201,14 @@ public class Pantalla_Instructores {
 		coach4.add(btn_ver3);
         
         // === Panel 5
-        coach5 = new JPanel();
+        coach5 = new JButton();
         coach5.setBackground(Color.white);
         coach5.setBounds(600, 350, 290, 170);
         coach5.setLayout(null);
+        coach5.setBorderPainted(false);
+        coach5.addActionListener(e -> {
+			menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel());
+        });
         panel_instructor.add(coach5);
 
         franja_negro = new JPanel();
@@ -212,10 +235,14 @@ public class Pantalla_Instructores {
 		coach5.add(btn_ver4);
         
         // === Panel 6
-        coach6 = new JPanel();
+        coach6 = new JButton();
         coach6.setBackground(Color.white);
         coach6.setBounds(900, 350, 290, 170);
         coach6.setLayout(null);
+        coach6.setBorderPainted(false);
+        coach6.addActionListener(e -> {
+			menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel());
+        });
         panel_instructor.add(coach6);
 
         franja_negro = new JPanel();
