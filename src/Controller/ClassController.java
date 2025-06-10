@@ -25,20 +25,23 @@ public class ClassController {
 		classModel.createClass(id_instructor, id_class_type, date);
 	}
 	
+	//Actualiza los campos de una clase:
+	//Tipo de clase (id_class_type)
+	//Fecha (session_date)
 	public void updateClass (int id_class_session, int id_class_type, int year, int month, int day) {
 		classModel.updateClass(id_class_session, id_class_type, Date.valueOf(LocalDate.of(year, month, day)));
 	}
 	
+	//Obtiene la información de una clase, regresando un objeto tipo ClassDB.
+	//Busca la clase con su id
 	public ClassDB getClass (int id) {
 		return classModel.getTClass(id);
 	}
 	
+	//Elimina una clase. 
+	//Busca la clase con su id
 	public boolean deleteClass (int id) {
 		return classModel.deleteClass(id);
 	}
 	
-	public static void main(String[] args) {
-		ClassController con = new ClassController(new ClassModel());
-		con.deleteClass(5);
-	}
 }

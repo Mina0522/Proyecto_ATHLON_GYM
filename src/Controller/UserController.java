@@ -108,9 +108,9 @@ public class UserController {
 			tableModel.addRow(new Object[] {
 					user.getFirst_name(),
 					user.getLast_name(),
-					user.getPhone_number(),
-					user.getPrice(),
+					user.getMembership_name(),
 					user.getTransaction_date() == null? "N/A" : user.getTransaction_date(),
+					user.getNext_transaction_date() == null? "N/A" : user.getTransaction_date(),
 					user.getControl_num()
 					});
 		}

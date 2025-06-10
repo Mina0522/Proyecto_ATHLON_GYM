@@ -1,36 +1,42 @@
 package Model;
 
 public class UserWithLastPayment {
+	String first_name, last_name, membership_name, transaction_date,
+	next_transaction_date;
 	int control_num;
-	String first_name, last_name, phone_number;
-	Double price;
-	String transaction_date;
-	public UserWithLastPayment(int control_num, String first_name, String last_name, String phone_number,
-			Double price, String transaction_date) {
-		this.control_num = control_num;
+	
+	public UserWithLastPayment(String first_name, String last_name, String membership_name, String transaction_date,
+			String next_transaction_date, int control_num) {
 		this.first_name = first_name;
 		this.last_name = last_name;
-		this.phone_number = phone_number;
-		this.price = price;
+		this.membership_name = membership_name;
 		this.transaction_date = transaction_date;
+		this.next_transaction_date = next_transaction_date;
+		this.control_num = control_num;
 	}
-	public int getControl_num() {
-		return control_num;
-	}
+
 	public String getFirst_name() {
 		return first_name;
 	}
+
 	public String getLast_name() {
 		return last_name;
 	}
-	public String getPhone_number() {
-		return phone_number;
+
+	public String getMembership_name() {
+		return membership_name;
 	}
-	public Double getPrice() {
-		return price;
-	}
+
 	public String getTransaction_date() {
 		return transaction_date;
+	}
+
+	public String getNext_transaction_date() {
+		return next_transaction_date;
+	}
+
+	public int getControl_num() {
+		return control_num;
 	}
 	
 }

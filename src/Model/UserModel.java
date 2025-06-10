@@ -142,7 +142,8 @@ public class UserModel {
 							rs.getInt("control_num"),
 							rs.getString("first_name"),
 							rs.getString("last_name"),
-							rs.getString("phone_number"));
+							rs.getString("phone_number"),
+							rs.getString("email"));
 					return member; //Regresar un objeto User con los datos del miembro encontrado
 				} else {
 					System.out.println("Usuario no encontrado");
@@ -160,37 +161,44 @@ public class UserModel {
 		ArrayList<UserWithLastPayment> list;
 		try (
 		PreparedStatement prepSt = MyConnection.getConn().prepareStatement(
-		"SELECT m.control_num, m.first_name, m.last_name, m.phone_number, p.price, p.transaction_date\r\n"
+		"SELECT \r\n"
+		+ "    m.first_name,\r\n"
+		+ "    m.last_name,\r\n"
+		+ "    m.control_num,\r\n"
+		+ "    ms.name AS membership_name,\r\n"
+		+ "    p.transaction_date,\r\n"
+		+ "    DATE_ADD(p.transaction_date, INTERVAL ms.duration_days DAY) AS next_transaction_date\r\n"
 		+ "FROM member m\r\n"
 		+ "LEFT JOIN (\r\n"
-		+ "	SELECT mp.id_member, mp.price, mp.transaction_date \r\n"
-		+ "	FROM membership_payment mp \r\n"
-		+ "	INNER JOIN (\r\n"
-		+ "		SELECT id_member, MAX(transaction_date) AS last_date\r\n"
-		+ "		FROM membership_payment\r\n"
-		+ "		GROUP BY id_member\r\n"
-		+ "	) p2 ON mp.id_member = p2.id_member AND mp.transaction_date = p2.last_date\r\n"
-		+ ") p ON m.id = p.id_member \r\n"
-		+ "WHERE m.first_name LIKE ? OR \r\n"
-		+ "m.control_num LIKE ? OR\r\n"
-		+ "m.last_name LIKE ? OR\r\n"
-		+ "m.first_name LIKE ? OR\r\n"
-		+ "m.phone_number LIKE ?")){
+		+ "    SELECT mp.*\r\n"
+		+ "    FROM membership_payment mp\r\n"
+		+ "    INNER JOIN (\r\n"
+		+ "        SELECT id_member, MAX(transaction_date) AS last_date\r\n"
+		+ "        FROM membership_payment\r\n"
+		+ "        GROUP BY id_member\r\n"
+		+ "    ) latest ON mp.id_member = latest.id_member AND mp.transaction_date = latest.last_date\r\n"
+		+ ") p ON m.id = p.id_member\r\n"
+		+ "LEFT JOIN membership ms ON p.id_membership = ms.id\r\n"
+		+ "WHERE \r\n"
+		+ "    m.first_name LIKE ? OR\r\n"
+		+ "    m.last_name LIKE ? OR\r\n"
+		+ "    m.control_num LIKE ? OR\r\n"
+		+ "    ms.name LIKE ?;\r\n"
+		+ "")){
 			prepSt.setString(1, '%' + text + '%');
 			prepSt.setString(2, '%' + text + '%');
 			prepSt.setString(3, '%' + text + '%');
 			prepSt.setString(4, '%' + text + '%');
-			prepSt.setString(5, '%' + text + '%');
 			try (ResultSet rs = prepSt.executeQuery()){
 				list = new ArrayList<>();
 				while (rs.next()) {
 						UserWithLastPayment user = new UserWithLastPayment(
-						rs.getInt("control_num"),
-						rs.getString("first_name"),
-						rs.getString("last_name"),
-						rs.getString("phone_number"),
-						rs.getDouble("price"),
-						rs.getString("transaction_date"));		
+							rs.getString("first_name"),
+							rs.getString("last_name"),
+							rs.getString("membership_name"),
+							rs.getString("transaction_date"),
+							rs.getString("next_transaction_date"),
+							rs.getInt("control_num"));
 						
 						list.add(user);
 					}
@@ -208,28 +216,35 @@ public class UserModel {
 		ArrayList<UserWithLastPayment> list;
 		
 		try (PreparedStatement prepSt = MyConnection.getConn().prepareStatement(
-				"SELECT m.control_num, m.first_name, m.last_name, m.phone_number, p.price, p.transaction_date\r\n"
-						+ "FROM member m\r\n"
-						+ "LEFT JOIN (\r\n"
-						+ "	SELECT mp.id_member, mp.price, mp.transaction_date \r\n"
-						+ "	FROM membership_payment mp \r\n"
-						+ "	INNER JOIN (\r\n"
-						+ "		SELECT id_member, MAX(transaction_date) AS last_date\r\n"
-						+ "		FROM membership_payment\r\n"
-						+ "		GROUP BY id_member\r\n"
-						+ "	) p2 ON mp.id_member = p2.id_member AND mp.transaction_date = p2.last_date\r\n"
-						+ ") p ON m.id = p.id_member")) 
+				"SELECT \r\n"
+				+ "    m.first_name,\r\n"
+				+ "    m.last_name,\r\n"
+				+ "    m.control_num,\r\n"
+				+ "    ms.name AS membership_name,\r\n"
+				+ "    p.transaction_date,\r\n"
+				+ "    DATE_ADD(p.transaction_date, INTERVAL ms.duration_days DAY) AS next_transaction_date\r\n"
+				+ "FROM member m\r\n"
+				+ "LEFT JOIN (\r\n"
+				+ "    SELECT mp.*\r\n"
+				+ "    FROM membership_payment mp\r\n"
+				+ "    INNER JOIN (\r\n"
+				+ "        SELECT id_member, MAX(transaction_date) AS last_date\r\n"
+				+ "        FROM membership_payment\r\n"
+				+ "        GROUP BY id_member\r\n"
+				+ "    ) latest ON mp.id_member = latest.id_member AND mp.transaction_date = latest.last_date\r\n"
+				+ ") p ON m.id = p.id_member\r\n"
+				+ "LEFT JOIN membership ms ON p.id_membership = ms.id;")) 
 		{
 			try (ResultSet rs = prepSt.executeQuery()) {
 				list = new ArrayList<>();
 				while (rs.next()) {
 					UserWithLastPayment user = new UserWithLastPayment(
-							rs.getInt("control_num"),
 							rs.getString("first_name"),
 							rs.getString("last_name"),
-							rs.getString("phone_number"),
-							rs.getDouble("price"),
-							rs.getString("transaction_date"));
+							rs.getString("membership_name"),
+							rs.getString("transaction_date"),
+							rs.getString("next_transaction_date"),
+							rs.getInt("control_num"));
 					list.add(user);
 				}
 				return list;
@@ -285,8 +300,8 @@ public class UserModel {
 //		UserModel model = new UserModel();
 //		model.getUsersWithLastPayment();
 //	}
-	public static void main(String[] args) {
-		UserModel model = new UserModel();
-		model.createUser("asd", "fgh", "12321321");
-	}
+//	public static void main(String[] args) {
+//		UserModel model = new UserModel();
+//		model.createUser("asd", "fgh", "12321321");
+//	}
 }
