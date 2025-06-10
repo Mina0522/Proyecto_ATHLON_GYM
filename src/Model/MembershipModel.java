@@ -37,15 +37,15 @@ public class MembershipModel {
 			try (ResultSet rs = pr.executeQuery()){
 				if (rs.next()) {
 					return new Membership(
-							rs.getInt("id"),
-							rs.getString("name"),
-							rs.getInt("branches_number"),
-							rs.getString("promotions"),
-							rs.getBoolean("has_invitation_pass"),
-							rs.getInt("duration_days"),
-							rs.getDouble("price"),
-							rs.getInt("id_instructor_type"),
-							rs.getString("type_name"));
+							rs.getInt("id"),//id de la membresía (No se necesita mostrar)
+							rs.getString("name"), //Nombre del plan (Premium, Básico)
+							rs.getInt("branches_number"), //Número de sedes
+							rs.getString("promotions"), //Promociones
+							rs.getBoolean("has_invitation_pass"), //Tiene tarjeta de invitación
+							rs.getInt("duration_days"), //Días que dura la suscripción
+							rs.getDouble("price"), //Precio
+							rs.getInt("id_instructor_type"), //Id del tipo de entrenador (para operaciones, no se necesita mostrar)
+							rs.getString("type_name")); //Nombre del tipo del instructor (para mostrar)
 				}
 			}
 		} catch (SQLException e) {
@@ -120,7 +120,6 @@ public class MembershipModel {
 	}
 	public static void main(String[] args) {
 		MembershipModel model = new MembershipModel();
-		model.updateMembership(1, "Básico", 1, "Ninguna", false, 30, 500.0, 1);
 		for (Membership hola: model.getAllMembership()) {
 			System.out.println(hola);
 		}
