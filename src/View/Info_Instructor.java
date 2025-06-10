@@ -4,10 +4,14 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import Controller.TrainerController;
+
 import java.awt.*;
 import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
+import Model.ClassModel;
+import Model.TrainerModel;
 
 public class Info_Instructor {
 
@@ -17,6 +21,11 @@ public class Info_Instructor {
     private JPanel panel_botones, panel_info, panelinfo, panelimg, panelinfo2;
     private JButton noti, confi, report, credencial, edit_info2, eli_info2, edit_info, eli_info, agregar, back;
     private JLabel text_inicio, text_, user, date, text_info, text_nom2, text;
+    
+    TrainerModel modelTrainer = new TrainerModel();
+    ClassModel cTrainer = new ClassModel();
+    
+    TrainerController controller = new TrainerController(modelTrainer, cTrainer);
 
     public Info_Instructor(Vista_GYM log) {
         this.menu_inicio = log;

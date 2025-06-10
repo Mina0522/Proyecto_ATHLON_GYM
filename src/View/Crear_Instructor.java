@@ -1,6 +1,9 @@
 package View;
 
 import javax.swing.*;
+
+import Controller.TrainerController;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +11,8 @@ import java.awt.event.ActionListener;
 import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
+import Model.ClassModel;
+import Model.TrainerModel;
 
 public class Crear_Instructor {
 
@@ -18,7 +23,11 @@ public class Crear_Instructor {
     private JButton noti, confi, crear, cancelar;
     private JLabel user, text;
 
-
+    TrainerModel modelTrainer = new TrainerModel();
+    ClassModel cTrainer = new ClassModel();
+    
+    TrainerController controller = new TrainerController(modelTrainer, cTrainer);
+    
     public Crear_Instructor(Vista_GYM log) {
         this.menu_inicio = log;
     }

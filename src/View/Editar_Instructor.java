@@ -2,10 +2,15 @@
 package View;
 
 import javax.swing.*;
+
+import Controller.TrainerController;
+
 import java.awt.*;
 import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
+import Model.ClassModel;
+import Model.TrainerModel;
 
 public class Editar_Instructor {
 
@@ -15,7 +20,11 @@ public class Editar_Instructor {
     private JPanel panel_botones, panel_agg;
     private JButton noti, confi, editar, cancelar;
     private JLabel user, text;
-
+    
+    TrainerModel modelTrainer = new TrainerModel();
+    ClassModel cTrainer = new ClassModel();
+    
+    TrainerController controller = new TrainerController(modelTrainer, cTrainer);
 
     public Editar_Instructor(Vista_GYM log) {
         this.menu_inicio = log;
