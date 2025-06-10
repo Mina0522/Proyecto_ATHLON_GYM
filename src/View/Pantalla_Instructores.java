@@ -1,36 +1,37 @@
 package View;
 
 import javax.swing.*;
+import Controller.TrainerController;
 import java.awt.*;
-import Funciones_graficas.Graficos_fondo;
+import java.util.List;
+import java.util.Arrays;
 import Funciones_graficas.Menu;
+import Model.ClassModel;
+import Model.TrainerModel;
 
 public class Pantalla_Instructores {
 
     private Vista_GYM menu_inicio;
     private JPanel panel_instructor;
-
-    private JPanel panel_botones, franja_negro;
-    private JButton noti, confi, crear_coach, btn_ver, btn_ver1, btn_ver2,btn_ver3, btn_ver4, btn_ver5;
-    private JButton coach1, coach2, coach3, coach4, coach5,coach6;
-    private JLabel text_coach;
+    private TrainerController controller;
+    private JButton noti, confi, crear_coach;
 
     public Pantalla_Instructores(Vista_GYM log) {
         this.menu_inicio = log;
+        
+        TrainerModel modelTrainer = new TrainerModel();
+        ClassModel cTrainer = new ClassModel();
+        controller = new TrainerController(modelTrainer, cTrainer);
     }
 
     public JPanel getPanel() {
-    	
-    	Color colorGris = Color.decode("#D9D9D9");
-    	panel_instructor = new JPanel();
-    	panel_instructor.setLayout(null);
-    	panel_instructor.setBackground(colorGris);
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-        panel_instructor.setSize(pantalla);
+        panel_instructor = new JPanel(null);
+        panel_instructor.setBackground(Color.decode("#D9D9D9"));
+        panel_instructor.setSize(Toolkit.getDefaultToolkit().getScreenSize());
 
         // === MENU ===
         Menu botones = new Menu("Personal");
-        panel_botones = botones.obtenerPanel();
+        JPanel panel_botones = botones.obtenerPanel();
         panel_botones.setBounds(0, 0, 250, 1080);
         panel_instructor.add(panel_botones);
 
@@ -57,231 +58,83 @@ public class Pantalla_Instructores {
         confi.setFocusPainted(false);
         confi.setOpaque(false);
         panel_instructor.add(confi);
-        
-        // ==
+
+        // == 
         JSeparator separador = new JSeparator(SwingConstants.HORIZONTAL);
         separador.setBounds(250, 95, 1030, 2);
         separador.setForeground(Color.BLACK);
         panel_instructor.add(separador);
 
-        // === Panel 1
-        coach1 = new JButton();
-        coach1.setBackground(Color.white);
-        coach1.setBounds(300, 150, 290, 170);
-        coach1.setLayout(null);
-        coach1.setBorderPainted(false);
-        coach1.addActionListener(e -> {
-			menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel());
-        });
-        panel_instructor.add(coach1);
+        // === Datos de instructores (nombre y posicion x, y)
+        List<String> nombres = Arrays.asList("Ryan Garcia", "Felipe Ramos", "Elena Barrera", "El pepe", "Carlos Hernandes", "Sarah Diaz");
+        int[][] posiciones = {
+            {300, 150}, {600, 150}, {900, 150},
+            {300, 350}, {600, 350}, {900, 350}
+        };
 
-        franja_negro = new JPanel();
-        franja_negro.setBackground(Color.black);
-        franja_negro.setBounds(0, 0, 290, 30);
-        coach1.add(franja_negro);
+        for (int i = 0; i < nombres.size(); i++) {
+            crearPanelInstructor(nombres.get(i), posiciones[i][0], posiciones[i][1]);
+        }
         
-        text_coach = new JLabel("Ryan Garcia");
-        text_coach.setForeground(Color.white);
-        text_coach.setBounds(10, 5, 100, 20);
-        text_coach.setFont(new Font("Arial", Font.BOLD, 20));
-        franja_negro.add(text_coach);
+    	// === 
+ 		crear_coach = new JButton("Crear instructor");
+ 		crear_coach.setFont(new Font("Arial", Font.BOLD, 20));
+ 		crear_coach.setBounds(1020, 560, 200, 50); 
+ 		crear_coach.setBackground(Color.BLACK);
+ 		crear_coach.setForeground(Color.WHITE);
+ 		crear_coach.setFocusPainted(false);
+ 		crear_coach.setBorderPainted(false);
+ 		crear_coach.addActionListener(e -> {
+ 		    menu_inicio.pintar_vista(new Crear_Instructor(menu_inicio).getPanel());
+ 		});
+ 		panel_instructor.add(crear_coach);
 
-		ImageIcon icono_noti = new ImageIcon(getClass().getResource("/files/user.png"));
-		btn_ver = new JButton(icono_noti);
-		btn_ver.setBounds(20, 90, 72, 72);
-		btn_ver.setBorderPainted(false);
-		btn_ver.setContentAreaFilled(false);
-		btn_ver.setFocusPainted(false);
-		btn_ver.setOpaque(false);
-		btn_ver.addActionListener(e -> {
-			menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel());
-        });
-		coach1.add(btn_ver);
-        
-        // === Panel 2
-        coach2 = new JButton();
-        coach2.setBackground(Color.white);
-        coach2.setBounds(600, 150, 290, 170);
-        coach2.setLayout(null);
-        coach2.setBorderPainted(false);
-        coach2.addActionListener(e -> {
-			menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel());
-        });
-        panel_instructor.add(coach2);
+        return panel_instructor;
+    }
 
-        franja_negro = new JPanel();
-        franja_negro.setBackground(Color.black);
-        franja_negro.setBounds(0, 0, 290, 30);
-        coach2.add(franja_negro);
-        
-        text_coach = new JLabel("Felipe Ramos");
-        text_coach.setForeground(Color.white);
-        text_coach.setBounds(10, 5, 100, 20);
-        text_coach.setFont(new Font("Arial", Font.BOLD, 20));
-        franja_negro.add(text_coach);
+    private void crearPanelInstructor(String nombre, int x, int y) {
+        JButton coach = new JButton();
+        coach.setLayout(null);
+        coach.setBackground(Color.WHITE);
+        coach.setBounds(x, y, 290, 170);
+        coach.setBorderPainted(false);
+        coach.addActionListener(e -> menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel()));
 
-		ImageIcon icono_noti1 = new ImageIcon(getClass().getResource("/files/user.png"));
-		btn_ver1 = new JButton(icono_noti1);
-		btn_ver1.setBounds(20, 90, 72, 72);
-		btn_ver1.setBorderPainted(false);
-		btn_ver1.setContentAreaFilled(false);
-		btn_ver1.setFocusPainted(false);
-		btn_ver1.setOpaque(false);
-		btn_ver1.addActionListener(e -> {
-			menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel());
-        });
-		coach2.add(btn_ver1);
-        
-        // === Panel 3
-        coach3 = new JButton();
-        coach3.setBackground(Color.white);
-        coach3.setBounds(900, 150, 290, 170);
-        coach3.setLayout(null);
-        coach3.setBorderPainted(false);
-        coach3.addActionListener(e -> {
-			menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel());
-        });
-        panel_instructor.add(coach3);
+        // Franja negra con nombre
+        JPanel franja = new JPanel(null);
+        franja.setBackground(Color.BLACK);
+        franja.setBounds(0, 0, 290, 30);
 
-        franja_negro = new JPanel();
-        franja_negro.setBackground(Color.black);
-        franja_negro.setBounds(0, 0, 290, 30);
-        coach3.add(franja_negro);
-        
-        text_coach = new JLabel("Elena Barrera");
-        text_coach.setForeground(Color.white);
-        text_coach.setBounds(10, 5, 100, 20);
-        text_coach.setFont(new Font("Arial", Font.BOLD, 20));
-        franja_negro.add(text_coach);
+        JLabel nombreLabel = new JLabel(nombre);
+        nombreLabel.setForeground(Color.WHITE);
+        nombreLabel.setBounds(10, 5, 250, 20);
+        nombreLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        franja.add(nombreLabel);
 
-		ImageIcon icono_noti2 = new ImageIcon(getClass().getResource("/files/user.png"));
-		btn_ver2 = new JButton(icono_noti2);
-		btn_ver2.setBounds(20, 90, 72, 72);
-		btn_ver2.setBorderPainted(false);
-		btn_ver2.setContentAreaFilled(false);
-		btn_ver2.setFocusPainted(false);
-		btn_ver2.setOpaque(false);
-		btn_ver2.addActionListener(e -> {
-			menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel());
-        });
-		coach3.add(btn_ver2);
-        
-        // === Panel 4
-        coach4 = new JButton();
-        coach4.setBackground(Color.white);
-        coach4.setBounds(300, 350, 290, 170);
-        coach4.setLayout(null);
-        coach4.setBorderPainted(false);
-        coach4.addActionListener(e -> {
-			menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel());
-        });
-        panel_instructor.add(coach4);
+        coach.add(franja);
 
-        franja_negro = new JPanel();
-        franja_negro.setBackground(Color.black);
-        franja_negro.setBounds(0, 0, 290, 30);
-        coach4.add(franja_negro);
-        
-        text_coach = new JLabel("El pepe");
-        text_coach.setForeground(Color.white);
-        text_coach.setBounds(10, 5, 100, 20);
-        text_coach.setFont(new Font("Arial", Font.BOLD, 20));
-        franja_negro.add(text_coach);
+        // Icono usuario
+        ImageIcon icono = new ImageIcon(getClass().getResource("/files/user.png"));
+        JButton btn_ver = new JButton(icono);
+        btn_ver.setBounds(20, 90, 72, 72);
+        btn_ver.setBorderPainted(false);
+        btn_ver.setContentAreaFilled(false);
+        btn_ver.setFocusPainted(false);
+        btn_ver.setOpaque(false);
+        btn_ver.addActionListener(e -> menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel()));
+        coach.add(btn_ver);
 
-		ImageIcon icono_noti4 = new ImageIcon(getClass().getResource("/files/user.png"));
-		btn_ver3 = new JButton(icono_noti4);
-		btn_ver3.setBounds(20, 90, 72, 72);
-		btn_ver3.setBorderPainted(false);
-		btn_ver3.setContentAreaFilled(false);
-		btn_ver3.setFocusPainted(false);
-		btn_ver3.setOpaque(false);
-		btn_ver3.addActionListener(e -> {
-			menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel());
-        });
-		coach4.add(btn_ver3);
-        
-        // === Panel 5
-        coach5 = new JButton();
-        coach5.setBackground(Color.white);
-        coach5.setBounds(600, 350, 290, 170);
-        coach5.setLayout(null);
-        coach5.setBorderPainted(false);
-        coach5.addActionListener(e -> {
-			menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel());
-        });
-        panel_instructor.add(coach5);
+        panel_instructor.add(coach);
+    }
 
-        franja_negro = new JPanel();
-        franja_negro.setBackground(Color.black);
-        franja_negro.setBounds(0, 0, 290, 30);
-        coach5.add(franja_negro);
-        
-        text_coach = new JLabel("Carlos Hernandes");
-        text_coach.setForeground(Color.white);
-        text_coach.setBounds(10, 5, 100, 20);
-        text_coach.setFont(new Font("Arial", Font.BOLD, 20));
-        franja_negro.add(text_coach);
-
-		ImageIcon icono_noti5 = new ImageIcon(getClass().getResource("/files/user.png"));
-		btn_ver4 = new JButton(icono_noti5);
-		btn_ver4.setBounds(20, 90, 72, 72);
-		btn_ver4.setBorderPainted(false);
-		btn_ver4.setContentAreaFilled(false);
-		btn_ver4.setFocusPainted(false);
-		btn_ver4.setOpaque(false);
-		btn_ver4.addActionListener(e -> {
-			menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel());
-        });
-		coach5.add(btn_ver4);
-        
-        // === Panel 6
-        coach6 = new JButton();
-        coach6.setBackground(Color.white);
-        coach6.setBounds(900, 350, 290, 170);
-        coach6.setLayout(null);
-        coach6.setBorderPainted(false);
-        coach6.addActionListener(e -> {
-			menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel());
-        });
-        panel_instructor.add(coach6);
-
-        franja_negro = new JPanel();
-        franja_negro.setBackground(Color.black);
-        franja_negro.setBounds(0, 0, 290, 30);
-        coach6.add(franja_negro);
-        
-        text_coach = new JLabel("Sarah Diaz");
-        text_coach.setForeground(Color.white);
-        text_coach.setBounds(10, 5, 100, 20);
-        text_coach.setFont(new Font("Arial", Font.BOLD, 20));
-        franja_negro.add(text_coach);
-
-		ImageIcon icono_noti6 = new ImageIcon(getClass().getResource("/files/user.png"));
-		btn_ver5 = new JButton(icono_noti6);
-		btn_ver5.setBounds(20, 90, 72, 72);
-		btn_ver5.setBorderPainted(false);
-		btn_ver5.setContentAreaFilled(false);
-		btn_ver5.setFocusPainted(false);
-		btn_ver5.setOpaque(false);
-		btn_ver5.addActionListener(e -> {
-			menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel());
-        });
-		coach6.add(btn_ver5);
- 
-        // === 
-		crear_coach = new JButton("Crear instructor");
-		crear_coach.setFont(new Font("Arial", Font.BOLD, 20));
-		crear_coach.setBounds(1020, 560, 200, 50); 
-		crear_coach.setBackground(Color.BLACK);
-		crear_coach.setForeground(Color.WHITE);
-		crear_coach.setFocusPainted(false);
-		crear_coach.setBorderPainted(false);
-		crear_coach.addActionListener(e -> {
-		    menu_inicio.pintar_vista(new Crear_Instructor(menu_inicio).getPanel());
-		});
-		panel_instructor.add(crear_coach);
-        
-		return panel_instructor;
-	}
-
+    private void agregarIcono(String path, int x, int y) {
+        JButton boton = new JButton(new ImageIcon(getClass().getResource(path)));
+        boton.setBounds(x, y, 57, 57);
+        boton.setBorderPainted(false);
+        boton.setContentAreaFilled(false);
+        boton.setFocusPainted(false);
+        boton.setOpaque(false);
+        panel_instructor.add(boton);
+    }
+   
 }

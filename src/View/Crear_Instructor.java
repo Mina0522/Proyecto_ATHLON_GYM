@@ -2,6 +2,9 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
@@ -122,6 +125,23 @@ public class Crear_Instructor {
         crear.setBackground(Color.BLACK);
         crear.setForeground(Color.WHITE);
         crear.setFocusPainted(false);
+        crear.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String linea1= nombre.getText().trim();
+                String linea2 = correo.getText().trim();
+                String linea3= tel.getText().trim();
+                String linea4 = especialidad.getText().trim();
+
+                if (linea1.isEmpty() || linea2.isEmpty() || linea3.isEmpty() || linea4.isEmpty()) {
+    	            JOptionPane.showMessageDialog(menu,
+        	                "Rellena todos los campos.",
+        	                "Datos incompletos", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "¡Clase guardada corrrectamente!");
+                    menu_inicio.pintar_vista(new Pantalla_Instructores(menu_inicio).getPanel());
+                }
+            }
+        });
         panel_agg.add(crear);
         
         cancelar = new JButton("Cancelar");
