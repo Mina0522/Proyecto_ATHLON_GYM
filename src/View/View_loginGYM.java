@@ -61,7 +61,7 @@ public class View_loginGYM {
 		panel_login.add(panel_inicio);
 		
 		// === Elementos.
-		text_inicio = new JLabel("Iniciar sesion");
+		text_inicio = new JLabel("Iniciar sesión");
 		text_inicio.setFont(new Font("Arial", Font.BOLD, 45));
 		text_inicio.setBounds(105, 28, 290, 50);
         panel_inicio.add(text_inicio);
@@ -69,7 +69,7 @@ public class View_loginGYM {
         // === Campos de usuario y contraseña personalizados. 
         Graficos_texto campo_usuario = new Graficos_texto();
         campo_usuario.setPlaceholder(" Ingresa tu usuario");
-        campo_usuario.setBounds(50,115, 390, 50);
+        campo_usuario.setBounds(50, 115, 390, 50);
         campo_usuario.setBackground(colorGris);
         campo_usuario.setFont(new Font("Arial", Font.PLAIN, 18));
         campo_usuario.setBorder(null);

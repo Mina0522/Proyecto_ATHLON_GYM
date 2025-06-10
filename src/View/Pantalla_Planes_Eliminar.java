@@ -21,9 +21,11 @@ public class Pantalla_Planes_Eliminar {
     }
 
     public JPanel getPanel() {
+    	
+    	Color colorGris = Color.decode("#D9D9D9");
         menu_user = new JPanel();
         menu_user.setLayout(null);
-        menu_user.setBackground(Color.LIGHT_GRAY);
+        menu_user.setBackground(colorGris);
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         menu_user.setSize(pantalla);
 
