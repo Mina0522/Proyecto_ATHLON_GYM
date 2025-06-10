@@ -118,4 +118,8 @@ public class UserController {
 					});
 		}
 	}
+	
+	public UserWithLastPayment getUserDetails (int id) {
+		return userModel.getUserDetails(id);
+	}
 }
