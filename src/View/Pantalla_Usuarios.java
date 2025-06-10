@@ -268,6 +268,7 @@ public class Pantalla_Usuarios {
         tabla = new JTable(modelo);
         tabla.setFont(new Font("Arial", Font.PLAIN, 17));
         tabla.setRowHeight(39);
+        
         tabla.setForeground(Color.BLACK);
         tabla.setBackground(Color.WHITE);
 
