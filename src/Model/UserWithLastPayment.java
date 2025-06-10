@@ -41,7 +41,9 @@ public class UserWithLastPayment {
 	public String getMembership_name() {
 		return membership_name;
 	}
-
+	public void setMembershipName(String membershipName) {
+	    this.membership_name = membershipName;
+	}
 	public String getTransaction_date() {
 		return transaction_date;
 	}

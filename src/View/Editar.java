@@ -12,6 +12,7 @@ import Model.ClassModel;
 import Model.PaymentModel;
 import Model.User;
 import Model.UserModel;
+import Model.UserWithLastPayment;
 
 public class Editar {
 
@@ -154,6 +155,9 @@ public class Editar {
 		comboBox.setBounds(50, 50, 300, 50);
 		comboBox.setBackground(colorGris);
 		comboBox.setFont(new Font("Arial", Font.BOLD, 25));
+		String seleccion = (String) comboBox.getSelectedItem();
+		int id = usuario.getId();
+		controlador.getUserDetails(id).setMembershipName(seleccion);
 		panelagg.add(comboBox);
 
 		
@@ -163,7 +167,7 @@ public class Editar {
 		ape2.setLayout(null);
 		panelagg.add(ape2);
 		
-        text_ape2 = new JLabel("10 / 04 / 2025");
+        text_ape2 = new JLabel(controlador.getUserDetails(id).getTransaction_date());
         text_ape2.setFont(new Font("Arial", Font.BOLD, 25));
         text_ape2.setForeground(Color.gray);
         text_ape2.setBounds(10, 5, 500, 50);

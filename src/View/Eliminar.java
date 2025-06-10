@@ -158,7 +158,8 @@ public class Eliminar {
 		nom2.setLayout(null);
 		paneldelete.add(nom2);
 		
-        text_nom2 = new JLabel("Basico");
+		int id = usuario.getId();
+        text_nom2 = new JLabel(controlador.getUserDetails(id).getMembership_name());
         text_nom2.setFont(new Font("Arial", Font.BOLD, 25));
         text_nom2.setForeground(Color.black);
         text_nom2.setBounds(10, 5, 500, 50);
