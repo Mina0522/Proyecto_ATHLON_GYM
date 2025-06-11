@@ -68,6 +68,7 @@ public class Pantalla_Instructores {
         panel_instructor.add(separador);
 
         // === Contenedor para scroll ===
+ 
         JPanel contenedor = new JPanel(null);
         contenedor.setPreferredSize(new Dimension(1030, 900));
         contenedor.setBackground(Color.decode("#D9D9D9"));
@@ -94,17 +95,24 @@ public class Pantalla_Instructores {
             int fila = i / columnas;
 
             int posX = margenX + (col * (ancho + espacioX));
-            int posY = 10 + (fila * (alto + espacioY));
+            int posY = 100 + (fila * (alto + espacioY));
 
             crearPanelInstructor(t, posX, posY, contenedor);
         }
 
         int totalFilas = (int) Math.ceil(entrenadores.size() / (double) columnas);
         int nuevaAltura = 150 + totalFilas * (alto + espacioY);
+        contenedor.setPreferredSize(new Dimension(1030, nuevaAltura + 100));
 
+        JScrollPane scroll = new JScrollPane(contenedor);
+        scroll.setBounds(250, 100, 1100, 600);
+        scroll.setBorder(null);
+        scroll.getVerticalScrollBar().setUnitIncrement(16);
+        panel_instructor.add(scroll);
+        
         crear_coach = new JButton("Crear instructor");
         crear_coach.setFont(new Font("Arial", Font.BOLD, 20));
-        crear_coach.setBounds((1030 - 200) / 2, nuevaAltura, 200, 50);
+        crear_coach.setBounds(760, 20, 200, 50);
         crear_coach.setBackground(Color.BLACK);
         crear_coach.setForeground(Color.WHITE);
         crear_coach.setFocusPainted(false);
@@ -113,14 +121,6 @@ public class Pantalla_Instructores {
             menu_inicio.pintar_vista(new Crear_Instructor(menu_inicio).getPanel());
         });
         contenedor.add(crear_coach);
-
-        contenedor.setPreferredSize(new Dimension(1030, nuevaAltura + 100));
-
-        JScrollPane scroll = new JScrollPane(contenedor);
-        scroll.setBounds(250, 100, 1100, 600);
-        scroll.setBorder(null);
-        scroll.getVerticalScrollBar().setUnitIncrement(16);
-        panel_instructor.add(scroll);
 
         return panel_instructor;
     }

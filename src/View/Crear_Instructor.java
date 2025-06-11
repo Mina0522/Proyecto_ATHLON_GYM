@@ -12,6 +12,7 @@ import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
 import Model.ClassModel;
+import Model.Trainer;
 import Model.TrainerModel;
 
 public class Crear_Instructor {
@@ -22,6 +23,7 @@ public class Crear_Instructor {
     private JPanel panel_botones, panel_agg;
     private JButton noti, confi, crear, cancelar;
     private JLabel user, text;
+    private JComboBox<Trainer> comboTipo;
 
     TrainerModel modelTrainer = new TrainerModel();
     ClassModel cTrainer = new ClassModel();
@@ -120,13 +122,19 @@ public class Crear_Instructor {
         tel.setBorder(null);
         panel_agg.add(tel);
         
-        Graficos_texto especialidad = new Graficos_texto();
-        especialidad.setPlaceholder(" Especialidad");
-        especialidad.setBounds(50, 350, 390, 40);
-        especialidad.setBackground(Color.lightGray);
-        especialidad.setFont(new Font("Arial", Font.PLAIN, 18));
-        especialidad.setBorder(null);
-        panel_agg.add(especialidad);
+//        Graficos_texto especialidad = new Graficos_texto();
+//        especialidad.setPlaceholder(" Especialidad");
+//        especialidad.setBounds(50, 350, 390, 40);
+//        especialidad.setBackground(Color.lightGray);
+//        especialidad.setFont(new Font("Arial", Font.PLAIN, 18));
+//        especialidad.setBorder(null);
+//        panel_agg.add(especialidad);
+        
+        comboTipo = new JComboBox<>();
+        comboTipo.setBounds(50, 350, 390, 40);
+        comboTipo.setFont(new Font("Arial", Font.PLAIN, 18));
+        comboTipo.setBackground(Color.lightGray);
+        panel_agg.add(comboTipo);
         
         crear = new JButton("Crear");
         crear.setBounds(50, 400, 390, 40);
@@ -134,25 +142,53 @@ public class Crear_Instructor {
         crear.setBackground(Color.BLACK);
         crear.setForeground(Color.WHITE);
         crear.setFocusPainted(false);
-        crear.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String linea1= nombre.getText().trim();
-                String linea2 = correo.getText().trim();
-                String linea3= tel.getText().trim();
-                String linea4 = especialidad.getText().trim();
+        crear.addActionListener(e -> {
+            String nombreU = nombre.getText().trim();
+            String correoU = correo.getText().trim();
+            String telU = tel.getText().trim();
+            int tipo = comboTipo.getSelectedIndex() + 1;
 
-                if (linea1.isEmpty() || linea2.isEmpty() || linea3.isEmpty() || linea4.isEmpty()) {
-    	            JOptionPane.showMessageDialog(menu,
-        	                "Rellena todos los campos.",
-        	                "Datos incompletos", JOptionPane.WARNING_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(null, "¡Clase guardada corrrectamente!");
-                    menu_inicio.pintar_vista(new Pantalla_Instructores(menu_inicio).getPanel());
-                }
+            int controlNum = controller.createTrainer(nombreU, correoU, telU, tipo);
+
+            switch (controlNum) {
+                case 1:
+                    JOptionPane.showMessageDialog(menu, 
+                    		"Rellena todos los campos.",
+                    		"Datos incompletos", JOptionPane.WARNING_MESSAGE);
+                    break;
+                case 2:
+                    JOptionPane.showMessageDialog(menu,
+                    		"El nombre no puede contener numeros.",
+                    		"Datos invalidos", JOptionPane.WARNING_MESSAGE);
+                    break;
+                case 3:
+                    JOptionPane.showMessageDialog(menu,
+                    		"El telefono no puede contener letras.", 
+                    		"Datos invalidos", JOptionPane.WARNING_MESSAGE);
+                    break;
+                case -1:
+                case 0:
+                    JOptionPane.showMessageDialog(menu,
+                    		"Ocurrio un error al registrar el instructor.", 
+                    		"Error", JOptionPane.ERROR_MESSAGE);
+                    break;
+                default:
+                    Trainer t = controller.getTrainer(controlNum);
+                    if (t != null) {
+                        JOptionPane.showMessageDialog(menu,
+                        		"¡Instructor creado exitosamente!");
+                        menu_inicio.pintar_vista(new Pantalla_Instructores(menu_inicio).getPanel());
+                    } else {
+                        JOptionPane.showMessageDialog(menu, 
+                        		"Instructor creado, pero no se pudo recuperar su informacion.",
+                        		"Advertencia", JOptionPane.WARNING_MESSAGE);
+                    }
+                    break;
             }
         });
-        panel_agg.add(crear);
         
+        panel_agg.add(crear);
+
         cancelar = new JButton("Cancelar");
         cancelar.setBounds(50, 450, 390, 40);
         cancelar.setFont(new Font("Arial", Font.BOLD, 22));
@@ -163,8 +199,6 @@ public class Crear_Instructor {
         	menu_inicio.pintar_vista(new Pantalla_Instructores(menu_inicio).getPanel());
         });
         panel_agg.add(cancelar);
-        
-        
 
 		return menu;
 	}
