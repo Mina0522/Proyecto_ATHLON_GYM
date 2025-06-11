@@ -11,14 +11,14 @@ public class MembershipModel {
 			int id_trainer_type, boolean has_invitation_pass) {
 		
 			String query = "INSERT INTO membership "
-					+ "(name, price, duration_days, id_instructor_type, has_invitation_pass) "
-					+ "VALUES (?,?,?,?,?)";
+					+ "(name, price, duration_days, id_instructor_type, has_invitation_pass, branches_number) "
+					+ "VALUES (?,?,?,?,?, 0)";
 			try (PreparedStatement prepStatement = MyConnection.getConn().prepareStatement(query)){
 				prepStatement.setString(1, name);
 				prepStatement.setDouble(2, price);
 				prepStatement.setInt(3, days);
-				prepStatement.setString(4, name);
-			    prepStatement.setInt(5, id_trainer_type);
+				prepStatement.setInt(4, id_trainer_type);
+			    prepStatement.setBoolean(5, has_invitation_pass);
 			    
 			    int nosejeje = prepStatement.executeUpdate();
 			    if (nosejeje > 0)
@@ -59,7 +59,7 @@ public class MembershipModel {
 		ArrayList<Membership> list;
 		try (PreparedStatement pr = MyConnection.getConn().prepareStatement(
 		"SELECT mship.*, type_name FROM membership mship "
-		+ "INNER JOIN (instructor_type it) ON mship.id = it.id ")) {
+		+ "LEFT JOIN (instructor_type it) ON mship.id = it.id ")) {
 			try (ResultSet rs = pr.executeQuery()){
 				list = new ArrayList<>();
 				while (rs.next()) {
@@ -82,18 +82,17 @@ public class MembershipModel {
 		return null; //Error
 	}
 	
-	public boolean updateMembership (String name, Double price, int days, int id_trainer_type, boolean has_invitation_pass) {
+	public boolean updateMembership (int id, String name, Double price, int days, int id_trainer_type, boolean has_invitation_pass) {
 		
 		try (PreparedStatement ps = MyConnection.getConn().prepareStatement(
-				"UPDATE membership SET branches_number = ?, promotions = ?, \r\n"
-				+ "has_invitation_pass = ?, duration_days = ?, \r\n"
-				+ "price = ?, name = ?, id_instructor_type = ?\r\n"
+				"UPDATE membership SET name = ?, price = ?, duration_days = ?, id_instructor_type = ?, has_invitation_pass = ?"
 				+ "WHERE id = ?")) {
 			ps.setString(1, name);
 			ps.setDouble(2, price);
 			ps.setInt(3, days);
 			ps.setString(4, name);
 			ps.setInt(5, id_trainer_type);
+			ps.setInt(6, id);
 			
 			int i = ps.executeUpdate();
 			if (i > 0)
@@ -115,11 +114,11 @@ public class MembershipModel {
 		}
 		return false; //Error al eliminar el plan
 	}
-//	public static void main(String[] args) {
-//		MembershipModel model = new MembershipModel();
-//		for (Membership hola: model.getAllMembership()) {
-//			System.out.println(hola);
-//		}
-//		
-//	}
+	public static void main(String[] args) {
+		MembershipModel model = new MembershipModel();
+		for (Membership hola: model.getAllMembership()) {
+			System.out.println(hola);
+		}
+		
+	}
 }

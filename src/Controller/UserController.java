@@ -23,7 +23,7 @@ public class UserController {
 	UserModel userModel;
 	PaymentModel paymentModel;
 	ClassModel classModel;
-	
+		
 	public UserController(UserModel userModel, PaymentModel paymentModel,
 			ClassModel classModel) {
 		this.userModel = userModel;
