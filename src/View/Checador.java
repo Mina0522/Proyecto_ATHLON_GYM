@@ -20,11 +20,15 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import Controller.LoginController;
+import Controller.UserController;
 import Funciones_graficas.Graficos;
 import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Model.AuthModel;
+import Model.ClassModel;
+import Model.PaymentModel;
 import Model.User;
+import Model.UserModel;
 
 public class Checador {
 	
@@ -32,6 +36,9 @@ public class Checador {
 	private Vista_GYM checador;
 	private LoginController controller;
 	private AuthModel model;
+	
+	private UserController  controlador2;
+
 
 	// === Aqui se crean los elementos que utilizaremos
 	public JPanel panel_inicio, panel_info, panel_info_dos, panel_negro, panel_nero;
@@ -39,11 +46,18 @@ public class Checador {
 	public JLabel img, text_inicio, img_logo, text_, text_clase, text_fecha;
 	public JButton btn_entrar, btn_volver;
 	public JTextArea info_clase, info_fecha; 
+	private User usuario;
 	
 	// === Constructor de View_loginGYM.
 	public Checador(Vista_GYM log, User user) {
 		checador = log;
 		model = new AuthModel();
+		this.usuario=user;
+		
+		UserModel userModel = new UserModel();
+        PaymentModel paymentModel = new PaymentModel();
+        ClassModel classModel = new ClassModel();
+        controlador2 = new UserController(userModel, paymentModel, classModel);
 	}
 	
 	// === Metodo que construye y lo devuelve a la ventana principal.
@@ -67,16 +81,18 @@ public class Checador {
 		img_logo.setBounds(220, 15, 128, 128);
 		panel_inicio.add(img_logo);
 		
-		text_inicio = new JLabel("Admin");
+		text_inicio = new JLabel(usuario.getFirst_name());
 		text_inicio.setFont(new Font("Arial", Font.BOLD, 40));
 		text_inicio.setForeground(Color.BLACK);
-		text_inicio.setBounds(220, 145, 500, 50);
+		text_inicio.setHorizontalAlignment(SwingConstants.CENTER);
+		text_inicio.setBounds(0, 155, 550, 50);
         panel_inicio.add(text_inicio);
         
-        text_ = new JLabel("P l a n  a d m i n");
+        text_ = new JLabel(controlador2.getUserDetails(usuario.getId()).getMembership_name());
         text_.setFont(new Font("Arial", Font.BOLD, 20));
         text_.setForeground(Color.GRAY);
-        text_.setBounds(200, 175, 500, 50);
+        text_.setHorizontalAlignment(SwingConstants.CENTER);
+        text_.setBounds(0, 185, 550, 50);
         panel_inicio.add(text_);
 		
         // === Panel 1
