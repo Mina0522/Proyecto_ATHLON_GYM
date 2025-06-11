@@ -129,7 +129,6 @@ public class TrainerModel {
 
 	public static void main(String[] args) {
 		TrainerModel model = new TrainerModel();
-		model.createTrainer("Ozuna", "ozuna@gmail.com", "1231231231", 1);
 		for (Trainer trainer : model.getAllTrainers()) {
 			System.out.println(trainer);
 		}
