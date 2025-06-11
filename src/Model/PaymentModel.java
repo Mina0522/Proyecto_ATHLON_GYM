@@ -97,7 +97,8 @@ public class PaymentModel {
 		}
 		return null; //Error al obtener el pago
 	}
-
+	
+	//Regresa una lista con todos los pagos. Inculye el primer nombre del usuario que pagó y el nombre del plan pagado
 	public ArrayList<Payment> getAllPayments () {
 		ArrayList<Payment> list;
 		try (PreparedStatement ps = MyConnection.getConn().prepareStatement(

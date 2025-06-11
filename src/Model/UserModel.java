@@ -380,10 +380,4 @@ public class UserModel {
 //		UserModel model = new UserModel();
 //		model.getUsersWithLastPayment();
 //	}
-	public static void main(String[] args) {
-		UserModel model = new UserModel();
-		for (UserWithLastPayment user : model.getUsersWithLastPayment()) {
-			System.out.println(user);
-		}
-	}
 }
