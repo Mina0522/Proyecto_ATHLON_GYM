@@ -158,7 +158,7 @@ public class Crear_Clase {
                     controlador2.createClass(id_instructor, id_class_type, fecha.getYear(), fecha.getMonthValue(), fecha.getDayOfMonth());
 
                     JOptionPane.showMessageDialog(menu,
-                            "¡Clase guardada correctamente!",
+                            "Clase guardada correctamente!",
                             "Éxito", JOptionPane.INFORMATION_MESSAGE);
                     menu_inicio.pintar_vista(new Pantalla_Inicio(menu_inicio).getPanel());
                 } catch (NumberFormatException ex) {
