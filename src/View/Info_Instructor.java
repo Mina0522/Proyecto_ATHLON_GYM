@@ -129,6 +129,35 @@ public class Info_Instructor {
         eli_info.setBackground(Color.BLACK);
         eli_info.setForeground(Color.WHITE);
         eli_info.setFocusPainted(false);
+        eli_info.addActionListener(e -> {
+            int opcion = JOptionPane.showConfirmDialog(
+                null,
+                "¿Estás seguro de que deseas eliminar a este usuario?",
+                "Confirmar eliminación",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+            );
+
+            if (opcion == JOptionPane.YES_OPTION) {
+                controller.deleteTrainer(trainer.getId());
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Usuario eliminado correctamente.",
+                    "Eliminación exitosa",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+                
+                menu_inicio.pintar_vista(new Pantalla_Instructores(menu_inicio).getPanel());
+
+            } else {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Se canceló la eliminación.",
+                    "Operación cancelada",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        });
         panel_info.add(eli_info);
       
 		// ===
