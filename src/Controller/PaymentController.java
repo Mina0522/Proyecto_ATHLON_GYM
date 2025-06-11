@@ -1,5 +1,9 @@
 package Controller;
 
+import java.util.ArrayList;
+
+import javax.swing.table.DefaultTableModel;
+
 import Model.Payment;
 import Model.PaymentModel;
 import Model.UserModel;
@@ -25,6 +29,17 @@ public class PaymentController {
 	
 	public Payment getPayment (int id) { 
 		return paymentModel.getPayment(id);
+	}
+	
+	//Regresa un TableModel con:
+	//Nombre del plan pagado | Nombre del usuario | Monto pagado
+	public DefaultTableModel getPaymentTable () {
+		DefaultTableModel tableModel = new DefaultTableModel();
+		ArrayList<Payment> payments = paymentModel.getAllPayments();
+		for (Payment p : payments) {
+			tableModel.addRow(new Object[] {p.getMembership_name(), p.getMember_name(), p.getPrice()});
+		}
+		return tableModel;
 	}
 	
 //	public static void main(String[] args) {

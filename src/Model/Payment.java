@@ -40,6 +40,26 @@ public class Payment {
 	public int getId_membership() {
 		return id_membership;
 	}
+	
+	public int getId_member() {
+		return id_member;
+	}
+
+	public int getDays() {
+		return days;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public String getMembership_name() {
+		return membership_name;
+	}
+
+	public String getMember_name() {
+		return member_name;
+	}
 
 	@Override
 	public String toString() {
