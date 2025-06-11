@@ -205,8 +205,12 @@ public class UserController {
 					user.getControl_number());
 	}
 	
+	public void geterateUserReportPDF (int id) {
+		PDFModel.createUserReportPDF(paymentModel.getAllUserPayments(id));
+	}
+	
 //	public static void main(String[] args) {
 //		UserController con = new UserController(new UserModel(), new PaymentModel(), new ClassModel());
-//		con.generateUserIdPDF(1);
+//		con.geterateUserReportPDF(3);
 //	}
 }

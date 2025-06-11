@@ -106,9 +106,35 @@ public class PaymentModel {
 							rs.getString("transaction_date"),
 							rs.getDouble("price"),
 							rs.getInt("days"),
-							rs.getString("m.first_name"),
-							rs.getString("ms.name"));
+							rs.getString("ms.name"),
+							rs.getString("m.first_name"));
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null; //Error al obtener el pago
+	}
+	
+	public ArrayList<Payment> getAllUserPayments (int id) {
+		ArrayList<Payment> list = new ArrayList<>();
+		try (PreparedStatement ps = MyConnection.getConn().prepareStatement(
+				"SELECT mp.*, m.first_name, ms.name FROM membership_payment mp\r\n"
+				+ "INNER JOIN member m ON mp.id_member = m.id\r\n"
+				+ "INNER JOIN membership ms ON mp.id_membership = ms.id WHERE id_member = ?")) {
+			ps.setInt(1, id);
+			try (ResultSet rs = ps.executeQuery()){
+				while (rs.next())
+					list.add(new Payment(
+							rs.getInt("id"),
+							rs.getInt("id_member"),
+							rs.getInt("id_membership"),
+							rs.getString("transaction_date"),
+							rs.getDouble("price"),
+							rs.getInt("days"),
+							rs.getString("ms.name"),
+							rs.getString("m.first_name")));
+			}
+			return list;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -132,8 +158,8 @@ public class PaymentModel {
 							rs.getString("transaction_date"),
 							rs.getDouble("price"),
 							rs.getInt("days"),
-							rs.getString("m.first_name"),
-							rs.getString("ms.name")));
+							rs.getString("ms.name"),
+							rs.getString("m.first_name")));
 			}
 			return list;
 			
@@ -143,11 +169,11 @@ public class PaymentModel {
 		return null;
 	}
 	
-//	public static void main(String[] args) {
-//		PaymentModel model = new PaymentModel();
-//		
-//		for (Payment pago : model.getAllPayments()) {
-//			System.out.println(pago);
-//		}
-//	}
+	public static void main(String[] args) {
+		PaymentModel model = new PaymentModel();
+		
+		for (Payment pago : model.getAllUserPayments(1)) {
+			System.out.println(pago);
+		}
+	}
 }

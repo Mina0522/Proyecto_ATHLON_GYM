@@ -64,7 +64,9 @@ public class Payment {
 	@Override
 	public String toString() {
 		return "Payment [date=" + date + ", price=" + price + ", id_membership=" + id_membership + ", id_member="
-				+ id_member + ", days=" + days + ", id=" + id + "]";
+				+ id_member + ", days=" + days + ", id=" + id + ", membership_name=" + membership_name
+				+ ", member_name=" + member_name + "]";
 	}
+	
 	
 }

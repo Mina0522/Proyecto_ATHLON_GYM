@@ -3,6 +3,7 @@ package Model;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -166,10 +167,97 @@ public class PDFModel {
 	        }
 	}
 	
+	public static void createUserReportPDF(ArrayList<Payment> paymentList) {
+	    try (PDDocument documento = new PDDocument()) {
+	    	String userName = paymentList.getFirst().getMember_name();
+	        PDPage pagina = new PDPage(PDRectangle.A5);
+	        documento.addPage(pagina);
+
+	        PDRectangle mediaBox = pagina.getMediaBox();
+	        float pageWidth = mediaBox.getWidth();
+	        float pageHeight = mediaBox.getHeight();
+
+	        PDPageContentStream fondo = new PDPageContentStream(documento, pagina, PDPageContentStream.AppendMode.OVERWRITE, false);
+	        fondo.setNonStrokingColor(new Color(220, 220, 220));
+	        fondo.addRect(0, 0, pageWidth, pageHeight);
+	        fondo.fill();
+	        fondo.close();
+
+	        PDType1Font fuente = new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD);
+	        float fontSize = 12;
+	        float startY = pageHeight - 70;
+	        float margin = 30;
+	        float tableWidth = pageWidth - 2 * margin;
+	        float rowHeight = 20;
+	        int cols = 3;
+	        float colWidth = tableWidth / cols;
+
+	        PDPageContentStream contenido = new PDPageContentStream(documento, pagina, PDPageContentStream.AppendMode.APPEND, true);
+
+	        contenido.setFont(fuente, fontSize);
+	        contenido.setNonStrokingColor(Color.BLACK);
+
+	        // Título principal
+	        String titulo = "Reporte de pagos de " + userName;
+	        float tituloAncho = fuente.getStringWidth(titulo) / 1000 * fontSize;
+	        float tituloX = (pageWidth - tituloAncho) / 2;
+	        float tituloY = pageHeight - 30;
+
+	        contenido.beginText();
+	        contenido.newLineAtOffset(tituloX, tituloY);
+	        contenido.showText(titulo);
+	        contenido.endText();
+
+	        // Títulos de columna
+	        String[] headers = {"Plan", "Fecha de pago", "Monto"};
+	        float textY = startY;
+
+	        contenido.beginText();
+	        contenido.newLineAtOffset(margin, textY);
+	        for (int i = 0; i < headers.length; i++) {
+	            contenido.showText(headers[i]);
+	            contenido.newLineAtOffset(colWidth, 0);
+	        }
+	        contenido.endText();
+
+	        // Datos de pagos
+	        textY -= rowHeight;
+	        for (Payment payment : paymentList) {
+	            contenido.beginText();
+	            contenido.setFont(fuente, fontSize);
+	            contenido.newLineAtOffset(margin, textY);
+	            contenido.showText(payment.getMembership_name());
+	            contenido.newLineAtOffset(colWidth, 0);
+	            contenido.showText(payment.getDate().toString());
+	            contenido.newLineAtOffset(colWidth, 0);
+	            contenido.showText("$" + payment.getPrice());
+	            contenido.endText();
+
+	            textY -= rowHeight;
+	        }
+
+	        contenido.close();
+
+	        // Obtener ruta y guardar archivo
+	        File ruta = PDFModel.askPath();
+	        documento.save(ruta);
+	        System.out.println("PDF guardado en: " + ruta.getAbsolutePath());
+
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        JOptionPane.showMessageDialog(null,
+	                "El reporte no se pudo descargar.",
+	                "Fail",
+	                JOptionPane.INFORMATION_MESSAGE);
+	    }
+	}
+
+
+	
 	public static File askPath() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Guardar PDF");
-        fileChooser.setSelectedFile(new File("credencial.pdf"));
+        fileChooser.setSelectedFile(new File("Nuevo_archivo.pdf"));
 
         int seleccion = fileChooser.showSaveDialog(null);
         if (seleccion == JFileChooser.APPROVE_OPTION) {
@@ -187,7 +275,7 @@ public class PDFModel {
     }
 	
 	public static void main(String[] args) {
-		PDFModel.createTrainerPDF("Alejandro", "6131133705", "Personal");
+		PDFModel.createUserReportPDF(new PaymentModel().getAllUserPayments(1));
 	}
 	
 }
