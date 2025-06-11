@@ -38,6 +38,23 @@ public class PaymentModel {
 		}
 		return list;
 	}
+	
+	public int countUsersWithoutPayments() {
+	    int count = 0;
+	    String sql = "SELECT COUNT(*) AS total FROM member m " +
+	                 "LEFT JOIN membership_payment mp ON m.id = mp.id_member " +
+	                 "WHERE mp.id_member IS NULL";
+	    try (PreparedStatement ps = MyConnection.getConn().prepareStatement(sql);
+	         ResultSet rs = ps.executeQuery()) {
+	        if (rs.next()) {
+	            count = rs.getInt("total");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return count;
+	}
+
 	//Método que regresa el último pago de un user con el id proporcionado
 	public Payment getLastUserPayment (int id) {
 		Payment payment = null;

@@ -90,7 +90,7 @@ public class Pantalla_Inicio {
         miembros_activos.setBounds(20, 15, 280, 50);
         panel_w1.add(miembros_activos);
         
-        JLabel cant1 = new JLabel("743");
+        JLabel cant1 = new JLabel(String.valueOf(controlador.getActiveUsersCount()));
         cant1.setFont(new Font("Arial", Font.BOLD, 65));
         cant1.setBounds(20, 125, 280, 50);
         panel_w1.add(cant1);
@@ -106,7 +106,7 @@ public class Pantalla_Inicio {
         nuevos_registros.setBounds(20, 15, 280, 50);
         panel_w2.add(nuevos_registros);
         
-        JLabel cant2 = new JLabel("42");
+        JLabel cant2 = new JLabel(String.valueOf(controlador.getActiveUsersCount()));       
         cant2.setFont(new Font("Arial", Font.BOLD, 65));
         cant2.setBounds(20, 125, 280, 50);
         panel_w2.add(cant2);
@@ -122,7 +122,7 @@ public class Pantalla_Inicio {
         pagos_pendientes.setBounds(20, 15, 280, 50);
         panel_w3.add(pagos_pendientes);
         
-        JLabel cant3 = new JLabel("12");
+        JLabel cant3 = new JLabel(String.valueOf(controlador.getFaltadPago()));  
         cant3.setFont(new Font("Arial", Font.BOLD, 65));
         cant3.setBounds(20, 125, 280, 50);
         panel_w3.add(cant3);

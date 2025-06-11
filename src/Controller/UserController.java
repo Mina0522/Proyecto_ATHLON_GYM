@@ -96,6 +96,15 @@ public class UserController {
 					payment.getId_membership()});
 		}
 	}
+	
+	public int getActiveUsersCount() {
+	    return userModel.countActiveUsers();
+	}
+	
+	public int getFaltadPago() {
+	    return paymentModel.countUsersWithoutPayments();
+	}
+
 	//Método que recibe el id del usuario y el modelo de la tabla a llenar (para llenar la tabla "Historial de clase"
 	public void fillUserClassTable (int id, DefaultTableModel tableModel) {
 		ArrayList<ClassDB> list = classModel.getUserClasses(id); //Llama al método de modelo de clases, que regresa un objeto ClaseDB

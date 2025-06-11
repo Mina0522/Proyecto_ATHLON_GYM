@@ -297,6 +297,28 @@ public class UserModel {
 		}
 	}
 	
+	public int countActiveUsers() {
+	    int count = 0;
+	    String sql = 
+	        "SELECT COUNT(DISTINCT m.id) AS total " +
+	        "FROM member m " +
+	        "JOIN membership_payment mp ON m.id = mp.id_member " +
+	        "JOIN membership ms ON mp.id_membership = ms.id " +
+	        "WHERE DATE_ADD(mp.transaction_date, INTERVAL ms.duration_days DAY) >= CURRENT_DATE";
+
+	    try (PreparedStatement ps = MyConnection.getConn().prepareStatement(sql);
+	         ResultSet rs = ps.executeQuery()) {
+	        if (rs.next()) {
+	            count = rs.getInt("total");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return count;
+	}
+
+
+	
 	public UserWithLastPayment getUserDetails (int id) {
 		try (PreparedStatement ps = MyConnection.getConn().prepareStatement(
 				"SELECT \r\n"
