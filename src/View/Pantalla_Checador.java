@@ -111,15 +111,15 @@ public class Pantalla_Checador {
             }
         });
         panel_inicio.add(btn_entrar);
-
-        btn_comentario = new JButton("Dejar comentario");
-        btn_comentario.setBounds(50, 350, 390, 55);
-        btn_comentario.setFont(new Font("Arial", Font.BOLD, 22));
-        btn_comentario.setForeground(Color.black);
-        btn_comentario.setContentAreaFilled(false);
-        btn_comentario.setFocusPainted(false);
-        btn_comentario.setBorderPainted(false);
-        panel_inicio.add(btn_comentario);
+        
+//        btn_comentario = new JButton("Dejar comentario");
+//        btn_comentario.setBounds(50, 350, 390, 55);
+//        btn_comentario.setFont(new Font("Arial", Font.BOLD, 22));
+//        btn_comentario.setForeground(Color.black);
+//        btn_comentario.setContentAreaFilled(false);
+//        btn_comentario.setFocusPainted(false);
+//        btn_comentario.setBorderPainted(false);
+//        panel_inicio.add(btn_comentario);
         
 		// === Boton para volver al inicio
 		ImageIcon icono_noti = new ImageIcon(getClass().getResource("/files/volver.png"));
