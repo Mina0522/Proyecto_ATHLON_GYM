@@ -185,6 +185,14 @@ public class Info_Instructor {
         report.setForeground(Color.black);
         report.setFocusPainted(false);
         report.setLayout(null);
+        report.addActionListener(e -> {
+	        controller.generateTrainerPDF(trainer.getId()); 
+	        JOptionPane.showMessageDialog(null,
+	            "El reporte se descargó correctamente.",
+	            "Éxito",
+	            JOptionPane.INFORMATION_MESSAGE);
+    	   
+        });
         panelinfo2.add(report);
         
         credencial = new JButton("Descargar credencial (PDF)");
@@ -193,6 +201,14 @@ public class Info_Instructor {
         credencial.setBackground(Color.lightGray);
         credencial.setForeground(Color.black);
         credencial.setFocusPainted(false);
+        credencial.addActionListener(e -> {
+	        controller.generateTrainerPDF(trainer.getId()); 
+	        JOptionPane.showMessageDialog(null,
+	            "El reporte se descargó correctamente.",
+	            "Éxito",
+	            JOptionPane.INFORMATION_MESSAGE);
+    	   
+        });
         panelinfo2.add(credencial);
 		
         back = new JButton("Volver");
