@@ -11,7 +11,7 @@ public class UserModel {
 
 	
 	//Método que crea un número de control que no exista en la DB
-	private int createControlNum ()  { 
+	private int createControlNum ()  {
 		Random rand = new Random();
 		int cnum; //Número de control
 		HashSet<Integer> currentNums = new HashSet<>(); //Aquí se guardarán los números de control que ya existen
@@ -148,6 +148,33 @@ public class UserModel {
 		System.out.println("Buscando usuario...");
 		try (PreparedStatement prepSt = MyConnection.getConn().prepareStatement("SELECT * FROM member WHERE  control_num = ?")){
 			prepSt.setInt(1, control_num);
+			try (ResultSet rs = prepSt.executeQuery()){
+				if (rs.next()) {
+					System.out.println("Usuario encontrado");
+					User member = new User
+							(rs.getInt("id"),
+							rs.getInt("control_num"),
+							rs.getString("first_name"),
+							rs.getString("last_name"),
+							rs.getString("phone_number"),
+							rs.getString("email"));
+					return member; //Regresar un objeto User con los datos del miembro encontrado
+				} else {
+					System.out.println("Usuario no encontrado");
+					return null; //No se encontró al usuario
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public User getUserWId(int id) {
+		System.out.println("Buscando usuario...");
+		try (PreparedStatement prepSt = MyConnection.getConn().prepareStatement("SELECT * FROM member WHERE  id = ?")){
+			prepSt.setInt(1, id);
 			try (ResultSet rs = prepSt.executeQuery()){
 				if (rs.next()) {
 					System.out.println("Usuario encontrado");

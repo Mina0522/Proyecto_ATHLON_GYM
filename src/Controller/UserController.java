@@ -16,6 +16,7 @@ import Model.Payment;
 import Model.PaymentModel;
 import Model.User;
 import Model.UserModel;
+import Model.UserPdfModel;
 import Model.UserWithLastPayment;
 
 public class UserController {
@@ -23,7 +24,6 @@ public class UserController {
 	UserModel userModel;
 	PaymentModel paymentModel;
 	ClassModel classModel;
-		
 	public UserController(UserModel userModel, PaymentModel paymentModel,
 			ClassModel classModel) {
 		this.userModel = userModel;
@@ -80,6 +80,10 @@ public class UserController {
 	
 	public User getUser(int control_num) { //Obtener objecto User con información del usuario con su número de control
 		return userModel.getUser(control_num);
+	}
+	
+	public User getUserWId (int id) {
+		return userModel.getUserWId(id);
 	}
 	
 //	Método que recibe el id del usuario y el modelo de la tabla a llenar (para llenar la tabla "Historial de pagos"
@@ -183,14 +187,17 @@ public class UserController {
 		return userModel.hasActveMmebership(id); //True si tiene un plan pagado vigente
 	}
 	
-//	public static void main(String[] args) {
-//		UserController con = new UserController(new UserModel(), new PaymentModel(), new ClassModel());
-//		JComboBox<ComboObject> combo = con.generateMembershipComboId(24);
-//		System.out.println(combo.getItemAt(0).getText());
-//		System.out.println(combo.getItemAt(1).getText());
-//		
-//		ComboObject objeto = (ComboObject)combo.getSelectedItem();
-//		int id_plan = objeto.getId();
-//		System.out.println(id_plan);
-//	}
+	public void generateUserIdPDF (int id) {
+		User user = getUserWId(id);
+		if (user != null)
+			UserPdfModel.createIdPDF(
+					user.getFirst_name(),
+					user.getLast_name(),
+					user.getControl_number());
+	}
+	
+	public static void main(String[] args) {
+		UserController con = new UserController(new UserModel(), new PaymentModel(), new ClassModel());
+		con.generateUserIdPDF(1);
+	}
 }
