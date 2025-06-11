@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import Controller.MembershipController;
 import Controller.UserController;
 
 import java.awt.*;
@@ -26,6 +27,12 @@ public class Pantalla_Planes {
     }
 
     public JPanel getPanel() {
+    	
+    	try {
+    	    UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatLightLaf());
+    	} catch (UnsupportedLookAndFeelException e1) {
+    	    e1.printStackTrace();
+    	}
     	
     	Color colorGris = Color.decode("#D9D9D9");
         menu_user = new JPanel();
@@ -153,70 +160,14 @@ public class Pantalla_Planes {
             menu_inicio.pintar_vista(new Pantalla_Planes_Eliminar(menu_inicio).getPanel());
         });
         menu_user.add(btn_eliminar);
-		
-        // === 
-        Graficos_fondo panel_planB = new Graficos_fondo();
-		panel_planB.setBackground(Color.WHITE);
-		panel_planB.setBounds(300, 355, 420, 280);
-		panel_planB.setLayout(null);
-		menu_user.add(panel_planB);
-		panel_planB.agregarImagen("files/fondo_planBasico.png", 0, 0, 420, 132);
+	
+        MembershipController memCtrl = new MembershipController();
+        Pantalla_PlanesCard carousel = new Pantalla_PlanesCard(memCtrl);
+        JPanel carouselPanel = carousel.getPanel();
+        // Fija la posición y tamaño para que quede bajo los botones:
+        carouselPanel.setBounds(300, 360, 900, 280);
+        menu_user.add(carouselPanel);
 
-
-        textB = new JLabel("Plan basico");
-        textB.setFont(new Font("Arial", Font.BOLD, 35));
-        textB.setForeground(Color.black);
-        textB.setHorizontalAlignment(SwingConstants.CENTER);
-
-        textB.setBounds(0, 145, 420, 50);
-        textB.setLayout(null);
-        panel_planB.add(textB);
-        
-        plan_basico = new JButton("Detalles");
-        plan_basico.setBounds(65, 210, 290, 50);
-        plan_basico.setFont(new Font("Arial", Font.BOLD, 22));
-        plan_basico.setBackground(Color.BLACK);
-        plan_basico.setHorizontalAlignment(SwingConstants.CENTER);
-        plan_basico.setForeground(Color.WHITE);
-        plan_basico.setFocusPainted(false);
-        plan_basico.addActionListener(e -> {
-            menu_inicio.pintar_vista(new Plan_Basico(menu_inicio).getPanel());
-        });
-        panel_planB.add(plan_basico);
-		
-        // ===
-        Graficos_fondo panel_planP = new Graficos_fondo();
-		panel_planP.setBackground(Color.WHITE);
-		panel_planP.setBounds(775, 355, 420, 280);
-		panel_planP.setLayout(null);
-		
-		panel_planP.agregarImagen("files/fondo_planPrem.png", 0, 0, 420, 132);
-
-
-		menu_user.add(panel_planP);
-		
-      
-        
-        textP = new JLabel("Plan premium");
-        textP.setFont(new Font("Arial", Font.BOLD, 35));
-        textP.setForeground(Color.black);
-        textP.setBounds(0, 145, 420, 50);
-		textP.setHorizontalAlignment(SwingConstants.CENTER);
-        textP.setLayout(null);
-        panel_planP.add(textP);
-
-
-		plan_prem = new JButton("Detalles");
-		plan_prem.setBounds(65, 210, 290, 50);
-		plan_prem.setFont(new Font("Arial", Font.BOLD, 22));
-		plan_prem.setBackground(Color.BLACK);
-		plan_prem.setForeground(Color.WHITE);
-		plan_prem.setHorizontalAlignment(SwingConstants.CENTER);
-		plan_prem.setFocusPainted(false);
-		plan_prem.addActionListener(e -> {
-            menu_inicio.pintar_vista(new Plan_Premium(menu_inicio).getPanel());
-        });
-		panel_planP.add(plan_prem);
 
 		return menu_user;
 	}
