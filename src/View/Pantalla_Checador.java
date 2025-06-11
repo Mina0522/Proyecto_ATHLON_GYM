@@ -18,11 +18,18 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import Controller.CheckinController;
 import Controller.LoginController;
+import Controller.UserController;
 import Funciones_graficas.Graficos;
 import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Model.AuthModel;
+import Model.ClassModel;
+import Model.PaymentModel;
+import Model.User;
+import Model.UserModel;
+import Model.UserWithLastPayment;
 
 public class Pantalla_Checador {
 	
@@ -30,8 +37,8 @@ public class Pantalla_Checador {
 
 	// === Creamos nuestra ventana de tipo Vista_GYM.
 	private Vista_GYM checador;
-	private LoginController controller;
-	private AuthModel model;
+	private CheckinController controlador;
+	private UserController  controlador2;
 
 	// === Aqui se crean los elementos que utilizaremos
 	public JPanel panel_inicio;
@@ -42,7 +49,11 @@ public class Pantalla_Checador {
 	// === Constructor de View_loginGYM.
 	public Pantalla_Checador(Vista_GYM log) {
 		checador = log;
-		model = new AuthModel();
+		controlador = new CheckinController();
+		UserModel userModel = new UserModel();
+        PaymentModel paymentModel = new PaymentModel();
+        ClassModel classModel = new ClassModel();
+        controlador2 = new UserController(userModel, paymentModel, classModel);
 	}
 	
 	// === Metodo que construye y lo devuelve a la ventana principal.
@@ -68,7 +79,7 @@ public class Pantalla_Checador {
         
         // === Campos de usuario y contraseña personalizados. 
         campo_usuario = new Graficos_texto();
-        campo_usuario.setPlaceholder(" Ingresa tu usuario");
+        campo_usuario.setPlaceholder(" Ingresa tu numero de control");
         campo_usuario.setBounds(50, 140, 390, 50);
         campo_usuario.setBackground(Color.lightGray);
         campo_usuario.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -83,7 +94,21 @@ public class Pantalla_Checador {
         btn_entrar.setForeground(Color.WHITE);
         btn_entrar.setFocusPainted(false);
         btn_entrar.addActionListener(e -> {
-        	checador.pintar_vista(new Checador(checador).getPanel());
+            String texto = campo_usuario.getText();
+
+            try {
+                int numero = Integer.parseInt(texto);
+                Object usuario = controlador.checkUser(numero);  
+                if (usuario == null) {
+                    JOptionPane.showMessageDialog(null, "No se encontró el usuario.", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    User usuario2 = controlador2.getUser(numero);
+                    checador.pintar_vista(new Checador(checador,usuario2).getPanel());
+                }
+
+            } catch (NumberFormatException o) {
+                System.out.println("El valor ingresado no es un número entero válido.");
+            }
         });
         panel_inicio.add(btn_entrar);
 

@@ -24,6 +24,7 @@ import Funciones_graficas.Graficos;
 import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Model.AuthModel;
+import Model.User;
 
 public class Checador {
 	
@@ -40,7 +41,7 @@ public class Checador {
 	public JTextArea info_clase, info_fecha; 
 	
 	// === Constructor de View_loginGYM.
-	public Checador(Vista_GYM log) {
+	public Checador(Vista_GYM log, User user) {
 		checador = log;
 		model = new AuthModel();
 	}
