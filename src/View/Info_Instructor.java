@@ -250,7 +250,7 @@ public class Info_Instructor {
             menu_inicio.pintar_vista(new Pantalla_Instructores(menu_inicio).getPanel());
         });
         panelinfo2.add(back);
-
+        
         return menu;
     }
 }
