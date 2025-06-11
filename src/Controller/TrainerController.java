@@ -101,5 +101,13 @@ public class TrainerController {
 		public boolean deleteTrainer (int id) {
 			return trainerModel.deleteTrainer(id);
 		}
+		
+		public JComboBox<ComboObject> getTrainerCombo () {
+			JComboBox<ComboObject> matenme = new JComboBox<>();
+			matenme.addItem(new ComboObject(1, "General"));
+			matenme.addItem(new ComboObject(2, "Personal"));
+			
+			return matenme;
+		}
 
 }
