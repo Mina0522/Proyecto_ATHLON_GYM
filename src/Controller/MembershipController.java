@@ -26,6 +26,10 @@ public class MembershipController {
 		return membershipModel.deleteMembership(id);
 	}
 	
+	public Membership getMembership (int id) {
+		return membershipModel.getMembership(id);
+	}
+	
 	public ArrayList<Membership> getAllMemberships (){
 		return membershipModel.getAllMembership();
 	}
