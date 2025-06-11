@@ -11,15 +11,12 @@ public class MembershipController {
 	}
 
 
-	public void createMembership (int branches_num, String promotions,
-			boolean has_invitation_pass, int days, Double price, String name,
-			int id_trainer_type) {
-		membershipModel.createMembership(branches_num, promotions, has_invitation_pass, days, price, name, id_trainer_type);
+	public void createMembership (String name, Double price, int days, int id_trainer_type, boolean has_invitation_pass) {
+		membershipModel.createMembership(name, price, days, id_trainer_type, has_invitation_pass);
 	}
 	
-	public boolean updateMembership (int id, String name, int branches_num, String promotions,
-			boolean has_invitation_pass, int days, Double price, int id_trainer_type) {
-		return membershipModel.updateMembership(id, name, branches_num, promotions, has_invitation_pass, days, price, id_trainer_type);
+	public boolean updateMembership (String name, Double price, int days, int id_trainer_type, boolean has_invitation_pass) {
+		return membershipModel.updateMembership(name, price, days, id_trainer_type, has_invitation_pass);
 	}
 	
 	public boolean deleteMembership (int id) {

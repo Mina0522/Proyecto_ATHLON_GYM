@@ -33,7 +33,7 @@ public class PaymentController {
 	
 	//Regresa un TableModel con:
 	//Nombre del plan pagado | Nombre del usuario | Monto pagado
-	public DefaultTableModel getPaymentTable () {
+	public DefaultTableModel getPaymentsTable () {
 		DefaultTableModel tableModel = new DefaultTableModel();
 		ArrayList<Payment> payments = paymentModel.getAllPayments();
 		for (Payment p : payments) {
@@ -42,9 +42,20 @@ public class PaymentController {
 		return tableModel;
 	}
 	
+	public ArrayList<Payment> probar () {
+		DefaultTableModel tableModel = new DefaultTableModel();
+		ArrayList<Payment> payments = paymentModel.getAllPayments();
+		for (Payment p : payments) {
+			tableModel.addRow(new Object[] {p.getMembership_name(), p.getMember_name(), p.getPrice()});
+		}
+		return payments;
+	}
+	
 //	public static void main(String[] args) {
-//		PaymentController con = new PaymentController(new PaymentModel());
-//		System.out.println(con.registerPayment(1, 1));
+//		PaymentController con = new PaymentController();
+//		for (Payment p : con.probar()) {
+//			System.out.println(p);
+//		}
 //	}
 	
 }

@@ -7,25 +7,26 @@ import java.util.ArrayList;
 
 public class MembershipModel {
 	
-	public void createMembership (int branches_num, String promotions,
-			boolean has_invitation_pass, int days, Double price, String name,
-			int id_trainer_type) {
+	public boolean createMembership (String name, Double price, int days,
+			int id_trainer_type, boolean has_invitation_pass) {
 		
 			String query = "INSERT INTO membership "
-					+ "(branches_number, promotions, has_invitation_pass, duration_days, price, name, id_instructor_type) "
-					+ "VALUES (?,?,?,?,?,?,?)";
+					+ "(name, price, duration_days, id_instructor_type, has_invitation_pass) "
+					+ "VALUES (?,?,?,?,?)";
 			try (PreparedStatement prepStatement = MyConnection.getConn().prepareStatement(query)){
-				prepStatement.setInt(1, branches_num);
-				prepStatement.setString(2, promotions);
-				prepStatement.setBoolean(3, has_invitation_pass);
-				prepStatement.setInt(4, days);
-				prepStatement.setDouble(5, price);
-				prepStatement.setString(6, name);
-			    prepStatement.setInt(7, id_trainer_type);
-			    prepStatement.execute();
+				prepStatement.setString(1, name);
+				prepStatement.setDouble(2, price);
+				prepStatement.setInt(3, days);
+				prepStatement.setString(4, name);
+			    prepStatement.setInt(5, id_trainer_type);
+			    
+			    int nosejeje = prepStatement.executeUpdate();
+			    if (nosejeje > 0)
+			    	return true; //Éxito
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+			return false; //Error
 	}
 	
 	public Membership getMembership (int id) {
@@ -81,22 +82,18 @@ public class MembershipModel {
 		return null; //Error
 	}
 	
-	public boolean updateMembership (int id, String name, int branches_num, String promotions,
-			boolean has_invitation_pass, int days, Double price, int id_trainer_type) {
+	public boolean updateMembership (String name, Double price, int days, int id_trainer_type, boolean has_invitation_pass) {
 		
 		try (PreparedStatement ps = MyConnection.getConn().prepareStatement(
 				"UPDATE membership SET branches_number = ?, promotions = ?, \r\n"
 				+ "has_invitation_pass = ?, duration_days = ?, \r\n"
 				+ "price = ?, name = ?, id_instructor_type = ?\r\n"
 				+ "WHERE id = ?")) {
-			ps.setInt(1, branches_num);
-			ps.setString(2, promotions);
-			ps.setBoolean(3, has_invitation_pass);
-			ps.setInt(4, days);
-			ps.setDouble(5, price);
-			ps.setString(6, name);
-			ps.setInt(7, id_trainer_type);
-			ps.setInt(8, id);
+			ps.setString(1, name);
+			ps.setDouble(2, price);
+			ps.setInt(3, days);
+			ps.setString(4, name);
+			ps.setInt(5, id_trainer_type);
 			
 			int i = ps.executeUpdate();
 			if (i > 0)
