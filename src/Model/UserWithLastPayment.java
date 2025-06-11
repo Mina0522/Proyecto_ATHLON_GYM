@@ -4,6 +4,11 @@ public class UserWithLastPayment {
 	String first_name, last_name, membership_name, transaction_date,
 	next_transaction_date;
 	int control_num;
+	 private String name;
+	 private String lastname;
+	 private String lastPaymentDate;
+	 private String paymentStatus;
+
 	
 	public UserWithLastPayment(String first_name, String last_name, String membership_name, String transaction_date,
 			String next_transaction_date, int control_num) {
@@ -14,6 +19,12 @@ public class UserWithLastPayment {
 		this.next_transaction_date = next_transaction_date;
 		this.control_num = control_num;
 	}
+    public UserWithLastPayment(String name, String lastname, String lastPaymentDate, String paymentStatus) {
+        this.name = name;
+        this.lastname = lastname;
+        this.lastPaymentDate = lastPaymentDate;
+        this.paymentStatus = paymentStatus;
+    }
 	
 	String phone_number, email;
 	

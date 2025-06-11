@@ -26,6 +26,8 @@ import Model.AuthModel;
 
 public class Pantalla_Checador {
 	
+	private Graficos_texto campo_usuario;
+
 	// === Creamos nuestra ventana de tipo Vista_GYM.
 	private Vista_GYM checador;
 	private LoginController controller;
@@ -65,7 +67,7 @@ public class Pantalla_Checador {
         panel_inicio.add(text_inicio);
         
         // === Campos de usuario y contraseña personalizados. 
-        Graficos_texto campo_usuario = new Graficos_texto();
+        campo_usuario = new Graficos_texto();
         campo_usuario.setPlaceholder(" Ingresa tu usuario");
         campo_usuario.setBounds(50, 140, 390, 50);
         campo_usuario.setBackground(Color.lightGray);
