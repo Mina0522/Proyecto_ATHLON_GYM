@@ -187,7 +187,7 @@ public class Pantalla_Planes_Crear {
 		panel_negro.setLayout(null);
 		panel.add(panel_negro);
 		
-        text = new JLabel("Propuesta de plan");
+        text = new JLabel("Crear de plan");
         text.setFont(new Font("Arial", Font.BOLD, 35));
         text.setForeground(Color.white);
         text.setBounds(20, 5, 500, 45);

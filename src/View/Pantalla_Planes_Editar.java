@@ -4,10 +4,24 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import Controller.MembershipController;
+import Controller.TrainerController;
+import Controller.UserController;
+
 import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+
 import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
+import Model.ClassModel;
+import Model.ComboObject;
+import Model.Membership;
+import Model.PaymentModel;
+import Model.TrainerModel;
+import Model.User;
+import Model.UserModel;
 
 public class Pantalla_Planes_Editar {
 
@@ -15,9 +29,31 @@ public class Pantalla_Planes_Editar {
     private JPanel menu_user, panel, panel_negro, panel_botones;
     private JButton noti, confi, btn_crear, btn_edit, btn_deta, btn_eliminar, btn, volver;
     private JLabel text;
+    UserModel userModel;
+	PaymentModel paymentModel;
+	ClassModel classModel;
+	UserController controlador;
+	TrainerModel trainerModel;
+    public TrainerController controladorTrainer;
+
+	private Membership membresiaSeleccionada;
+	private MembershipController controladorMem;
+	private Graficos_texto precio;
+	private Graficos_texto promo;
+	
     
     public Pantalla_Planes_Editar(Vista_GYM log) {
         this.menu_inicio = log;
+        this.userModel = new UserModel();
+        this.paymentModel = new PaymentModel();
+        this.classModel = new ClassModel();
+    	controladorMem = new MembershipController();
+    	
+    	trainerModel = new TrainerModel();
+        controladorMem = new MembershipController();
+    	controladorTrainer = new TrainerController(trainerModel,classModel);
+        
+        controlador = new UserController(userModel,paymentModel,classModel);
     }
 
     public JPanel getPanel() {
@@ -169,54 +205,79 @@ public class Pantalla_Planes_Editar {
         text.setLayout(null);
         panel_negro.add(text);
         
-        // ====
-        Graficos_texto tipo = new Graficos_texto();
-        tipo.setPlaceholder(" Tipo de plan");
-        tipo.setBounds(30, 80, 330, 35);
-        tipo.setBackground(Color.lightGray);
-        tipo.setFont(new Font("Arial", Font.PLAIN, 18));
-        tipo.setBorder(null);
-        panel.add(tipo);
+
+
+       JComboBox<ComboObject> comboBoxTrainer = controladorTrainer.getTrainerCombo();
+       comboBoxTrainer.setBounds(500, 80, 330, 50);
+       comboBoxTrainer.setBackground(colorGris);
+       comboBoxTrainer.setFont(new Font("Arial", Font.PLAIN, 18));
+       comboBoxTrainer.setBorder(null);
+       panel.add(comboBoxTrainer);
+
+       // ComboBox de pase de invitación
+       JComboBox<String> comboInvitacion = new JComboBox<>(new String[]{"Sí", "No"});
+       comboInvitacion.setBackground(colorGris);
+       comboInvitacion.setFont(new Font("Arial", Font.PLAIN, 18));
+       comboInvitacion.setBounds(500, 150, 330, 50);
+       panel.add(comboInvitacion);
+
+       panel.add(comboInvitacion);
         
-        Graficos_texto sede1 = new Graficos_texto();
-        sede1.setPlaceholder(" Numero de sedes");
-        sede1.setBounds(30, 130, 330, 35);
-        sede1.setBackground(Color.lightGray);
-        sede1.setFont(new Font("Arial", Font.PLAIN, 18));
-        sede1.setBorder(null);
-        panel.add(sede1);
+        JComboBox<ComboObject> comboBox = controlador.generateMembershipCombo();
+        comboBox.setBounds(30, 80, 330, 50);
+        comboBox.setBackground(colorGris);
+        comboBox.setFont(new Font("Arial", Font.PLAIN, 18));
+        panel.add(comboBox);
+
+       
+        comboBox.addActionListener(e -> {
+            ComboObject selectedItem = (ComboObject) comboBox.getSelectedItem();
+            if (selectedItem != null) {
+                membresiaSeleccionada = controladorMem.getMembership(selectedItem.getId());
+                if (membresiaSeleccionada != null) {
+                    precio.setText(String.valueOf(membresiaSeleccionada.getPrice()));
+                    promo.setText(String.valueOf(membresiaSeleccionada.getDays()));
+
+                   
+                    int idEntrenador = membresiaSeleccionada.getId_trainer_type();
+                    for (int i = 0; i < comboBoxTrainer.getItemCount(); i++) {
+                        ComboObject item = comboBoxTrainer.getItemAt(i);
+                        if (item.getId() == idEntrenador) {
+                            comboBoxTrainer.setSelectedItem(item);
+                            break;
+                        }
+                    }
+
+                    // Pintar pase de invitación
+                    comboInvitacion.setSelectedItem(membresiaSeleccionada.isHas_invitation_pass() ? "Sí" : "No");
+                }
+            }
+        });
+
+
         
-        Graficos_texto acceso2 = new Graficos_texto();
-        acceso2.setPlaceholder(" Clase de acceso");
-        acceso2.setBounds(30, 180, 330, 35);
-        acceso2.setBackground(Color.lightGray);
-        acceso2.setFont(new Font("Arial", Font.PLAIN, 18));
-        acceso2.setBorder(null);
-        panel.add(acceso2);
+        precio = new Graficos_texto();
+        precio.setPlaceholder(" Precio");
+        precio.setBounds(30, 150, 330, 50);
+        precio.setBackground(colorGris);
+        precio.setFont(new Font("Arial", Font.PLAIN, 18));
+        precio.setBorder(null);
+        panel.add(precio);
         
-        Graficos_texto inst = new Graficos_texto();
-        inst.setPlaceholder(" Tipo de instructor");
-        inst.setBounds(30, 230, 330, 35);
-        inst.setBackground(Color.lightGray);
-        inst.setFont(new Font("Arial", Font.PLAIN, 18));
-        inst.setBorder(null);
-        panel.add(inst);
         
-        Graficos_texto promo2 = new Graficos_texto();
-        promo2.setPlaceholder(" Tipo de promociones");
-        promo2.setBounds(500, 80, 330, 35);
-        promo2.setBackground(Color.lightGray);
-        promo2.setFont(new Font("Arial", Font.PLAIN, 18));
-        promo2.setBorder(null);
-        panel.add(promo2);
         
-        Graficos_texto invi = new Graficos_texto();
-        invi.setPlaceholder(" Tarjeta de invitacion");
-        invi.setBounds(500, 130, 330, 35);
-        invi.setBackground(Color.lightGray);
-        invi.setFont(new Font("Arial", Font.PLAIN, 18));
-        invi.setBorder(null);
-        panel.add(invi);
+        promo = new Graficos_texto();
+        promo.setPlaceholder("Dias que dura el plan");
+        promo.setBounds(30, 220, 330, 50);
+        promo.setBackground(colorGris);
+        promo.setFont(new Font("Arial", Font.PLAIN, 18));
+        promo.setBorder(null);
+        panel.add(promo);
+      
+       
+
+        
+      
         
         volver = new JButton("Volver");
         volver.setBounds(500, 230, 150, 50);
@@ -236,8 +297,73 @@ public class Pantalla_Planes_Editar {
         btn.setBackground(Color.BLACK);
         btn.setForeground(Color.WHITE);
         btn.setFocusPainted(false);
-        panel.add(btn);
+        btn.addActionListener(e -> {
+        	
+        	if (membresiaSeleccionada == null) {
+                JOptionPane.showMessageDialog(menu_user, "Debes seleccionar un plan primero.", "Plan no seleccionado", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            int idPlan     = membresiaSeleccionada.getId();
+            String textoPrecio = precio.getText().trim();
+            String textoDias   = promo.getText().trim();
+            String placeholderInv = "Pase de invitación"; 
+            String selInv      = comboInvitacion.getEditor().getItem().toString().trim();
 
+           
+
+            if (textoPrecio.isEmpty()) {
+                JOptionPane.showMessageDialog(menu_user, "Debes ingresar un precio.", "Campo vacío", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            if (textoDias.isEmpty()) {
+                JOptionPane.showMessageDialog(menu_user, "Debes ingresar la duración en días.", "Campo vacío", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            Object selObj = comboBoxTrainer.getSelectedItem();
+
+            if (!(selObj instanceof ComboObject)) {
+                JOptionPane.showMessageDialog(menu_user,
+                    "Debes seleccionar un entrenador de la lista, no escribir otro.",
+                    "Falta entrenador",
+                    JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            ComboObject selTrainer = (ComboObject) selObj;
+
+            int trainerId = selTrainer.getId();
+
+            if (selInv.isEmpty() || selInv.equals(placeholderInv)) {
+                JOptionPane.showMessageDialog(menu_user, "Debes seleccionar si deseas pase de invitación (Sí o No).", "Falta pase", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            double precioP;
+            int diasP;
+            try {
+                precioP = Double.parseDouble(textoPrecio);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(menu_user, "El precio debe ser un número válido.", "Formato incorrecto", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            try {
+                diasP = Integer.parseInt(textoDias);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(menu_user, "La duración debe ser un número entero válido.", "Formato incorrecto", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            boolean tienePase = selInv.equalsIgnoreCase("Sí");
+
+            controladorMem.updateMembership(idPlan, precioP, diasP, trainerId, tienePase);
+            
+            
+            JOptionPane.showMessageDialog(menu_user, "Plan actualizado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        });
+
+
+        panel.add(btn);
 		return menu_user;
 	}
 
