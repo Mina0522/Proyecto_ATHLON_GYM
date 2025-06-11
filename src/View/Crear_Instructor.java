@@ -12,6 +12,7 @@ import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
 import Model.ClassModel;
+import Model.ComboObject;
 import Model.Trainer;
 import Model.TrainerModel;
 
@@ -23,7 +24,8 @@ public class Crear_Instructor {
     private JPanel panel_botones, panel_agg;
     private JButton noti, confi, crear, cancelar;
     private JLabel user, text;
-    private JComboBox<Trainer> comboTipo;
+    private JComboBox<ComboObject> comboTipo;
+
 
     TrainerModel modelTrainer = new TrainerModel();
     ClassModel cTrainer = new ClassModel();
@@ -122,20 +124,14 @@ public class Crear_Instructor {
         tel.setBorder(null);
         panel_agg.add(tel);
         
-//        Graficos_texto especialidad = new Graficos_texto();
-//        especialidad.setPlaceholder(" Especialidad");
-//        especialidad.setBounds(50, 350, 390, 40);
-//        especialidad.setBackground(Color.lightGray);
-//        especialidad.setFont(new Font("Arial", Font.PLAIN, 18));
-//        especialidad.setBorder(null);
-//        panel_agg.add(especialidad);
-        
         comboTipo = new JComboBox<>();
+        comboTipo.addItem(new ComboObject(1, "General"));
+        comboTipo.addItem(new ComboObject(2, "Personal"));
         comboTipo.setBounds(50, 350, 390, 40);
         comboTipo.setFont(new Font("Arial", Font.PLAIN, 18));
         comboTipo.setBackground(Color.lightGray);
         panel_agg.add(comboTipo);
-        
+
         crear = new JButton("Crear");
         crear.setBounds(50, 400, 390, 40);
         crear.setFont(new Font("Arial", Font.BOLD, 22));
@@ -143,10 +139,11 @@ public class Crear_Instructor {
         crear.setForeground(Color.WHITE);
         crear.setFocusPainted(false);
         crear.addActionListener(e -> {
+            ComboObject tipoSeleccionado = (ComboObject) comboTipo.getSelectedItem();
             String nombreU = nombre.getText().trim();
             String correoU = correo.getText().trim();
             String telU = tel.getText().trim();
-            int tipo = comboTipo.getSelectedIndex() + 1;
+            int tipo = tipoSeleccionado.getId();
 
             int controlNum = controller.createTrainer(nombreU, correoU, telU, tipo);
 
@@ -186,7 +183,6 @@ public class Crear_Instructor {
                     break;
             }
         });
-        
         panel_agg.add(crear);
 
         cancelar = new JButton("Cancelar");
