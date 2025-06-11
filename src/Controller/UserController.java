@@ -12,11 +12,11 @@ import Model.ClassDB;
 import Model.ClassModel;
 import Model.ComboObject;
 import Model.MyConnection;
+import Model.PDFModel;
 import Model.Payment;
 import Model.PaymentModel;
 import Model.User;
 import Model.UserModel;
-import Model.UserPdfModel;
 import Model.UserWithLastPayment;
 
 public class UserController {
@@ -199,14 +199,14 @@ public class UserController {
 	public void generateUserIdPDF (int id) {
 		User user = getUserWId(id);
 		if (user != null)
-			UserPdfModel.createIdPDF(
+			PDFModel.createIdPDF(
 					user.getFirst_name(),
 					user.getLast_name(),
 					user.getControl_number());
 	}
 	
-	public static void main(String[] args) {
-		UserController con = new UserController(new UserModel(), new PaymentModel(), new ClassModel());
-		con.generateUserIdPDF(1);
-	}
+//	public static void main(String[] args) {
+//		UserController con = new UserController(new UserModel(), new PaymentModel(), new ClassModel());
+//		con.generateUserIdPDF(1);
+//	}
 }
