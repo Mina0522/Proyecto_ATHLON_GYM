@@ -311,6 +311,31 @@ public class UserModel {
 		return null; //Error
 	}
 	
+	public boolean hasActveMmebership (int id) {
+		try (PreparedStatement ps = MyConnection.getConn().prepareStatement(
+				"SELECT mp.*\r\n"
+				+ "FROM membership_payment mp\r\n"
+				+ "JOIN membership ms ON mp.id_membership = ms.id\r\n"
+				+ "WHERE mp.id_member = ?\r\n"
+				+ "  AND mp.transaction_date = (\r\n"
+				+ "    SELECT MAX(mp2.transaction_date)\r\n"
+				+ "    FROM membership_payment mp2\r\n"
+				+ "    WHERE mp2.id_member = mp.id_member\r\n"
+				+ "  )\r\n"
+				+ "  AND CURRENT_DATE <= DATE_ADD(mp.transaction_date, INTERVAL ms.duration_days DAY)")) {
+			ps.setInt(1, id);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) 
+					return true;
+				else 
+					return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 //	//-----------------------------------------------------------------------------------------------
 //	//PRUEBAS: método que regresa los usuarios registrados actualmente
 //	private void showUsers () { 
@@ -355,8 +380,10 @@ public class UserModel {
 //		UserModel model = new UserModel();
 //		model.getUsersWithLastPayment();
 //	}
-//	public static void main(String[] args) {
-//		UserModel model = new UserModel();
-//		System.out.println(model.getUserDetails(1));
-//	}
+	public static void main(String[] args) {
+		UserModel model = new UserModel();
+		for (UserWithLastPayment user : model.getUsersWithLastPayment()) {
+			System.out.println(user);
+		}
+	}
 }

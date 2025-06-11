@@ -116,7 +116,7 @@ public class UserController {
 					user.getLast_name(),
 					user.getMembership_name(),
 					user.getTransaction_date() == null? "N/A" : user.getTransaction_date(),
-					user.getNext_transaction_date() == null? "N/A" : user.getTransaction_date(),
+					user.getNext_transaction_date() == null? "N/A" : user.getNext_transaction_date(),
 					user.getControl_num()
 					});
 		}
@@ -179,14 +179,14 @@ public class UserController {
 		return userModel.getUserDetails(id);
 	}
 	
-	public static void main(String[] args) {
-		UserController con = new UserController(new UserModel(), new PaymentModel(), new ClassModel());
-		JComboBox<ComboObject> combo = con.generateMembershipComboId(24);
-		System.out.println(combo.getItemAt(0).getText());
-		System.out.println(combo.getItemAt(1).getText());
-		
-		ComboObject objeto = (ComboObject)combo.getSelectedItem();
-		int id_plan = objeto.getId();
-		System.out.println(id_plan);
-	}
+//	public static void main(String[] args) {
+//		UserController con = new UserController(new UserModel(), new PaymentModel(), new ClassModel());
+//		JComboBox<ComboObject> combo = con.generateMembershipComboId(24);
+//		System.out.println(combo.getItemAt(0).getText());
+//		System.out.println(combo.getItemAt(1).getText());
+//		
+//		ComboObject objeto = (ComboObject)combo.getSelectedItem();
+//		int id_plan = objeto.getId();
+//		System.out.println(id_plan);
+//	}
 }
