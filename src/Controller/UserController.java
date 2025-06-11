@@ -210,7 +210,12 @@ public class UserController {
 	}
 	
 	public JComboBox<ComboObject> getPlanesCombo () {
-		
+		ArrayList<ClassDB> clases = classModel.getAllClasses();
+		JComboBox<ComboObject> objetos = new JComboBox<>();
+		for (ClassDB clase : clases) {
+			objetos.addItem(new ComboObject(clase.getId_class(), clase.getType()));
+		}
+		return objetos;
 	}
 	
 //	public static void main(String[] args) {
