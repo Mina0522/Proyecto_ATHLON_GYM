@@ -250,8 +250,7 @@ public class Detalles {
     }
     public static void mostrarModalPago(UserController controlador,User usuario) {
         
-    	PaymentModel modeloPago = new PaymentModel();
-    	PaymentController controladorPago = new PaymentController(modeloPago);
+    	PaymentController controladorPago = new PaymentController();
         JDialog dialogo = new JDialog();
         dialogo.setModal(true);
         dialogo.setSize(350, 300);

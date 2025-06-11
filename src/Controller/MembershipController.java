@@ -6,8 +6,8 @@ public class MembershipController {
 	MembershipModel membershipModel;
 	
 	
-	public MembershipController(MembershipModel membershipModel) {
-		this.membershipModel = membershipModel;
+	public MembershipController() {
+		this.membershipModel = new MembershipModel();
 	}
 
 

@@ -7,8 +7,8 @@ import Model.UserModel;
 public class PaymentController {
 	PaymentModel paymentModel;
 	UserModel userModel;
-	public PaymentController(PaymentModel paymentModel) {
-		this.paymentModel = paymentModel;
+	public PaymentController() {
+		this.paymentModel = new PaymentModel();
 		this.userModel = new UserModel();
 	}
 	
@@ -27,9 +27,9 @@ public class PaymentController {
 		return paymentModel.getPayment(id);
 	}
 	
-	public static void main(String[] args) {
-		PaymentController con = new PaymentController(new PaymentModel());
-		System.out.println(con.registerPayment(1, 1));
-	}
+//	public static void main(String[] args) {
+//		PaymentController con = new PaymentController(new PaymentModel());
+//		System.out.println(con.registerPayment(1, 1));
+//	}
 	
 }

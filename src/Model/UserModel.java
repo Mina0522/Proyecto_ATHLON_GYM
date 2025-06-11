@@ -326,13 +326,13 @@ public class UserModel {
 			ps.setInt(1, id);
 			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next()) 
-					return true;
+					return true; //Tiene un pago vigente
 				else 
-					return false;
+					return false; //Pago vencido o no hay pago
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
+			return false; //Error
 		}
 	}
 	

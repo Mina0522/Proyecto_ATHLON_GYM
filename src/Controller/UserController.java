@@ -179,6 +179,10 @@ public class UserController {
 		return userModel.getUserDetails(id);
 	}
 	
+	public boolean isActive (int id) {
+		return userModel.hasActveMmebership(id); //True si tiene un plan pagado vigente
+	}
+	
 //	public static void main(String[] args) {
 //		UserController con = new UserController(new UserModel(), new PaymentModel(), new ClassModel());
 //		JComboBox<ComboObject> combo = con.generateMembershipComboId(24);

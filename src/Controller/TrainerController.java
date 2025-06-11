@@ -13,7 +13,7 @@ public class TrainerController {
 	TrainerModel trainerModel;
 	ClassModel classModel;
 	
-	public TrainerController(Model.TrainerModel trainerModel, ClassModel classModel) {
+	public TrainerController(TrainerModel trainerModel, ClassModel classModel) {
 		this.trainerModel = trainerModel;
 		this.classModel = classModel;
 	}

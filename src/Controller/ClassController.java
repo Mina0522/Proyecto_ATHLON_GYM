@@ -9,8 +9,8 @@ import Model.ClassModel;
 public class ClassController {
 	ClassModel classModel;
 	
-	public ClassController (ClassModel classModel) {
-		this.classModel = classModel;
+	public ClassController () {
+		this.classModel = new ClassModel();
 	}
 	
 	//id_instructor = la id del instructor seleccionado en ese momento
