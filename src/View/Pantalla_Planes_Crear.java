@@ -10,6 +10,7 @@ import Controller.TrainerController;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.ItemEvent;
 
 import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
@@ -223,76 +224,49 @@ public class Pantalla_Planes_Crear {
         
         
         JComboBox<ComboObject> comboBoxTrainer = controladorTrainer.getTrainerCombo();
+        comboBoxTrainer.setForeground(Color.GRAY);
+        comboBoxTrainer.insertItemAt(new ComboObject(-1, "Selecciona un entrenador"), 0);
+        comboBoxTrainer.setSelectedIndex(0); 
+        comboBoxTrainer.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                ComboObject selected = (ComboObject) comboBoxTrainer.getSelectedItem();
+                if (selected != null && selected.getId() != -1) {
+                    comboBoxTrainer.setForeground(Color.BLACK);  
+                } else {
+                    comboBoxTrainer.setForeground(Color.GRAY);  
+                }
+            }
+        });
+
         comboBoxTrainer.setBounds(500, 80, 330, 50);
         comboBoxTrainer.setBackground(colorGris);
         comboBoxTrainer.setFont(new Font("Arial", Font.PLAIN, 18));
         comboBoxTrainer.setBorder(null);
-        comboBoxTrainer.setEditable(true);
-
-        
-        JTextField editorEntrenador = (JTextField) comboBoxTrainer.getEditor().getEditorComponent();
-        editorEntrenador.setText("Tipo de entrenador");    // texto del placeholder
-        editorEntrenador.setForeground(Color.GRAY);
-        editorEntrenador.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (editorEntrenador.getText().equals("Tipo de entrenador")) {
-                	editorEntrenador.setText("");
-                	editorEntrenador.setForeground(Color.gray);
-                }
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (editorEntrenador.getText().isEmpty()) {
-                	editorEntrenador.setText("Tipo de entrenador");
-                	editorEntrenador.setForeground(Color.GRAY);
-                }
-            }
-        });
-        
-        comboBoxTrainer.addActionListener(e -> {
-            String item = comboBoxTrainer.getEditor().getItem().toString();
-            if (! item.equals("Tipo de entrenador")) {
-            	editorEntrenador.setForeground(Color.BLACK);
-            	editorEntrenador.setFont(new Font("Arial", Font.BOLD, 18));
-                }
-        });
+        comboBoxTrainer.setEditable(false);  
         panel.add(comboBoxTrainer);
         
-        JComboBox<String> comboInvitacion = new JComboBox<>(new String[]{"Sí", "No"});
+       
+        
+        JComboBox<String> comboInvitacion = new JComboBox<>(new String[]{"Selecciona una opción", "Sí", "No"});
+        comboInvitacion.setSelectedIndex(0); 
+        comboInvitacion.setForeground(Color.GRAY);
         comboInvitacion.setBackground(colorGris);
         comboInvitacion.setFont(new Font("Arial", Font.PLAIN, 18));
-        comboInvitacion.setEditable(true);
+        comboInvitacion.setEditable(false);
         comboInvitacion.setBounds(500, 150, 330, 50);
-
-        JTextField editorInv = (JTextField) comboInvitacion.getEditor().getEditorComponent();
-        editorInv.setText("Pase de invitación");    // texto del placeholder
-        editorInv.setForeground(Color.GRAY);
-
-        editorInv.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (editorInv.getText().equals("Pase de invitación")) {
-                    editorInv.setText("");
-                    editorInv.setForeground(Color.gray);
-                }
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (editorInv.getText().isEmpty()) {
-                    editorInv.setText("Pase de invitación");
-                    editorInv.setForeground(Color.GRAY);
-                }
-            }
-        });
-        comboInvitacion.addActionListener(e -> {
-            String item = comboInvitacion.getEditor().getItem().toString();
-            if (! item.equals("Pase de invitación")) {
-                editorInv.setForeground(Color.BLACK);
-                editorInv.setFont(new Font("Arial", Font.BOLD, 18));
-                }
-        });
         panel.add(comboInvitacion);
+
+        comboInvitacion.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                String selected = (String) comboInvitacion.getSelectedItem();
+                if (!selected.equals("Selecciona una opción")) {
+                    comboInvitacion.setForeground(Color.BLACK);  
+                } else {
+                    comboInvitacion.setForeground(Color.GRAY);  
+                }
+            }
+        });
+
         
         volver = new JButton("Volver");
         volver.setBounds(500, 230, 150, 50);
@@ -316,9 +290,8 @@ public class Pantalla_Planes_Crear {
             String nombreP     = nombrePlan.getText().trim();
             String textoPrecio = precio.getText().trim();
             String textoDias   = promo.getText().trim();
-            String placeholderInv = "Pase de invitación"; 
-            String selInv      = comboInvitacion.getEditor().getItem().toString().trim();
 
+           
             if (nombreP.isEmpty()) {
                 JOptionPane.showMessageDialog(menu_user, "Debes ingresar un nombre para el plan.", "Campo vacío", JOptionPane.WARNING_MESSAGE);
                 return;
@@ -328,42 +301,48 @@ public class Pantalla_Planes_Crear {
                 return;
             }
 
+            
             if (textoPrecio.isEmpty()) {
                 JOptionPane.showMessageDialog(menu_user, "Debes ingresar un precio.", "Campo vacío", JOptionPane.WARNING_MESSAGE);
                 return;
             }
+
             if (textoDias.isEmpty()) {
                 JOptionPane.showMessageDialog(menu_user, "Debes ingresar la duración en días.", "Campo vacío", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-
+ 
             Object selObj = comboBoxTrainer.getSelectedItem();
-
-            if (!(selObj instanceof ComboObject)) {
+            if (!(selObj instanceof ComboObject) || ((ComboObject) selObj).getId() == -1) {
                 JOptionPane.showMessageDialog(menu_user,
-                    "Debes seleccionar un entrenador de la lista, no escribir otro.",
-                    "Falta entrenador",
+                    "Debes seleccionar un entrenador válido de la lista.",
+                    "Entrenador no seleccionado",
+                    JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            int trainerId = ((ComboObject) selObj).getId();
+
+            
+            String selInv = (String) comboInvitacion.getSelectedItem();
+            if (selInv.equals("Selecciona una opción")) {
+                JOptionPane.showMessageDialog(menu_user,
+                    "Debes seleccionar si deseas pase de invitación (Sí o No).",
+                    "Pase de invitación no seleccionado",
                     JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
-            ComboObject selTrainer = (ComboObject) selObj;
-
-            int trainerId = selTrainer.getId();
-
-            if (selInv.isEmpty() || selInv.equals(placeholderInv)) {
-                JOptionPane.showMessageDialog(menu_user, "Debes seleccionar si deseas pase de invitación (Sí o No).", "Falta pase", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
+           
             double precioP;
-            int diasP;
             try {
                 precioP = Double.parseDouble(textoPrecio);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(menu_user, "El precio debe ser un número válido.", "Formato incorrecto", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+
+           
+            int diasP;
             try {
                 diasP = Integer.parseInt(textoDias);
             } catch (NumberFormatException ex) {
@@ -371,8 +350,10 @@ public class Pantalla_Planes_Crear {
                 return;
             }
 
+            
             boolean tienePase = selInv.equalsIgnoreCase("Sí");
 
+           
             controladorMem.createMembership(
                 nombreP,
                 precioP,
@@ -380,9 +361,9 @@ public class Pantalla_Planes_Crear {
                 trainerId,
                 tienePase
             );
+
             JOptionPane.showMessageDialog(menu_user, "Plan creado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             menu_inicio.pintar_vista(new Pantalla_Planes(menu_inicio).getPanel());
-
         });
 
 
