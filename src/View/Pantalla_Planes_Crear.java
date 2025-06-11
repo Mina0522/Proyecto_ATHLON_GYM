@@ -4,10 +4,19 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import Controller.MembershipController;
+import Controller.TrainerController;
+
 import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+
 import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
+import Model.ClassModel;
+import Model.ComboObject;
+import Model.TrainerModel;
 
 public class Pantalla_Planes_Crear {
 
@@ -15,12 +24,28 @@ public class Pantalla_Planes_Crear {
     private JPanel menu_user, panel, panel_negro, panel_botones;
     private JButton noti, confi, btn_crear, btn_edit, btn_deta, btn_eliminar, btn, volver;
     private JLabel text;
+    public MembershipController controladorMem;
+    public TrainerController controladorTrainer;
+    TrainerModel trainerModel;
+	ClassModel classModel;
+
     
     public Pantalla_Planes_Crear(Vista_GYM log) {
         this.menu_inicio = log;
+        trainerModel = new TrainerModel();
+        classModel = new ClassModel();
+        controladorMem = new MembershipController();
+    	controladorTrainer = new TrainerController(trainerModel,classModel);
     }
 
     public JPanel getPanel() {
+    	
+    	try {
+    	    UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatLightLaf());
+    	} catch (UnsupportedLookAndFeelException e1) {
+    	    e1.printStackTrace();
+    	}
+    	
     	
     	Color colorGris = Color.decode("#D9D9D9");
         menu_user = new JPanel();
@@ -165,50 +190,109 @@ public class Pantalla_Planes_Crear {
         text = new JLabel("Propuesta de plan");
         text.setFont(new Font("Arial", Font.BOLD, 35));
         text.setForeground(Color.white);
-        text.setBounds(20, 5, 500, 50);
+        text.setBounds(20, 5, 500, 45);
         text.setLayout(null);
         panel_negro.add(text);
         
         // ====
-        Graficos_texto sede = new Graficos_texto();
-        sede.setPlaceholder(" Numero de sedes");
-        sede.setBounds(30, 80, 330, 50);
-        sede.setBackground(Color.lightGray);
-        sede.setFont(new Font("Arial", Font.PLAIN, 18));
-        sede.setBorder(null);
-        panel.add(sede);
+        Graficos_texto nombrePlan = new Graficos_texto();
+        nombrePlan.setPlaceholder(" Nombre del plan");
+        nombrePlan.setBounds(30, 80, 330, 50);
+        nombrePlan.setBackground(colorGris);
+        nombrePlan.setFont(new Font("Arial", Font.PLAIN, 18));
+        nombrePlan.setBorder(null);
+        panel.add(nombrePlan);
         
-        Graficos_texto acceso = new Graficos_texto();
-        acceso.setPlaceholder(" Clase de acceso");
-        acceso.setBounds(30, 150, 330, 50);
-        acceso.setBackground(Color.lightGray);
-        acceso.setFont(new Font("Arial", Font.PLAIN, 18));
-        acceso.setBorder(null);
-        panel.add(acceso);
+        Graficos_texto precio = new Graficos_texto();
+        precio.setPlaceholder(" Precio");
+        precio.setBounds(30, 150, 330, 50);
+        precio.setBackground(colorGris);
+        precio.setFont(new Font("Arial", Font.PLAIN, 18));
+        precio.setBorder(null);
+        panel.add(precio);
         
-        Graficos_texto instructor = new Graficos_texto();
-        instructor.setPlaceholder(" Tipo de instructor");
-        instructor.setBounds(30, 220, 330, 50);
-        instructor.setBackground(Color.lightGray);
-        instructor.setFont(new Font("Arial", Font.PLAIN, 18));
-        instructor.setBorder(null);
-        panel.add(instructor);
+        
         
         Graficos_texto promo = new Graficos_texto();
-        promo.setPlaceholder(" Tipo de promociones");
-        promo.setBounds(500, 80, 330, 50);
-        promo.setBackground(Color.lightGray);
+        promo.setPlaceholder(" Dias que dura el plan");
+        promo.setBounds(30, 220, 330, 50);
+        promo.setBackground(colorGris);
         promo.setFont(new Font("Arial", Font.PLAIN, 18));
         promo.setBorder(null);
         panel.add(promo);
         
-        Graficos_texto invitacion = new Graficos_texto();
-        invitacion.setPlaceholder(" Tarjeta de invitacion");
-        invitacion.setBounds(500, 150, 330, 50);
-        invitacion.setBackground(Color.lightGray);
-        invitacion.setFont(new Font("Arial", Font.PLAIN, 18));
-        invitacion.setBorder(null);
-        panel.add(invitacion);
+        
+        JComboBox<ComboObject> comboBoxTrainer = controladorTrainer.getTrainerCombo();
+        comboBoxTrainer.setBounds(500, 80, 330, 50);
+        comboBoxTrainer.setBackground(colorGris);
+        comboBoxTrainer.setFont(new Font("Arial", Font.PLAIN, 18));
+        comboBoxTrainer.setBorder(null);
+        comboBoxTrainer.setEditable(true);
+
+        
+        JTextField editorEntrenador = (JTextField) comboBoxTrainer.getEditor().getEditorComponent();
+        editorEntrenador.setText("Tipo de entrenador");    // texto del placeholder
+        editorEntrenador.setForeground(Color.GRAY);
+        editorEntrenador.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (editorEntrenador.getText().equals("Tipo de entrenador")) {
+                	editorEntrenador.setText("");
+                	editorEntrenador.setForeground(Color.gray);
+                }
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (editorEntrenador.getText().isEmpty()) {
+                	editorEntrenador.setText("Tipo de entrenador");
+                	editorEntrenador.setForeground(Color.GRAY);
+                }
+            }
+        });
+        
+        comboBoxTrainer.addActionListener(e -> {
+            String item = comboBoxTrainer.getEditor().getItem().toString();
+            if (! item.equals("Tipo de entrenador")) {
+            	editorEntrenador.setForeground(Color.BLACK);
+            	editorEntrenador.setFont(new Font("Arial", Font.BOLD, 18));
+                }
+        });
+        panel.add(comboBoxTrainer);
+        
+        JComboBox<String> comboInvitacion = new JComboBox<>(new String[]{"Sí", "No"});
+        comboInvitacion.setBackground(colorGris);
+        comboInvitacion.setFont(new Font("Arial", Font.PLAIN, 18));
+        comboInvitacion.setEditable(true);
+        comboInvitacion.setBounds(500, 150, 330, 50);
+
+        JTextField editorInv = (JTextField) comboInvitacion.getEditor().getEditorComponent();
+        editorInv.setText("Pase de invitación");    // texto del placeholder
+        editorInv.setForeground(Color.GRAY);
+
+        editorInv.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (editorInv.getText().equals("Pase de invitación")) {
+                    editorInv.setText("");
+                    editorInv.setForeground(Color.gray);
+                }
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (editorInv.getText().isEmpty()) {
+                    editorInv.setText("Pase de invitación");
+                    editorInv.setForeground(Color.GRAY);
+                }
+            }
+        });
+        comboInvitacion.addActionListener(e -> {
+            String item = comboInvitacion.getEditor().getItem().toString();
+            if (! item.equals("Pase de invitación")) {
+                editorInv.setForeground(Color.BLACK);
+                editorInv.setFont(new Font("Arial", Font.BOLD, 18));
+                }
+        });
+        panel.add(comboInvitacion);
         
         volver = new JButton("Volver");
         volver.setBounds(500, 230, 150, 50);
@@ -228,6 +312,88 @@ public class Pantalla_Planes_Crear {
         btn.setBackground(Color.BLACK);
         btn.setForeground(Color.WHITE);
         btn.setFocusPainted(false);
+        btn.addActionListener(e -> {
+            String nombreP     = nombrePlan.getText().trim();
+            String textoPrecio = precio.getText().trim();
+            String textoDias   = promo.getText().trim();
+            String placeholderInv = "Pase de invitación"; // mismo texto que al inicializar
+            String selInv      = comboInvitacion.getEditor().getItem().toString().trim();
+
+            // 1) Nombre
+            if (nombreP.isEmpty()) {
+                JOptionPane.showMessageDialog(menu_user, "Debes ingresar un nombre para el plan.", "Campo vacío", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            if (!nombreP.matches("[A-Za-zÁÉÍÓÚáéíóúÑñ ]+")) {
+                JOptionPane.showMessageDialog(menu_user, "El nombre sólo puede contener letras y espacios.", "Formato incorrecto", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // 2) Precio y días
+            if (textoPrecio.isEmpty()) {
+                JOptionPane.showMessageDialog(menu_user, "Debes ingresar un precio.", "Campo vacío", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            if (textoDias.isEmpty()) {
+                JOptionPane.showMessageDialog(menu_user, "Debes ingresar la duración en días.", "Campo vacío", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+         // 1) Obtienes el ítem seleccionado
+            Object selObj = comboBoxTrainer.getSelectedItem();
+
+            // 2) Validas que sea un ComboObject (no un texto cualquiera)
+            if (!(selObj instanceof ComboObject)) {
+                JOptionPane.showMessageDialog(menu_user,
+                    "Debes seleccionar un entrenador de la lista, no escribir otro.",
+                    "Falta entrenador",
+                    JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // 3) Ya sabes que es válido, haces el cast
+            ComboObject selTrainer = (ComboObject) selObj;
+
+            // 4) Sacas el ID numérico
+            int trainerId = selTrainer.getId();
+
+            // 4) Pase de invitación: comprueba exactamente el mismo placeholder
+            if (selInv.isEmpty() || selInv.equals(placeholderInv)) {
+                JOptionPane.showMessageDialog(menu_user, "Debes seleccionar si deseas pase de invitación (Sí o No).", "Falta pase", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // 5) Parseo seguro
+            double precioP;
+            int diasP;
+            try {
+                precioP = Double.parseDouble(textoPrecio);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(menu_user, "El precio debe ser un número válido.", "Formato incorrecto", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            try {
+                diasP = Integer.parseInt(textoDias);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(menu_user, "La duración debe ser un número entero válido.", "Formato incorrecto", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // 6) Booleano de invitación
+            boolean tienePase = selInv.equalsIgnoreCase("Sí");
+
+            // 7) Llamada al controlador
+            controladorMem.createMembership(
+                nombreP,
+                precioP,
+                diasP,
+                trainerId,
+                tienePase
+            );
+            JOptionPane.showMessageDialog(menu_user, "Plan creado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        });
+
+
         panel.add(btn);
         
 		return menu_user;
