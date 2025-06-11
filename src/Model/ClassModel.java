@@ -179,6 +179,20 @@ public class ClassModel {
 			}
 		}
 		
+		public ArrayList<ClassDB> getAllClasses (){
+			ArrayList<ClassDB> list = new ArrayList<>();
+			try (PreparedStatement ps = MyConnection.getConn().prepareStatement("SELECT * FROM class_type");
+			ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					list.add(new ClassDB(rs.getInt("id"),
+							rs.getString("type_name")));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
 //	public static void main(String[] args) {
 //		ClassModel model = new ClassModel();
 //		System.out.println(model.getTClass(1));

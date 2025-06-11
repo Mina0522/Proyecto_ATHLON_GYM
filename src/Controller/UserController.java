@@ -209,6 +209,10 @@ public class UserController {
 		PDFModel.createUserReportPDF(paymentModel.getAllUserPayments(id));
 	}
 	
+	public JComboBox<ComboObject> getPlanesCombo () {
+		
+	}
+	
 //	public static void main(String[] args) {
 //		UserController con = new UserController(new UserModel(), new PaymentModel(), new ClassModel());
 //		con.geterateUserReportPDF(3);
