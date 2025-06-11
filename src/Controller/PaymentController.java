@@ -33,14 +33,21 @@ public class PaymentController {
 	
 	//Regresa un TableModel con:
 	//Nombre del plan pagado | Nombre del usuario | Monto pagado
-	public DefaultTableModel getPaymentsTable () {
-		DefaultTableModel tableModel = new DefaultTableModel();
-		ArrayList<Payment> payments = paymentModel.getAllPayments();
-		for (Payment p : payments) {
-			tableModel.addRow(new Object[] {p.getMembership_name(), p.getMember_name(), p.getPrice()});
-		}
-		return tableModel;
+	public DefaultTableModel getPaymentsTable() {
+	    String[] columnas = {"Plan pagado", "Usuario", "Monto"};
+	    DefaultTableModel tableModel = new DefaultTableModel(columnas, 0);
+
+	    ArrayList<Payment> payments = paymentModel.getAllPayments();
+	    for (Payment p : payments) {
+	        tableModel.addRow(new Object[] {
+	            p.getMembership_name(),
+	            p.getMember_name(),
+	            p.getPrice()
+	        });
+	    }
+	    return tableModel;
 	}
+
 	
 	public ArrayList<Payment> probar () {
 		DefaultTableModel tableModel = new DefaultTableModel();

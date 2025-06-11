@@ -43,6 +43,12 @@ public class Detalles {
     }
 
     public JPanel getPanel() {
+    	
+    	try {
+    	    UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatLightLaf());
+    	} catch (UnsupportedLookAndFeelException e1) {
+    	    e1.printStackTrace();
+    	}
         menu = new JPanel();
         menu.setLayout(null);
         Color colorGris = Color.decode("#D9D9D9");

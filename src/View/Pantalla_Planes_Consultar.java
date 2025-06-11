@@ -1,8 +1,11 @@
 package View;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+
+import Controller.PaymentController;
 
 import java.awt.*;
 import Funciones_graficas.Graficos_fondo;
@@ -15,12 +18,20 @@ public class Pantalla_Planes_Consultar {
     private JPanel menu_user, panel, panel_negro, panel_botones, panel_negro1;
     private JButton noti, confi, btn_crear, btn_edit, btn_deta, btn_eliminar, btn;
     private JLabel text, text1, text2, text3, text4, text5, text_negro;
+    private PaymentController controlador;
     
     public Pantalla_Planes_Consultar(Vista_GYM log) {
         this.menu_inicio = log;
+        controlador= new PaymentController();
     }
 
     public JPanel getPanel() {
+    	
+    	try {
+    	    UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatLightLaf());
+    	} catch (UnsupportedLookAndFeelException e1) {
+    	    e1.printStackTrace();
+    	}
     	
     	Color colorGris = Color.decode("#D9D9D9");
         menu_user = new JPanel();
@@ -152,71 +163,54 @@ public class Pantalla_Planes_Consultar {
         // === 
 		panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(300, 335, 900, 250);
+		panel.setBounds(300, 365, 900, 250);
 		panel.setLayout(null);
 		menu_user.add(panel);
 		
-		panel_negro = new JPanel();
-		panel_negro.setBackground(Color.black);
-		panel_negro.setBounds(0, 0, 900, 60);
-		panel_negro.setLayout(null);
-		panel.add(panel_negro);
-		
-        text = new JLabel("Consultar registros");
-        text.setFont(new Font("Arial", Font.BOLD, 35));
-        text.setForeground(Color.white);
-        text.setBounds(20, 5, 500, 50);
-        text.setLayout(null);
-        panel_negro.add(text);
+		JLabel text_clase = new JLabel("Consultar registros", SwingConstants.CENTER);
+        text_clase.setOpaque(true);
+        text_clase.setBackground(Color.BLACK);
+        text_clase.setForeground(Color.WHITE);
+        text_clase.setFont(new Font("Arial", Font.BOLD, 28));
+        text_clase.setBounds(0, 0, 900, 50);
+        panel.add(text_clase);
+
+      
         
-        // ====
-        text1 = new JLabel("Nombre del plan             Duracion               Costo");
-        text1.setFont(new Font("Arial", Font.BOLD, 35));
-        text1.setForeground(Color.black);
-        text1.setBounds(20, 65, 900, 50);
-        text1.setLayout(null);
-        panel.add(text1);
-        
-        text2 = new JLabel("         Basico                    1 mes                     $350");
-        text2.setFont(new Font("Arial", Font.BOLD, 35));
-        text2.setForeground(Color.gray);
-        text2.setBounds(20, 95, 900, 50);
-        text2.setLayout(null);
-        panel.add(text2);
-        
-        text3 = new JLabel("         Basico                    1 mes                     $350");
-        text3.setFont(new Font("Arial", Font.BOLD, 35));
-        text3.setForeground(Color.gray);
-        text3.setBounds(20, 125, 900, 50);
-        text3.setLayout(null);
-        panel.add(text3);
-        
-        text4 = new JLabel("         Basico                    1 mes                     $350");
-        text4.setFont(new Font("Arial", Font.BOLD, 35));
-        text4.setForeground(Color.gray);
-        text4.setBounds(20, 155, 900, 50);
-        text4.setLayout(null);
-        panel.add(text4);
-        
-        text5 = new JLabel("         Basico                    1 mes                     $350");
-        text5.setFont(new Font("Arial", Font.BOLD, 35));
-        text5.setForeground(Color.gray);
-        text5.setBounds(20, 185, 900, 50);
-        text5.setLayout(null);
-        panel.add(text5);
-        
-		panel_negro1 = new JPanel();
-		panel_negro1.setBackground(Color.black);
-		panel_negro1.setBounds(900, 580, 300, 50);
-		panel_negro1.setLayout(null);
-		menu_user.add(panel_negro1);
-		
-        text_negro = new JLabel("Total     $12,230");
-        text_negro.setFont(new Font("Arial", Font.BOLD, 35));
-        text_negro.setForeground(Color.white);
-        text_negro.setBounds(10, 5, 500, 50);
-        text_negro.setLayout(null);
-        panel_negro1.add(text_negro);
+        DefaultTableModel modeloPagos = controlador.getPaymentsTable();
+
+        JTable tabla2 = new JTable(modeloPagos) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        tabla2.setFont(new Font("Arial", Font.PLAIN, 20)); 
+        tabla2.setRowHeight(45);
+        tabla2.setForeground(Color.BLACK);
+        tabla2.setBackground(Color.WHITE);
+
+       
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        tabla2.setDefaultRenderer(Object.class, centerRenderer);
+
+        JScrollPane scroll2 = new JScrollPane(tabla2);
+        scroll2.setBounds(0, 50, 900, 205);
+        scroll2.setVisible(true);
+        panel.add(scroll2);
+
+        JTableHeader header2 = tabla2.getTableHeader();
+        header2.setPreferredSize(new Dimension(scroll2.getWidth(), 35));
+        header2.setFont(new Font("Arial", Font.BOLD, 24));  
+        header2.setBackground(Color.BLACK);
+        header2.setForeground(Color.WHITE);
+
+     
+        DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) header2.getDefaultRenderer();
+        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+
         
 		return menu_user;
 	}
