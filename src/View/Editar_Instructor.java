@@ -10,6 +10,8 @@ import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
 import Model.ClassModel;
+import Model.ComboObject;
+import Model.Trainer;
 import Model.TrainerModel;
 
 public class Editar_Instructor {
@@ -25,9 +27,11 @@ public class Editar_Instructor {
     ClassModel cTrainer = new ClassModel();
     
     TrainerController controller = new TrainerController(modelTrainer, cTrainer);
+    private int trainerId;
 
-    public Editar_Instructor(Vista_GYM log) {
+    public Editar_Instructor(Vista_GYM log, int trainerId) {
         this.menu_inicio = log;
+        this.trainerId = trainerId;
     }
 
     public JPanel getPanel() {
@@ -52,24 +56,6 @@ public class Editar_Instructor {
         botones.configurarBotonMenu("Checador", e -> menu_inicio.pintar_vista(new Pantalla_Checador(menu_inicio).getPanel()));
         botones.configurarBotonMenu("Salir", e -> menu_inicio.pintar_vista(new View_loginGYM(menu_inicio).getPanel()));
 
-
-        // === iconos de notificaciones
-        noti = new JButton(new ImageIcon(getClass().getResource("/files/campana.png")));
-        noti.setBounds(1100, 20, 57, 57);
-        noti.setBorderPainted(false);
-        noti.setContentAreaFilled(false);
-        noti.setFocusPainted(false);
-        noti.setOpaque(false);
-        menu.add(noti);
-
-        confi = new JButton(new ImageIcon(getClass().getResource("/files/configuracion.png")));
-        confi.setBounds(1190, 20, 57, 57);
-        confi.setBorderPainted(false);
-        confi.setContentAreaFilled(false);
-        confi.setFocusPainted(false);
-        confi.setOpaque(false);
-        menu.add(confi);
-        
         // ==
         JSeparator separador = new JSeparator(SwingConstants.HORIZONTAL);
         separador.setBounds(250, 95, 1030, 2); 
@@ -94,8 +80,10 @@ public class Editar_Instructor {
 		text.setBounds(275, 145, 500, 50);
 		panel_agg.add(text);
 		
+		Trainer trainer = controller.getTrainer(trainerId);
+		
         Graficos_texto nombre = new Graficos_texto();
-        nombre.setPlaceholder(" Felipe Ramos");
+        nombre.setText(trainer.getName());
         nombre.setBounds(225, 200, 415, 40);
         nombre.setBackground(Color.lightGray);
         nombre.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -103,7 +91,7 @@ public class Editar_Instructor {
         panel_agg.add(nombre);
         
         Graficos_texto correo = new Graficos_texto();
-        correo.setPlaceholder(" feliperamos@gmail.com");
+        correo.setText(trainer.getEmail());
         correo.setBounds(225, 260, 415, 40);
         correo.setBackground(Color.lightGray);
         correo.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -111,21 +99,30 @@ public class Editar_Instructor {
         panel_agg.add(correo);
         
         Graficos_texto tel = new Graficos_texto();
-        tel.setPlaceholder(" 6121231231");
+        tel.setText(trainer.getPhone_number());
         tel.setBounds(225, 320, 415, 40);
         tel.setBackground(Color.lightGray);
         tel.setFont(new Font("Arial", Font.PLAIN, 18));
         tel.setBorder(null);
         panel_agg.add(tel);
         
-        Graficos_texto especialidad = new Graficos_texto();
-        especialidad.setPlaceholder(" Pesas");
-        especialidad.setBounds(225, 380, 415, 40);
-        especialidad.setBackground(Color.lightGray);
-        especialidad.setFont(new Font("Arial", Font.PLAIN, 18));
-        especialidad.setBorder(null);
-        panel_agg.add(especialidad);
-        
+        JComboBox<ComboObject> comboTipo = new JComboBox<>();
+        comboTipo.addItem(new ComboObject(1, "General"));
+        comboTipo.addItem(new ComboObject(2, "Personal"));
+        comboTipo.setBounds(225, 380, 415, 40);
+        comboTipo.setFont(new Font("Arial", Font.PLAIN, 18));
+        comboTipo.setBackground(Color.lightGray);
+        panel_agg.add(comboTipo);
+
+        int tipo = trainer.getType();
+        for (int i = 0; i < comboTipo.getItemCount(); i++) {
+            ComboObject item = (ComboObject) comboTipo.getItemAt(i);
+            if (item.getId() == tipo) {
+                comboTipo.setSelectedIndex(i);
+                break;
+            }
+        }
+
         cancelar = new JButton("Cancelar");
         cancelar.setBounds(30, 450, 330, 40);
         cancelar.setFont(new Font("Arial", Font.BOLD, 22));
@@ -143,10 +140,46 @@ public class Editar_Instructor {
         editar.setBackground(Color.BLACK);
         editar.setForeground(Color.WHITE);
         editar.setFocusPainted(false);
+        editar.addActionListener(e -> {
+            String nombreU = nombre.getText().trim();
+            String correoU = correo.getText().trim();
+            String telU = tel.getText().trim();
+            ComboObject tipoSeleccionado = (ComboObject) comboTipo.getSelectedItem();
+            int tipoU = tipoSeleccionado.getId();
+
+            int result = controller.updateTrainer(trainerId, nombreU, correoU, telU, tipoU);
+
+            switch (result) {
+                case 1:
+                    JOptionPane.showMessageDialog(menu, 
+                    		"Rellena al menos un campo para actualizar.", 
+                        "Datos incompletos", JOptionPane.WARNING_MESSAGE);
+                    break;
+                case 2:
+                    JOptionPane.showMessageDialog(menu, 
+                    		"El nombre no puede contener numeros.", 
+                        "Datos inválidos", JOptionPane.WARNING_MESSAGE);
+                    break;
+                case 3:
+                    JOptionPane.showMessageDialog(menu,
+                    		"El telefono no puede contener letras.", 
+                        "Datos invalidos", JOptionPane.WARNING_MESSAGE);
+                    break;
+                case 0:
+                    JOptionPane.showMessageDialog(menu, 
+                    		"¡Instructor actualizado exitosamente!");
+                    menu_inicio.pintar_vista(new Pantalla_Instructores(menu_inicio).getPanel());
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(menu, 
+                    		"Ocurrio un error al actualizar el instructor.", 
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                    break;
+            }
+        });
+
         panel_agg.add(editar);
         
-        
-
 		return menu;
 	}
 }

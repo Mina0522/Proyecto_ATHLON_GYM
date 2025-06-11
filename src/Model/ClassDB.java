@@ -10,7 +10,7 @@ public class ClassDB {
 		this.type = type;
 		this.registrations = registrations;
 	}
-
+	
 	public String getDate() {
 		return date;
 	}

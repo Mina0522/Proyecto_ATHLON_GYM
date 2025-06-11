@@ -67,5 +67,5 @@ public class Membership {
 				+ promotions + ", has_invitation_pass=" + has_invitation_pass + ", days=" + days + ", price=" + price
 				+ ", id_trainer_type=" + id_trainer_type + ", trainer_type_name=" + trainer_type_name + "]";
 	}
-	
+
 }

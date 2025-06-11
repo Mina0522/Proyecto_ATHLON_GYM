@@ -32,16 +32,17 @@ public class TrainerModel {
 	
 	public Trainer getTrainer (int id) {
 		try (PreparedStatement ps = MyConnection.getConn().prepareStatement(
-		"SELECT * FROM instructor WHERE id = ?")) {
+		"SELECT i.*, it.type_name FROM instructor i LEFT JOIN (instructor_type it) ON i.id_instructor_type = it.id WHERE i.id = ?")) {
 			ps.setInt(1, id);
 			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next()) {
 					return new Trainer (
-							rs.getInt("id"),
+							rs.getInt("i.id"),
 							rs.getString("name"),
 							rs.getString("email"),
 							rs.getString("phone_number"),
-							rs.getInt("id_instructor_type"));
+							rs.getInt("id_instructor_type"),
+							rs.getString("it.type_name"));
 				}
 			}
 			
@@ -109,7 +110,7 @@ public class TrainerModel {
 	
 	public ArrayList<Trainer> getAllTrainers() {
 		ArrayList<Trainer> list;
-			try (PreparedStatement pr = MyConnection.getConn().prepareStatement("SELECT * FROM instructor");
+			try (PreparedStatement pr = MyConnection.getConn().prepareStatement("SELECT i.*, it.type_name FROM instructor i LEFT JOIN (instructor_type it) ON i.id_instructor_type = it.id;");
 			ResultSet rs = pr.executeQuery()) {
 				list = new ArrayList<>();
 				while (rs.next()) {
@@ -118,7 +119,8 @@ public class TrainerModel {
 					rs.getString("name"),
 					rs.getString("email"),
 					rs.getString("phone_number"),
-					rs.getInt("id_instructor_type")));
+					rs.getInt("id_instructor_type"),
+					rs.getString("it.type_name")));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -127,10 +129,10 @@ public class TrainerModel {
 		return list;
 	}
 
-	public static void main(String[] args) {
-		TrainerModel model = new TrainerModel();
-		for (Trainer trainer : model.getAllTrainers()) {
-			System.out.println(trainer);
-		}
-	}
+//	public static void main(String[] args) {
+//		TrainerModel model = new TrainerModel();
+//		for (Trainer trainer : model.getAllTrainers()) {
+//			System.out.println(trainer);
+//		}
+//	}
 }

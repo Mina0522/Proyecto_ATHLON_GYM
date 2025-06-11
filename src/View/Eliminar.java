@@ -53,24 +53,7 @@ public class Eliminar {
         botones.configurarBotonMenu("Planes", e -> menu_inicio.pintar_vista(new Pantalla_Planes(menu_inicio).getPanel()));
         botones.configurarBotonMenu("Checador", e -> menu_inicio.pintar_vista(new Pantalla_Checador(menu_inicio).getPanel()));
         botones.configurarBotonMenu("Salir", e -> menu_inicio.pintar_vista(new View_loginGYM(menu_inicio).getPanel()));
-
-        // === iconos de notificaciones
-        noti = new JButton(new ImageIcon(getClass().getResource("/files/campana.png")));
-        noti.setBounds(1100, 20, 57, 57);
-        noti.setBorderPainted(false);
-        noti.setContentAreaFilled(false);
-        noti.setFocusPainted(false);
-        noti.setOpaque(false);
-        menu.add(noti);
-
-        confi = new JButton(new ImageIcon(getClass().getResource("/files/configuracion.png")));
-        confi.setBounds(1190, 20, 57, 57);
-        confi.setBorderPainted(false);
-        confi.setContentAreaFilled(false);
-        confi.setFocusPainted(false);
-        confi.setOpaque(false);
-        menu.add(confi);
-        
+  
         // ==
         
         JSeparator separador = new JSeparator(SwingConstants.HORIZONTAL);

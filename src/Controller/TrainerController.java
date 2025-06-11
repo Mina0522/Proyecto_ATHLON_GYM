@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import Model.ClassDB;
 import Model.ClassModel;
 import Model.ComboObject;
+import Model.PDFModel;
 import Model.Trainer;
 import Model.TrainerModel;
 
@@ -108,6 +109,21 @@ public class TrainerController {
 			matenme.addItem(new ComboObject(2, "Personal"));
 			
 			return matenme;
+		}
+		
+		public void generateTrainerPDF (int id) {
+			Trainer trainer = trainerModel.getTrainer(id);
+			PDFModel.createTrainerPDF(trainer.getName(), trainer.getPhone_number(), trainer.getType_name());
+		}
+		
+		public void generateTrainerReportPDF (int id) {
+			String name = trainerModel.getTrainer(id).getName();
+			PDFModel.createTrainerReportPDF(classModel.getTrainerClassHistory(id),name);
+		}
+		
+		public static void main(String[] args) {
+			TrainerController con = new TrainerController(new TrainerModel(), new ClassModel());
+			con.generateTrainerReportPDF(1);
 		}
 
 }
