@@ -4,9 +4,11 @@ import javax.swing.*;
 import Controller.TrainerController;
 import java.awt.*;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Arrays;
 import Funciones_graficas.Menu;
 import Model.ClassModel;
+import Model.Trainer;
 import Model.TrainerModel;
 
 public class Pantalla_Instructores {
@@ -65,47 +67,78 @@ public class Pantalla_Instructores {
         separador.setForeground(Color.BLACK);
         panel_instructor.add(separador);
 
-        // === Datos de instructores (nombre y posicion x, y)
-        List<String> nombres = Arrays.asList("Ryan Garcia", "Felipe Ramos", "Elena Barrera", "El pepe", "Carlos Hernandes", "Sarah Diaz");
-        int[][] posiciones = {
-            {300, 150}, {600, 150}, {900, 150},
-            {300, 350}, {600, 350}, {900, 350}
-        };
+        // === Contenedor para scroll ===
+        JPanel contenedor = new JPanel(null);
+        contenedor.setPreferredSize(new Dimension(1030, 900));
+        contenedor.setBackground(Color.decode("#D9D9D9"));
 
-        for (int i = 0; i < nombres.size(); i++) {
-            crearPanelInstructor(nombres.get(i), posiciones[i][0], posiciones[i][1]);
+        int ancho = 290, alto = 170;
+        int espacioX = 50, espacioY = 30;
+        int columnas = 3;
+
+        int contenedorAncho = 1030;
+
+        int totalAnchura = columnas * ancho + (columnas - 1) * espacioX;
+        int margenX = (contenedorAncho - totalAnchura) / 2;
+
+        ArrayList<Trainer> entrenadores = controller.getAllTrainers();
+//        System.out.println("Entrenadores encontrados: " + entrenadores.size());
+//        for(Trainer t : entrenadores) {
+//            System.out.println("Entrenador: " + t.getName());
+//        }
+
+        for (int i = 0; i < entrenadores.size(); i++) {
+            Trainer t = entrenadores.get(i);
+
+            int col = i % columnas;
+            int fila = i / columnas;
+
+            int posX = margenX + (col * (ancho + espacioX));
+            int posY = 10 + (fila * (alto + espacioY));
+
+            crearPanelInstructor(t, posX, posY, contenedor);
         }
-        
-    	// === 
- 		crear_coach = new JButton("Crear instructor");
- 		crear_coach.setFont(new Font("Arial", Font.BOLD, 20));
- 		crear_coach.setBounds(1020, 560, 200, 50); 
- 		crear_coach.setBackground(Color.BLACK);
- 		crear_coach.setForeground(Color.WHITE);
- 		crear_coach.setFocusPainted(false);
- 		crear_coach.setBorderPainted(false);
- 		crear_coach.addActionListener(e -> {
- 		    menu_inicio.pintar_vista(new Crear_Instructor(menu_inicio).getPanel());
- 		});
- 		panel_instructor.add(crear_coach);
+
+        int totalFilas = (int) Math.ceil(entrenadores.size() / (double) columnas);
+        int nuevaAltura = 150 + totalFilas * (alto + espacioY);
+
+        crear_coach = new JButton("Crear instructor");
+        crear_coach.setFont(new Font("Arial", Font.BOLD, 20));
+        crear_coach.setBounds((1030 - 200) / 2, nuevaAltura, 200, 50);
+        crear_coach.setBackground(Color.BLACK);
+        crear_coach.setForeground(Color.WHITE);
+        crear_coach.setFocusPainted(false);
+        crear_coach.setBorderPainted(false);
+        crear_coach.addActionListener(e -> {
+            menu_inicio.pintar_vista(new Crear_Instructor(menu_inicio).getPanel());
+        });
+        contenedor.add(crear_coach);
+
+        contenedor.setPreferredSize(new Dimension(1030, nuevaAltura + 100));
+
+        JScrollPane scroll = new JScrollPane(contenedor);
+        scroll.setBounds(250, 100, 1100, 600);
+        scroll.setBorder(null);
+        scroll.getVerticalScrollBar().setUnitIncrement(16);
+        panel_instructor.add(scroll);
 
         return panel_instructor;
     }
 
-    private void crearPanelInstructor(String nombre, int x, int y) {
+    private void crearPanelInstructor(Trainer entrenador, int x, int y, JPanel contenedor) {
         JButton coach = new JButton();
         coach.setLayout(null);
         coach.setBackground(Color.WHITE);
         coach.setBounds(x, y, 290, 170);
         coach.setBorderPainted(false);
-        coach.addActionListener(e -> menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel()));
+        coach.addActionListener(e -> menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel())); // Puedes personalizar esto si quieres ver más info del entrenador
 
-        // Franja negra con nombre
+        // ==
         JPanel franja = new JPanel(null);
         franja.setBackground(Color.BLACK);
         franja.setBounds(0, 0, 290, 30);
 
-        JLabel nombreLabel = new JLabel(nombre);
+        JLabel nombreLabel = new JLabel(entrenador.getName());
         nombreLabel.setForeground(Color.WHITE);
         nombreLabel.setBounds(10, 5, 250, 20);
         nombreLabel.setFont(new Font("Arial", Font.BOLD, 20));
@@ -113,7 +146,7 @@ public class Pantalla_Instructores {
 
         coach.add(franja);
 
-        // Icono usuario
+        // ==
         ImageIcon icono = new ImageIcon(getClass().getResource("/files/user.png"));
         JButton btn_ver = new JButton(icono);
         btn_ver.setBounds(20, 90, 72, 72);
@@ -124,17 +157,6 @@ public class Pantalla_Instructores {
         btn_ver.addActionListener(e -> menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel()));
         coach.add(btn_ver);
 
-        panel_instructor.add(coach);
+        contenedor.add(coach);
     }
-
-    private void agregarIcono(String path, int x, int y) {
-        JButton boton = new JButton(new ImageIcon(getClass().getResource(path)));
-        boton.setBounds(x, y, 57, 57);
-        boton.setBorderPainted(false);
-        boton.setContentAreaFilled(false);
-        boton.setFocusPainted(false);
-        boton.setOpaque(false);
-        panel_instructor.add(boton);
-    }
-   
 }
