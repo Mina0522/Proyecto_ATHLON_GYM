@@ -141,9 +141,8 @@ public class UserController {
 				try (ResultSet rs = ps.executeQuery()){
 					while (rs.next()) {
 						combo.addItem(new ComboObject(rs.getInt("m.id"), rs.getString("m.name")));
-						id_current_membership = rs.getInt("p.id_membership");
 						if (id_current_membership == 0)
-							id_current_membership = rs.getInt("id");
+							id_current_membership = rs.getInt("p.id_membership");
 					}
 					for (int i = 0; i < combo.getItemCount(); i++) {
 						ComboObject cObject = combo.getItemAt(i);
@@ -185,5 +184,9 @@ public class UserController {
 		JComboBox<ComboObject> combo = con.generateMembershipComboId(24);
 		System.out.println(combo.getItemAt(0).getText());
 		System.out.println(combo.getItemAt(1).getText());
+		
+		ComboObject objeto = (ComboObject)combo.getSelectedItem();
+		int id_plan = objeto.getId();
+		System.out.println(id_plan);
 	}
 }
