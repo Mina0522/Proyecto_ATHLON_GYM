@@ -9,6 +9,9 @@ import Controller.PaymentController;
 import Controller.UserController;
 
 import java.awt.*;
+import java.io.IOException;
+import java.sql.SQLException;
+
 import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
@@ -238,6 +241,15 @@ public class Detalles {
         pdf.setBackground(Color.GRAY);
         pdf.setForeground(Color.WHITE);
         pdf.setFocusPainted(false);
+        pdf.addActionListener(e -> {
+        	 
+    	        controlador.generateUserIdPDF(usuario.getId()); 
+    	        JOptionPane.showMessageDialog(null,
+    	            "El reporte se descargó correctamente.",
+    	            "Éxito",
+    	            JOptionPane.INFORMATION_MESSAGE);
+        	   
+        });
         panelagg.add(pdf);
         
         volver = new JButton("Volver");

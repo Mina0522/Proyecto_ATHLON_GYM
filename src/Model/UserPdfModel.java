@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 public class UserPdfModel {
 	
@@ -83,6 +84,10 @@ public class UserPdfModel {
 
 	        } catch (IOException e) {
 	            e.printStackTrace();
+	            JOptionPane.showMessageDialog(null,
+	    	            "El reporte no se pudo descargar.",
+	    	            "Fail",
+	    	            JOptionPane.INFORMATION_MESSAGE);
 	        }
 	}
 	
