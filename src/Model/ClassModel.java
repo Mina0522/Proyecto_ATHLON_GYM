@@ -178,7 +178,7 @@ public class ClassModel {
 				return false; //Error al eliminar la clase
 			}
 		}
-	
+		
 //	public static void main(String[] args) {
 //		ClassModel model = new ClassModel();
 //		System.out.println(model.getTClass(1));

@@ -251,6 +251,90 @@ public class PDFModel {
 	                JOptionPane.INFORMATION_MESSAGE);
 	    }
 	}
+	
+	public static void createTrainerReportPDF(ArrayList<ClassDB> classList, String name) {
+	    try (PDDocument documento = new PDDocument()) {
+	        PDPage pagina = new PDPage(PDRectangle.A5);
+	        documento.addPage(pagina);
+
+	        PDRectangle mediaBox = pagina.getMediaBox();
+	        float pageWidth = mediaBox.getWidth();
+	        float pageHeight = mediaBox.getHeight();
+
+	        PDPageContentStream fondo = new PDPageContentStream(documento, pagina, PDPageContentStream.AppendMode.OVERWRITE, false);
+	        fondo.setNonStrokingColor(new Color(220, 220, 220));
+	        fondo.addRect(0, 0, pageWidth, pageHeight);
+	        fondo.fill();
+	        fondo.close();
+
+	        PDType1Font fuente = new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD);
+	        float fontSize = 12;
+	        float startY = pageHeight - 70;
+	        float margin = 30;
+	        float tableWidth = pageWidth - 2 * margin;
+	        float rowHeight = 20;
+	        int cols = 3;
+	        float colWidth = tableWidth / cols;
+
+	        PDPageContentStream contenido = new PDPageContentStream(documento, pagina, PDPageContentStream.AppendMode.APPEND, true);
+
+	        contenido.setFont(fuente, fontSize);
+	        contenido.setNonStrokingColor(Color.BLACK);
+
+	        // Título principal
+	        String titulo = "Clases del entrenador " + name;
+	        float tituloAncho = fuente.getStringWidth(titulo) / 1000 * fontSize;
+	        float tituloX = (pageWidth - tituloAncho) / 2;
+	        float tituloY = pageHeight - 30;
+
+	        contenido.beginText();
+	        contenido.newLineAtOffset(tituloX, tituloY);
+	        contenido.showText(titulo);
+	        contenido.endText();
+
+	        // Títulos de columna
+	        String[] headers = {"Fecha", "Tipo de clase", "Asistencias"};
+	        float textY = startY;
+
+	        contenido.beginText();
+	        contenido.newLineAtOffset(margin, textY);
+	        for (int i = 0; i < headers.length; i++) {
+	            contenido.showText(headers[i]);
+	            contenido.newLineAtOffset(colWidth, 0);
+	        }
+	        contenido.endText();
+
+	        // Datos de pagos
+	        textY -= rowHeight;
+	        for (ClassDB classs : classList) {
+	            contenido.beginText();
+	            contenido.setFont(fuente, fontSize);
+	            contenido.newLineAtOffset(margin, textY);
+	            contenido.showText(classs.getDate());
+	            contenido.newLineAtOffset(colWidth, 0);
+	            contenido.showText(classs.getClassType());
+	            contenido.newLineAtOffset(colWidth, 0);
+	            contenido.showText(""+classs.getRegistrations());
+	            contenido.endText();
+
+	            textY -= rowHeight;
+	        }
+
+	        contenido.close();
+
+	        // Obtener ruta y guardar archivo
+	        File ruta = PDFModel.askPath();
+	        documento.save(ruta);
+	        System.out.println("PDF guardado en: " + ruta.getAbsolutePath());
+
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        JOptionPane.showMessageDialog(null,
+	                "El reporte no se pudo descargar.",
+	                "Fail",
+	                JOptionPane.INFORMATION_MESSAGE);
+	    }
+	}
 
 
 	
@@ -274,8 +358,8 @@ public class PDFModel {
         return null; // El usuario canceló
     }
 	
-	public static void main(String[] args) {
-		PDFModel.createUserReportPDF(new PaymentModel().getAllUserPayments(1));
-	}
+//	public static void main(String[] args) {
+//		PDFModel.createUserReportPDF(new PaymentModel().getAllUserPayments(1));
+//	}
 	
 }

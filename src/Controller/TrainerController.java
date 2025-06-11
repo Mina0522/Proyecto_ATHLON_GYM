@@ -116,9 +116,14 @@ public class TrainerController {
 			PDFModel.createTrainerPDF(trainer.getName(), trainer.getPhone_number(), trainer.getType_name());
 		}
 		
+		public void generateTrainerReportPDF (int id) {
+			String name = trainerModel.getTrainer(id).getName();
+			PDFModel.createTrainerReportPDF(classModel.getTrainerClassHistory(id),name);
+		}
+		
 		public static void main(String[] args) {
 			TrainerController con = new TrainerController(new TrainerModel(), new ClassModel());
-			con.generateTrainerPDF(9);
+			con.generateTrainerReportPDF(1);
 		}
 
 }
