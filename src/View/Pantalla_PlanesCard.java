@@ -69,7 +69,7 @@ public class Pantalla_PlanesCard {
         p.add(lblName);
 
        
-        JButton btnDetails = new JButton("Detalles");
+        JButton btnDetails = new JButton("Detalless");
         btnDetails.setBounds(250, 140, 400, 50);
         btnDetails.setBackground(Color.BLACK);
         btnDetails.setForeground(Color.WHITE);

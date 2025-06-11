@@ -147,7 +147,7 @@ public class Pantalla_Planes {
         MembershipController memCtrl = new MembershipController();
         Pantalla_PlanesCard carousel = new Pantalla_PlanesCard(memCtrl);
         JPanel carouselPanel = carousel.getPanel();
-        // Fija la posición y tamaño para que quede bajo los botones:
+        
         carouselPanel.setBounds(300, 360, 900, 280);
         menu_user.add(carouselPanel);
 
