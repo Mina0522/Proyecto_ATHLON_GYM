@@ -215,7 +215,7 @@ public class Info_Instructor {
         report.setFocusPainted(false);
         report.setLayout(null);
         report.addActionListener(e -> {
-	        controller.generateTrainerPDF(trainer.getId()); 
+	        controller.generateTrainerReportPDF(trainer.getId()); 
 	        JOptionPane.showMessageDialog(null,
 	            "El reporte se descargó correctamente.",
 	            "Éxito",
