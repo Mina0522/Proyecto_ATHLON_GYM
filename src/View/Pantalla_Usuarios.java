@@ -262,8 +262,8 @@ public class Pantalla_Usuarios {
             }
         };  
         this.modelo=modelo;
-        modelo.setRowCount(0);
-        controlador.fillUserHomeTable(nombreUsuario, modelo);
+        this.modelo.setRowCount(0);
+        controlador.fillUserHomeTable("", this.modelo);
         
 
         tabla = new JTable(modelo);

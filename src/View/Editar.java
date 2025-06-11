@@ -9,6 +9,7 @@ import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
 import Model.ClassModel;
+import Model.ComboObject;
 import Model.PaymentModel;
 import Model.User;
 import Model.UserModel;
@@ -150,15 +151,15 @@ public class Editar {
 		menu.add(panelagg);
 
 		
-		String[] opciones = {"Premium", "Básico"};
-		JComboBox<String> comboBox = new JComboBox<>(opciones);
-		comboBox.setBounds(50, 50, 300, 50);
-		comboBox.setBackground(colorGris);
-		comboBox.setFont(new Font("Arial", Font.BOLD, 25));
-		String seleccion = (String) comboBox.getSelectedItem();
-		int id = usuario.getId();
-		controlador.getUserDetails(id).setMembershipName(seleccion);
-		panelagg.add(comboBox);
+		JLabel plan = new JLabel("  "+controlador.getUserDetails(usuario.getId()).getMembership_name());
+		
+		plan.setBounds(50, 50, 300, 50);
+		plan.setBackground(colorGris);
+		plan.setOpaque(true);
+		plan.setFont(new Font("Arial", Font.BOLD, 25));
+		plan.setForeground(Color.gray);
+		
+		panelagg.add(plan);
 
 		
 		ape2 = new JPanel();
@@ -167,7 +168,7 @@ public class Editar {
 		ape2.setLayout(null);
 		panelagg.add(ape2);
 		
-        text_ape2 = new JLabel(controlador.getUserDetails(id).getTransaction_date());
+        text_ape2 = new JLabel(controlador.getUserDetails(usuario.getId()).getTransaction_date());
         text_ape2.setFont(new Font("Arial", Font.BOLD, 25));
         text_ape2.setForeground(Color.gray);
         text_ape2.setBounds(10, 5, 500, 50);

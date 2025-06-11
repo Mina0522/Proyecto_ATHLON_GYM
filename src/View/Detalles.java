@@ -28,6 +28,8 @@ public class Detalles {
     private JLabel text_inicio, text_, user, text_clase;
     private User usuario;
     
+    public DefaultTableModel modeloPagos;
+    
     private UserController controlador;
 
     public Detalles(Vista_GYM log,User usuario) {
@@ -190,14 +192,11 @@ public class Detalles {
         
         
         
-        DefaultTableModel modelo2 = new DefaultTableModel(null, columnas2) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
+        modeloPagos = new DefaultTableModel(null, columnas2) {
+            @Override public boolean isCellEditable(int r, int c) { return false; }
         };
         
-        JTable tabla2 = new JTable(modelo2);
+        JTable tabla2 = new JTable(modeloPagos);
         tabla2.setFont(new Font("Arial", Font.PLAIN, 16));
         tabla2.setRowHeight(39);
         tabla2.setForeground(Color.BLACK);
@@ -215,7 +214,7 @@ public class Detalles {
         header2.setBackground(Color.BLACK);
         header2.setForeground(Color.WHITE);
 
-        controlador.fillUserDetailsTable(usuario.getControl_number(), modelo2);
+        controlador.fillUserDetailsTable(usuario.getControl_number(), modeloPagos);
         
         
         // ===
@@ -248,8 +247,18 @@ public class Detalles {
         
         return menu;
     }
-    public static void mostrarModalPago(UserController controlador,User usuario) {
+    public void mostrarModalPago(UserController controlador,User usuario) {
         
+    	
+    	if (controlador.isActive(usuario.getId())) {
+            JOptionPane.showMessageDialog(
+                null,
+                "El usuario ya tiene un plan activo. No puede registrar otro hasta que venza.",
+                "Plan activo",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+            }
     	PaymentController controladorPago = new PaymentController();
         JDialog dialogo = new JDialog();
         dialogo.setModal(true);
@@ -308,7 +317,12 @@ public class Detalles {
         		JOptionPane.showMessageDialog(dialogo,
                         "Pago registrado con exito");
         		controladorPago.registerPayment(usuario.getId(), id_plan);
-                dialogo.dispose();
+        		dialogo.dispose();
+        		modeloPagos.setRowCount(0);
+                controlador.fillUserDetailsTable(usuario.getControl_number(), modeloPagos);
+                
+                
+                
         	}
         	else {
         		JOptionPane.showMessageDialog(dialogo,
@@ -324,7 +338,7 @@ public class Detalles {
         
     }
     
-public static void mostrarModalClases(UserController controlador,User usuario) {
+public  void mostrarModalClases(UserController controlador,User usuario) {
         
     	
         JDialog dialogo = new JDialog();
