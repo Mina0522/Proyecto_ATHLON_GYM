@@ -200,7 +200,7 @@ public class Editar {
              
              
              int controlNum = usuario.getControl_number();
-             int resultado = controlador.updateUser(controlNum, nuevoNombre, nuevoApellido, nuevoTelefono,nuevoCorreo);
+             int resultado = controlador.updateUser(controlNum, nuevoNombre, nuevoApellido, nuevoTelefono,nuevoCorreo,1);
              switch (resultado) {
                  case 0:
                      JOptionPane.showMessageDialog(null, "Usuarios actualizados con éxito.", "Éxito",

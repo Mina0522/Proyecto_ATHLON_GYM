@@ -262,6 +262,7 @@ public class Pantalla_Usuarios {
             }
         };  
         this.modelo=modelo;
+        modelo.setRowCount(0);
         controlador.fillUserHomeTable(nombreUsuario, modelo);
         
 

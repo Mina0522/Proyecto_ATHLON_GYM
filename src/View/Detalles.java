@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import Controller.ClassController;
+import Controller.PaymentController;
 import Controller.UserController;
 
 import java.awt.*;
@@ -11,6 +13,7 @@ import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
 import Model.ClassModel;
+import Model.ComboObject;
 import Model.PaymentModel;
 import Model.User;
 import Model.UserModel;
@@ -110,23 +113,26 @@ public class Detalles {
         panel.add(text_);
         
         //
-        edit = new JButton("Editar");
-        edit.setBounds(20, 240, 150, 40);
-        edit.setFont(new Font("Arial", Font.BOLD, 22));
+        edit = new JButton("Registrar pago");
+        edit.setBounds(20, 240, 170, 50);
+        edit.setFont(new Font("Arial", Font.BOLD, 18));
         edit.setBackground(Color.lightGray);
         edit.setForeground(Color.black);
         edit.setFocusPainted(false);
         edit.addActionListener(e -> {
-        	menu_inicio.pintar_vista(new Editar(menu_inicio,usuario).getPanel());
+        	mostrarModalPago(controlador,usuario);
         });
         panel.add(edit);
         
-        eli = new JButton("Eliminar");
-        eli.setBounds(220, 240, 150, 40);
-        eli.setFont(new Font("Arial", Font.BOLD, 22));
+        eli = new JButton("Añadir a clase");
+        eli.setBounds(215, 240, 170, 50);
+        eli.setFont(new Font("Arial", Font.BOLD, 18));
         eli.setBackground(Color.BLACK);
         eli.setForeground(Color.WHITE);
         eli.setFocusPainted(false);
+        eli.addActionListener(e -> {
+        	mostrarModalClases(controlador,usuario);
+        });
         panel.add(eli);
         
         text_clase = new JLabel("Historial de clases", SwingConstants.CENTER);
@@ -134,7 +140,7 @@ public class Detalles {
         text_clase.setBackground(Color.BLACK);
         text_clase.setForeground(Color.WHITE);
         text_clase.setFont(new Font("Arial", Font.BOLD, 22));
-        text_clase.setBounds(20, 315, 370, 35);
+        text_clase.setBounds(20, 315, 365, 35);
         panel.add(text_clase);
 
         String[] columnas = {"Fecha", "Clase"};
@@ -160,7 +166,7 @@ public class Detalles {
         header.setForeground(Color.WHITE);
 
         JScrollPane scroll = new JScrollPane(tabla);
-        scroll.setBounds(20, 350, 370, 130);
+        scroll.setBounds(20, 350, 365, 130);
         panel.add(scroll);
         controlador.fillUserClassTable(usuario.getControl_number(), modelo);
         
@@ -177,7 +183,7 @@ public class Detalles {
         text_clase.setBackground(Color.BLACK);
         text_clase.setForeground(Color.WHITE);
         text_clase.setFont(new Font("Arial", Font.BOLD, 22));
-        text_clase.setBounds(20, 13, 370, 35);
+        text_clase.setBounds(20, 33, 370, 35);
         panelagg.add(text_clase);
 
         String[] columnas2 = {"Fecha", "Pagos", "Plan"};
@@ -197,15 +203,17 @@ public class Detalles {
         tabla2.setForeground(Color.BLACK);
         tabla2.setBackground(Color.WHITE);
 
+        
+
+        JScrollPane scroll2 = new JScrollPane(tabla2);
+        scroll2.setBounds(20, 69, 370, 150);
+        panelagg.add(scroll2);
+        
         JTableHeader header2 = tabla2.getTableHeader();
-        header2.setPreferredSize(new Dimension(header.getWidth(), 30));
+        header2.setPreferredSize(new Dimension(scroll2.getWidth(), 30));
         header2.setFont(new Font("Arial", Font.BOLD, 20));
         header2.setBackground(Color.BLACK);
         header2.setForeground(Color.WHITE);
-
-        JScrollPane scroll2 = new JScrollPane(tabla2);
-        scroll2.setBounds(20, 49, 370, 150);
-        panelagg.add(scroll2);
 
         controlador.fillUserDetailsTable(usuario.getControl_number(), modelo2);
         
@@ -240,5 +248,154 @@ public class Detalles {
         
         return menu;
     }
+    public static void mostrarModalPago(UserController controlador,User usuario) {
+        
+    	PaymentModel modeloPago = new PaymentModel();
+    	PaymentController controladorPago = new PaymentController(modeloPago);
+        JDialog dialogo = new JDialog();
+        dialogo.setModal(true);
+        dialogo.setSize(350, 300);
+        dialogo.setLayout(null);
 
+        JPanel panelTitulo = new JPanel();
+        panelTitulo.setBackground(Color.black);
+        panelTitulo.setBounds(0,0,350,50);
+        dialogo.add(panelTitulo);
+        
+        JLabel titulo = new JLabel("Registrar pago");
+        titulo.setHorizontalAlignment(SwingConstants.CENTER);
+        titulo.setForeground(Color.white);
+        titulo.setBounds(0, 5,350,45);
+        titulo.setFont(new Font("Arial", Font.BOLD, 25));
+        panelTitulo.add(titulo);
+
+        
+        JLabel plan = new JLabel("Tipo de plan");
+        plan.setHorizontalAlignment(SwingConstants.CENTER);
+        plan.setBounds(0, 70,350,45);
+        plan.setFont(new Font("Arial", Font.BOLD, 23));
+        dialogo.add(plan);
+        
+		JComboBox<ComboObject> comboBox = controlador.generateMembershipComboId(usuario.getId());
+		comboBox.setBounds(50, 120, 250, 50);
+		
+		comboBox.setBackground( Color.decode("#D9D9D9"));
+		comboBox.setFont(new Font("Arial", Font.BOLD, 20));
+		dialogo.add(comboBox);
+		
+        
+        JButton botonCancelar = new JButton("Cancelar");
+        botonCancelar.setFont(new Font("Arial", Font.BOLD, 22));
+        botonCancelar.setBounds(20,200,130,50);
+        dialogo.add(botonCancelar);
+        
+        botonCancelar.addActionListener(e -> {
+        	dialogo.dispose();
+        });
+        
+        
+        JButton botonGuardar = new JButton("Pagar");
+        botonGuardar.setForeground(Color.white);
+        botonGuardar.setBackground(Color.black);
+        botonGuardar.setFont(new Font("Arial", Font.BOLD, 22));
+        botonGuardar.setBounds(195,200,130,50);
+        dialogo.add(botonGuardar);
+        
+        botonGuardar.addActionListener(e -> {
+        	ComboObject objeto = (ComboObject)comboBox.getSelectedItem();
+        	if(objeto !=null) {
+        		
+        		int id_plan =objeto.getId();
+        		JOptionPane.showMessageDialog(dialogo,
+                        "Pago registrado con exito");
+        		controladorPago.registerPayment(usuario.getId(), id_plan);
+                dialogo.dispose();
+        	}
+        	else {
+        		JOptionPane.showMessageDialog(dialogo,
+                        "Registra un plan");
+        	}
+        	
+            
+           
+        });
+        dialogo.setLocationRelativeTo(null);
+        dialogo.setVisible(true);
+
+        
+    }
+    
+public static void mostrarModalClases(UserController controlador,User usuario) {
+        
+    	
+        JDialog dialogo = new JDialog();
+        dialogo.setModal(true);
+        dialogo.setSize(350, 300);
+        dialogo.setLayout(null);
+
+        JPanel panelTitulo = new JPanel();
+        panelTitulo.setBackground(Color.black);
+        panelTitulo.setBounds(0,0,350,50);
+        dialogo.add(panelTitulo);
+        
+        JLabel titulo = new JLabel("Apuntar a clase");
+        titulo.setHorizontalAlignment(SwingConstants.CENTER);
+        titulo.setForeground(Color.white);
+        titulo.setBounds(0, 5,350,45);
+        titulo.setFont(new Font("Arial", Font.BOLD, 25));
+        panelTitulo.add(titulo);
+
+        
+        JLabel plan = new JLabel("Clases disponibles");
+        plan.setHorizontalAlignment(SwingConstants.CENTER);
+        plan.setBounds(0, 70,350,45);
+        plan.setFont(new Font("Arial", Font.BOLD, 23));
+        dialogo.add(plan);
+        
+        String[] opciones = {"Box", "Hit"};
+		JComboBox<String> comboBox = new JComboBox<>(opciones);
+		comboBox.setBounds(50, 120, 250, 50);
+		comboBox.setBackground( Color.decode("#D9D9D9"));
+		comboBox.setFont(new Font("Arial", Font.BOLD, 20));
+		dialogo.add(comboBox);
+		
+        
+        JButton botonCancelar = new JButton("Cancelar");
+        botonCancelar.setFont(new Font("Arial", Font.BOLD, 22));
+        botonCancelar.setBounds(20,200,130,50);
+        dialogo.add(botonCancelar);
+        
+        botonCancelar.addActionListener(e -> {
+        	dialogo.dispose();
+        });
+        
+        
+        JButton botonGuardar = new JButton("Apuntar");
+        botonGuardar.setForeground(Color.white);
+        botonGuardar.setBackground(Color.black);
+        botonGuardar.setFont(new Font("Arial", Font.BOLD, 22));
+        botonGuardar.setBounds(195,200,130,50);
+        dialogo.add(botonGuardar);
+        
+        botonGuardar.addActionListener(e -> {
+        	String seleccion = (String) comboBox.getSelectedItem();
+        	if(!seleccion.isEmpty()) {
+        		JOptionPane.showMessageDialog(dialogo,
+                        "El usuario se ha apuntado a la clase");
+        		
+                dialogo.dispose();
+        	}
+        	else {
+        		JOptionPane.showMessageDialog(dialogo,
+                        "Registra un plan");
+        	}
+        	
+            
+           
+        });
+        dialogo.setLocationRelativeTo(null);
+        dialogo.setVisible(true);
+
+        
+    }
 }
