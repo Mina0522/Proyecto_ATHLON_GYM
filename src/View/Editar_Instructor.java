@@ -157,6 +157,44 @@ public class Editar_Instructor {
         editar.setBackground(Color.BLACK);
         editar.setForeground(Color.WHITE);
         editar.setFocusPainted(false);
+        editar.addActionListener(e -> {
+            String nombreU = nombre.getText().trim();
+            String correoU = correo.getText().trim();
+            String telU = tel.getText().trim();
+            ComboObject tipoSeleccionado = (ComboObject) comboTipo.getSelectedItem();
+            int tipoU = tipoSeleccionado.getId();
+
+            int result = controller.updateTrainer(trainerId, nombreU, correoU, telU, tipoU);
+
+            switch (result) {
+                case 1:
+                    JOptionPane.showMessageDialog(menu, 
+                    		"Rellena al menos un campo para actualizar.", 
+                        "Datos incompletos", JOptionPane.WARNING_MESSAGE);
+                    break;
+                case 2:
+                    JOptionPane.showMessageDialog(menu, 
+                    		"El nombre no puede contener numeros.", 
+                        "Datos inválidos", JOptionPane.WARNING_MESSAGE);
+                    break;
+                case 3:
+                    JOptionPane.showMessageDialog(menu,
+                    		"El telefono no puede contener letras.", 
+                        "Datos invalidos", JOptionPane.WARNING_MESSAGE);
+                    break;
+                case 0:
+                    JOptionPane.showMessageDialog(menu, 
+                    		"¡Instructor actualizado exitosamente!");
+                    menu_inicio.pintar_vista(new Pantalla_Instructores(menu_inicio).getPanel());
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(menu, 
+                    		"Ocurrio un error al actualizar el instructor.", 
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                    break;
+            }
+        });
+
         panel_agg.add(editar);
         
 		return menu;
