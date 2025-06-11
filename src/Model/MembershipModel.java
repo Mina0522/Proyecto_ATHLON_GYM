@@ -114,12 +114,12 @@ public class MembershipModel {
 		}
 		return false; //Error al eliminar el plan
 	}
-	public static void main(String[] args) {
-		MembershipModel model = new MembershipModel();
-		model.updateMembership(1, 500.0, 30, 1, false);
-		for (Membership hola: model.getAllMembership()) {
-			System.out.println(hola);
-		}
-		
-	}
+//	public static void main(String[] args) {
+//		MembershipModel model = new MembershipModel();
+//		model.updateMembership(1, 500.0, 30, 1, false);
+//		for (Membership hola: model.getAllMembership()) {
+//			System.out.println(hola);
+//		}
+//		
+//	}
 }
