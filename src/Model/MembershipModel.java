@@ -82,17 +82,17 @@ public class MembershipModel {
 		return null; //Error
 	}
 	
-	public boolean updateMembership (int id, String name, Double price, int days, int id_trainer_type, boolean has_invitation_pass) {
+	public boolean updateMembership (int id, Double price, int days, int id_trainer_type, boolean has_invitation_pass) {
 		
 		try (PreparedStatement ps = MyConnection.getConn().prepareStatement(
-				"UPDATE membership SET name = ?, price = ?, duration_days = ?, id_instructor_type = ?, has_invitation_pass = ?"
+				"UPDATE membership SET price = ?, duration_days = ?, id_instructor_type = ?, has_invitation_pass = ? "
 				+ "WHERE id = ?")) {
-			ps.setString(1, name);
-			ps.setDouble(2, price);
-			ps.setInt(3, days);
-			ps.setString(4, name);
-			ps.setInt(5, id_trainer_type);
-			ps.setInt(6, id);
+			ps.setDouble(1, price);
+			ps.setInt(2, days);
+			ps.setInt(3, id_trainer_type);
+			ps.setBoolean(4, has_invitation_pass);
+			
+			ps.setInt(5, id);
 			
 			int i = ps.executeUpdate();
 			if (i > 0)
@@ -116,6 +116,7 @@ public class MembershipModel {
 	}
 	public static void main(String[] args) {
 		MembershipModel model = new MembershipModel();
+		model.updateMembership(1, 500.0, 30, 1, false);
 		for (Membership hola: model.getAllMembership()) {
 			System.out.println(hola);
 		}

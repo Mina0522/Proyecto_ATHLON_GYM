@@ -18,8 +18,8 @@ public class MembershipController {
 		membershipModel.createMembership(name, price, days, id_trainer_type, has_invitation_pass);
 	}
 	
-	public boolean updateMembership (int id, String name, Double price, int days, int id_trainer_type, boolean has_invitation_pass) {
-		return membershipModel.updateMembership(id, name, price, days, id_trainer_type, has_invitation_pass);
+	public boolean updateMembership (int id, Double price, int days, int id_trainer_type, boolean has_invitation_pass) {
+		return membershipModel.updateMembership(id, price, days, id_trainer_type, has_invitation_pass);
 	}
 	
 	public boolean deleteMembership (int id) {
