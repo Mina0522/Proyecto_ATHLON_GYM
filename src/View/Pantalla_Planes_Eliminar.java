@@ -4,10 +4,19 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import Controller.MembershipController;
+import Controller.UserController;
+
 import java.awt.*;
 import Funciones_graficas.Graficos_fondo;
+import Funciones_graficas.Graficos_textarea;
 import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
+import Model.ClassModel;
+import Model.ComboObject;
+import Model.Membership;
+import Model.PaymentModel;
+import Model.UserModel;
 
 public class Pantalla_Planes_Eliminar {
 
@@ -15,9 +24,22 @@ public class Pantalla_Planes_Eliminar {
     private JPanel menu_user, panel, panel_negro, panel_botones;
     private JButton noti, confi, btn_crear, btn_edit, btn_deta, btn_eliminar, btn, volver;
     private JLabel text;
+    UserController controlador;
+    UserModel userModel;
+	PaymentModel paymentModel;
+	ClassModel classModel;
+	
+    private Membership membresiaSeleccionada;
+	private MembershipController controladorMem;
     
     public Pantalla_Planes_Eliminar(Vista_GYM log) {
         this.menu_inicio = log;
+        controladorMem = new MembershipController();
+        this.userModel = new UserModel();
+        this.paymentModel = new PaymentModel();
+        this.classModel = new ClassModel();
+        controlador = new UserController(userModel,paymentModel,classModel);
+    	
     }
 
     public JPanel getPanel() {
@@ -170,22 +192,23 @@ public class Pantalla_Planes_Eliminar {
         panel_negro.add(text);
 
         // ====
-        Graficos_texto delete = new Graficos_texto();
-        delete.setPlaceholder(" Plan a eleminar");
-        delete.setBounds(30, 80, 330, 50);
-        delete.setBackground(Color.lightGray);
-        delete.setFont(new Font("Arial", Font.PLAIN, 18));
-        delete.setBorder(null);
-        panel.add(delete);
+        JComboBox<ComboObject> comboBox = controlador.generateMembershipCombo();
+        comboBox.setBounds(30, 80, 330, 50);
+        comboBox.setBackground(colorGris);
+        comboBox.setFont(new Font("Arial", Font.PLAIN, 18));
+        panel.add(comboBox);
+
         
-        JTextArea text_area = new JTextArea();
+        Graficos_textarea text_area = new Graficos_textarea();
+        text_area.setPlaceholder(" Ingrese su motivo(Opcional)");
+        text_area.setBackground(colorGris);
         text_area.setLineWrap(true);
         text_area.setWrapStyleWord(true);
         text_area.setBorder(null);
         
         JScrollPane scroll = new JScrollPane(text_area);
         scroll.setBounds(30, 150, 330, 120);
-        text_area.setBackground(Color.lightGray);
+        text_area.setBackground(colorGris);
         text_area.setFont(new Font("Arial", Font.PLAIN, 18));
         scroll.setBorder(null);
         scroll.getViewport().setBackground(Color.lightGray);
@@ -210,6 +233,27 @@ public class Pantalla_Planes_Eliminar {
         btn.setForeground(Color.WHITE);
         btn.setFocusPainted(false);
         panel.add(btn);
+        
+        btn.addActionListener(e -> {
+            int confirmacion = JOptionPane.showConfirmDialog(
+                null,
+                "¿Estás seguro de que deseas enviar?",
+                "Confirmar envío",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+            	ComboObject selectedItem = (ComboObject) comboBox.getSelectedItem();
+                controladorMem.deleteMembership(selectedItem.getId());
+                JOptionPane.showMessageDialog(null, "Enviado correctamente.");
+                menu_inicio.pintar_vista(new Pantalla_Planes(menu_inicio).getPanel());
+            } else {
+                
+                JOptionPane.showMessageDialog(null, "Envío cancelado.");
+            }
+        });
+
 
 		return menu_user;
 	}

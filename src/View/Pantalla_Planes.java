@@ -17,7 +17,7 @@ import Model.UserModel;
 public class Pantalla_Planes {
 
     private Vista_GYM menu_inicio;
-    private JPanel menu_user, panel_planB, panel_planP, panel_botones;
+    private JPanel menu_user, panel_botones;
     private JButton noti, confi, btn_crear, btn_edit, btn_deta, btn_eliminar, plan_basico, plan_prem;
     private JLabel textP, textB;
       
@@ -66,7 +66,7 @@ public class Pantalla_Planes {
         
         // ==
         JSeparator separador = new JSeparator(SwingConstants.HORIZONTAL);
-        separador.setBounds(250, 95, 1030, 2);
+        separador.setBounds(250, 90, 1030, 2);
         separador.setForeground(Color.BLACK);
         menu_user.add(separador);
 
@@ -77,7 +77,7 @@ public class Pantalla_Planes {
 
         btn_crear = new JButton("Crear plan");
         btn_crear.setIcon(icono);
-        btn_crear.setBounds(300, 120, 420, 90);
+        btn_crear.setBounds(300, 110, 420, 100);
         btn_crear.setFont(new Font("Arial", Font.BOLD, 32));
         btn_crear.setBorderPainted(false);
         btn_crear.setHorizontalAlignment(SwingConstants.LEFT);
@@ -98,7 +98,7 @@ public class Pantalla_Planes {
 
         btn_edit = new JButton("Editar plan");
         btn_edit.setIcon(icono_edit);
-        btn_edit.setBounds(775, 120, 420, 90);
+        btn_edit.setBounds(775, 110, 420, 100);
         btn_edit.setFont(new Font("Arial", Font.BOLD, 32));
         btn_edit.setBorderPainted(false);
         btn_edit.setHorizontalAlignment(SwingConstants.LEFT);
@@ -119,7 +119,7 @@ public class Pantalla_Planes {
 
         btn_deta = new JButton("Consultar plan");
         btn_deta.setIcon(icono_deta);
-        btn_deta.setBounds(775, 230, 420, 90);
+        btn_deta.setBounds(300, 235, 420, 100);
         btn_deta.setFont(new Font("Arial", Font.BOLD, 32));
         btn_deta.setBorderPainted(false);
         btn_deta.setHorizontalAlignment(SwingConstants.LEFT);
@@ -140,7 +140,7 @@ public class Pantalla_Planes {
 
         btn_eliminar = new JButton("Eliminar plan");
         btn_eliminar.setIcon(icono_eliminar);
-        btn_eliminar.setBounds(300, 230, 420, 90);
+        btn_eliminar.setBounds(775, 235, 420, 100);
         btn_eliminar.setFont(new Font("Arial", Font.BOLD, 32));
         btn_eliminar.setBorderPainted(false);
         btn_eliminar.setHorizontalAlignment(SwingConstants.LEFT);
@@ -155,29 +155,25 @@ public class Pantalla_Planes {
         menu_user.add(btn_eliminar);
 		
         // === 
-		panel_planB = new JPanel();
+        Graficos_fondo panel_planB = new Graficos_fondo();
 		panel_planB.setBackground(Color.WHITE);
-		panel_planB.setBounds(310, 335, 400, 300);
+		panel_planB.setBounds(300, 355, 420, 280);
 		panel_planB.setLayout(null);
 		menu_user.add(panel_planB);
-		
-        ImageIcon basic = new ImageIcon(getClass().getResource("/files/fondo_planBasico.png"));
-        Image plab = basic.getImage().getScaledInstance(400, 134, Image.SCALE_SMOOTH);
-        ImageIcon icono_plab = new ImageIcon(plab);
+		panel_planB.agregarImagen("files/fondo_planBasico.png", 0, 0, 420, 132);
 
-        JLabel planbasico = new JLabel(icono_plab);
-        planbasico.setBounds(0, 0, 400, 134);
-        panel_planB.add(planbasico);
-        
+
         textB = new JLabel("Plan basico");
         textB.setFont(new Font("Arial", Font.BOLD, 35));
         textB.setForeground(Color.black);
-        textB.setBounds(100, 150, 500, 50);
+        textB.setHorizontalAlignment(SwingConstants.CENTER);
+
+        textB.setBounds(0, 145, 400, 50);
         textB.setLayout(null);
         panel_planB.add(textB);
         
         plan_basico = new JButton("Detalles");
-        plan_basico.setBounds(50, 230, 290, 50);
+        plan_basico.setBounds(50, 210, 290, 50);
         plan_basico.setFont(new Font("Arial", Font.BOLD, 22));
         plan_basico.setBackground(Color.BLACK);
         plan_basico.setForeground(Color.WHITE);
@@ -188,29 +184,29 @@ public class Pantalla_Planes {
         panel_planB.add(plan_basico);
 		
         // ===
-		panel_planP = new JPanel();
+        Graficos_fondo panel_planP = new Graficos_fondo();
 		panel_planP.setBackground(Color.WHITE);
-		panel_planP.setBounds(787, 335, 400, 300);
+		panel_planP.setBounds(775, 355, 420, 280);
 		panel_planP.setLayout(null);
+		
+		panel_planP.agregarImagen("files/fondo_planPrem.png", 0, 0, 420, 132);
+
+
 		menu_user.add(panel_planP);
 		
-        ImageIcon prem = new ImageIcon(getClass().getResource("/files/fondo_planPrem.png"));
-        Image pre = prem.getImage().getScaledInstance(400, 134, Image.SCALE_SMOOTH);
-        ImageIcon icono_pre = new ImageIcon(pre);
-
-        JLabel planpre = new JLabel(icono_pre);
-        planpre.setBounds(0, 0, 400, 134);
-        panel_planP.add(planpre);
+      
         
         textP = new JLabel("Plan premium");
         textP.setFont(new Font("Arial", Font.BOLD, 35));
         textP.setForeground(Color.black);
-        textP.setBounds(100, 150, 500, 50);
+        textP.setBounds(0, 145, 400, 50);
+		textP.setHorizontalAlignment(SwingConstants.CENTER);
         textP.setLayout(null);
         panel_planP.add(textP);
-		
+
+
 		plan_prem = new JButton("Detalles");
-		plan_prem.setBounds(50, 230, 290, 50);
+		plan_prem.setBounds(50, 210, 290, 50);
 		plan_prem.setFont(new Font("Arial", Font.BOLD, 22));
 		plan_prem.setBackground(Color.BLACK);
 		plan_prem.setForeground(Color.WHITE);

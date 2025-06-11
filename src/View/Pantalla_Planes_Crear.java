@@ -381,6 +381,8 @@ public class Pantalla_Planes_Crear {
                 tienePase
             );
             JOptionPane.showMessageDialog(menu_user, "Plan creado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            menu_inicio.pintar_vista(new Pantalla_Planes(menu_inicio).getPanel());
+
         });
 
 

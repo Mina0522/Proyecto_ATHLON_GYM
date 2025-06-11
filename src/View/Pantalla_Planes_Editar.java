@@ -47,7 +47,6 @@ public class Pantalla_Planes_Editar {
         this.userModel = new UserModel();
         this.paymentModel = new PaymentModel();
         this.classModel = new ClassModel();
-    	controladorMem = new MembershipController();
     	
     	trainerModel = new TrainerModel();
         controladorMem = new MembershipController();
