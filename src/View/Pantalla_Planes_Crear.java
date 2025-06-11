@@ -316,10 +316,9 @@ public class Pantalla_Planes_Crear {
             String nombreP     = nombrePlan.getText().trim();
             String textoPrecio = precio.getText().trim();
             String textoDias   = promo.getText().trim();
-            String placeholderInv = "Pase de invitación"; // mismo texto que al inicializar
+            String placeholderInv = "Pase de invitación"; 
             String selInv      = comboInvitacion.getEditor().getItem().toString().trim();
 
-            // 1) Nombre
             if (nombreP.isEmpty()) {
                 JOptionPane.showMessageDialog(menu_user, "Debes ingresar un nombre para el plan.", "Campo vacío", JOptionPane.WARNING_MESSAGE);
                 return;
@@ -329,7 +328,6 @@ public class Pantalla_Planes_Crear {
                 return;
             }
 
-            // 2) Precio y días
             if (textoPrecio.isEmpty()) {
                 JOptionPane.showMessageDialog(menu_user, "Debes ingresar un precio.", "Campo vacío", JOptionPane.WARNING_MESSAGE);
                 return;
@@ -339,10 +337,8 @@ public class Pantalla_Planes_Crear {
                 return;
             }
 
-         // 1) Obtienes el ítem seleccionado
             Object selObj = comboBoxTrainer.getSelectedItem();
 
-            // 2) Validas que sea un ComboObject (no un texto cualquiera)
             if (!(selObj instanceof ComboObject)) {
                 JOptionPane.showMessageDialog(menu_user,
                     "Debes seleccionar un entrenador de la lista, no escribir otro.",
@@ -351,19 +347,15 @@ public class Pantalla_Planes_Crear {
                 return;
             }
 
-            // 3) Ya sabes que es válido, haces el cast
             ComboObject selTrainer = (ComboObject) selObj;
 
-            // 4) Sacas el ID numérico
             int trainerId = selTrainer.getId();
 
-            // 4) Pase de invitación: comprueba exactamente el mismo placeholder
             if (selInv.isEmpty() || selInv.equals(placeholderInv)) {
                 JOptionPane.showMessageDialog(menu_user, "Debes seleccionar si deseas pase de invitación (Sí o No).", "Falta pase", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
-            // 5) Parseo seguro
             double precioP;
             int diasP;
             try {
@@ -379,10 +371,8 @@ public class Pantalla_Planes_Crear {
                 return;
             }
 
-            // 6) Booleano de invitación
             boolean tienePase = selInv.equalsIgnoreCase("Sí");
 
-            // 7) Llamada al controlador
             controladorMem.createMembership(
                 nombreP,
                 precioP,
