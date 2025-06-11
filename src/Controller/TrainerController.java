@@ -2,10 +2,12 @@ package Controller;
 
 import java.util.ArrayList;
 
+import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 
 import Model.ClassDB;
 import Model.ClassModel;
+import Model.ComboObject;
 import Model.Trainer;
 import Model.TrainerModel;
 
@@ -98,5 +100,13 @@ public class TrainerController {
 		
 		public boolean deleteTrainer (int id) {
 			return trainerModel.deleteTrainer(id);
+		}
+		
+		public JComboBox<ComboObject> getTrainerCombo () {
+			JComboBox<ComboObject> matenme = new JComboBox<>();
+			matenme.addItem(new ComboObject(1, "General"));
+			matenme.addItem(new ComboObject(2, "Personal"));
+			
+			return matenme;
 		}
 }
