@@ -1,15 +1,17 @@
 package Model;
 
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+
 public class TrainerModel {
 	
 	public int createTrainer (String name, String email, String phone_number, int type) {
-		try (PreparedStatement ps = MyConnection.getConn().prepareStatement(
-		"INSERT INTO instructor (name, email, phone_number, id_instructor_type) VALUES (?, ?, ?, ?)")) {
+		String query = "INSERT INTO instructor (name, email, phone_number, id_instructor_type) VALUES (?, ?, ?, ?)";
+		try (PreparedStatement ps = MyConnection.getConn().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setString(1, name);
 			ps.setString(2, email);
 			ps.setString(3, phone_number);
@@ -125,10 +127,11 @@ public class TrainerModel {
 		return list;
 	}
 
-//	public static void main(String[] args) {
-//		TrainerModel model = new TrainerModel();
-//		for (Trainer trainer : model.getAllTrainers()) {
-//			System.out.println(trainer);
-//		}
-//	}
+	public static void main(String[] args) {
+		TrainerModel model = new TrainerModel();
+		model.createTrainer("Ozuna", "ozuna@gmail.com", "1231231231", 1);
+		for (Trainer trainer : model.getAllTrainers()) {
+			System.out.println(trainer);
+		}
+	}
 }

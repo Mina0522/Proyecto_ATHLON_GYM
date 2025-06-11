@@ -45,4 +45,9 @@ public class ChekinModel {
 		}
 		return null; //Error
 	}
+	
+//	public static void main(String[] args) {
+//		ChekinModel model = new ChekinModel();
+//		System.out.println(model.getUserDetailsCN(0));
+//	}
 }
