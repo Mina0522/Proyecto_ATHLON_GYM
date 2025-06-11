@@ -119,7 +119,7 @@ public class Pantalla_Planes {
 
         btn_deta = new JButton("Consultar plan");
         btn_deta.setIcon(icono_deta);
-        btn_deta.setBounds(300, 235, 420, 100);
+        btn_deta.setBounds(775, 235, 420, 100);
         btn_deta.setFont(new Font("Arial", Font.BOLD, 32));
         btn_deta.setBorderPainted(false);
         btn_deta.setHorizontalAlignment(SwingConstants.LEFT);
@@ -140,7 +140,7 @@ public class Pantalla_Planes {
 
         btn_eliminar = new JButton("Eliminar plan");
         btn_eliminar.setIcon(icono_eliminar);
-        btn_eliminar.setBounds(775, 235, 420, 100);
+        btn_eliminar.setBounds(300, 235, 420, 100);
         btn_eliminar.setFont(new Font("Arial", Font.BOLD, 32));
         btn_eliminar.setBorderPainted(false);
         btn_eliminar.setHorizontalAlignment(SwingConstants.LEFT);
@@ -168,14 +168,15 @@ public class Pantalla_Planes {
         textB.setForeground(Color.black);
         textB.setHorizontalAlignment(SwingConstants.CENTER);
 
-        textB.setBounds(0, 145, 400, 50);
+        textB.setBounds(0, 145, 420, 50);
         textB.setLayout(null);
         panel_planB.add(textB);
         
         plan_basico = new JButton("Detalles");
-        plan_basico.setBounds(50, 210, 290, 50);
+        plan_basico.setBounds(65, 210, 290, 50);
         plan_basico.setFont(new Font("Arial", Font.BOLD, 22));
         plan_basico.setBackground(Color.BLACK);
+        plan_basico.setHorizontalAlignment(SwingConstants.CENTER);
         plan_basico.setForeground(Color.WHITE);
         plan_basico.setFocusPainted(false);
         plan_basico.addActionListener(e -> {
@@ -199,17 +200,18 @@ public class Pantalla_Planes {
         textP = new JLabel("Plan premium");
         textP.setFont(new Font("Arial", Font.BOLD, 35));
         textP.setForeground(Color.black);
-        textP.setBounds(0, 145, 400, 50);
+        textP.setBounds(0, 145, 420, 50);
 		textP.setHorizontalAlignment(SwingConstants.CENTER);
         textP.setLayout(null);
         panel_planP.add(textP);
 
 
 		plan_prem = new JButton("Detalles");
-		plan_prem.setBounds(50, 210, 290, 50);
+		plan_prem.setBounds(65, 210, 290, 50);
 		plan_prem.setFont(new Font("Arial", Font.BOLD, 22));
 		plan_prem.setBackground(Color.BLACK);
 		plan_prem.setForeground(Color.WHITE);
+		plan_prem.setHorizontalAlignment(SwingConstants.CENTER);
 		plan_prem.setFocusPainted(false);
 		plan_prem.addActionListener(e -> {
             menu_inicio.pintar_vista(new Plan_Premium(menu_inicio).getPanel());
