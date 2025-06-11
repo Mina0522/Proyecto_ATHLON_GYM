@@ -1,5 +1,8 @@
 package Controller;
 
+import java.util.ArrayList;
+
+import Model.Membership;
 import Model.MembershipModel;
 
 public class MembershipController {
@@ -21,5 +24,9 @@ public class MembershipController {
 	
 	public boolean deleteMembership (int id) {
 		return membershipModel.deleteMembership(id);
+	}
+	
+	public ArrayList<Membership> getAllMemberships (){
+		return membershipModel.getAllMembership();
 	}
 }

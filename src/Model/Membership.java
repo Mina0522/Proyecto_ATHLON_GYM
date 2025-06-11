@@ -22,8 +22,6 @@ public class Membership {
 		this.id_trainer_type = id_trainer_type;
 	}
 	
-	
-	
 	public Membership(int id, String name, int branches_num, String promotions, boolean has_invitation_pass, int days,
 			Double price, int id_trainer_type, String trainer_type_name) {
 		this.id = id;
@@ -36,8 +34,6 @@ public class Membership {
 		this.id_trainer_type = id_trainer_type;
 		this.trainer_type_name = trainer_type_name;
 	}
-
-
 
 	public String getName() {
 		return name;
