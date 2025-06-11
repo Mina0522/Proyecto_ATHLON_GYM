@@ -14,7 +14,6 @@ public class LoginController {
 	}
 	
 	public boolean auth (String email, String password) {
-//		return model.auth(email, password);
-		return true;
+		return model.auth(email, password);
 	}
 }
