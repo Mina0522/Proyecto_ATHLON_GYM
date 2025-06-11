@@ -7,24 +7,40 @@
 - Registrar asistencias (checador)
 
 ---
-## Funcionalidades implementadas
+## Funcionalidades Principales
 
-Actualmente, se ha desarrollado un módulo CRUD funcional para usuarios, el cual permite:
+- *Inicio de sesión* con validación de credenciales.
+- *Gestión completa de usuarios* (miembros del gimnasio):
+  - Buscar usuarios por nombre o mostrar todos.
+  - Ver detalles, editar y eliminar registros.
+  - Crear usuarios con número de control autogenerado.
+- *Gestión de personal*:
+  - Visualización y edición de información personal y profesional.
+- *Módulo de planes* de entrenamiento:
+  - Crear, modificar y asignar planes.
+- *Checador de asistencias*:
+  - Registro automático de entradas/salidas.
+  - Visualización del historial por usuario.
+- *Alertas visuales* (confirmación, error, validación).
+- *Interfaz amigable con widgets y navegación organizada por pestañas.*
 
-- Buscar usuarios (miembros del gym) desde una tabla general.
+---
 
-  - Si no se introduce un nombre, se muestran todos los usuarios del sistema.
+## Instrucciones de Instalación y Ejecución
 
-  - Si se introduce un nombre, se filtran los usuarios por nombre.
+### Requisitos
+- Java JDK 8 o superior
+- IDE recomendado: Eclipse
+- Sistema operativo: Windows o macOS
 
-- Consultar detalles, editar y eliminar usuarios mediante su número de control.
-
-  - El número de control es visible en la tabla general y sirve como identificador principal para estas operaciones.
-- Crear nuevos usuarios.
-  - Se pueden crear nuevos usuraios con número de control generado automáticamente, introduciendo sus datos en el apartado "Crear usuario".
-
-Este módulo hace uso de formularios, validaciones básicas y alertas visuales para garantizar una experiencia clara y eficiente para el administrador.
-
+### Pasos de instalación
+1. Clona este repositorio o descarga el ZIP del proyecto.
+2. Abre el proyecto en tu IDE favorito.
+3. Asegúrate de tener configurado correctamente el JDK.
+4. Compila y ejecuta el proyecto desde la clase principal (por ejemplo, Main.java o Login.java).
+5. Credenciales para navegar en el sistema.
+- Usuario: admin
+- Contraseña: admin123
 ---
 ## Diseño
 
@@ -47,10 +63,6 @@ El prototipo en Figma incluye:
 ## ¿Cómo navegar en el Figma?
 
 Este prototipo muestra el flujo visual de las pantallas del sistema. No es un software funcional , pero representa cómo será el sistema final cuando esté programado en Java.
-
-## Credenciales para navegar en el sistema.
-- Usuario: admin
-- Contraseña: admin123
 
 ---
 
