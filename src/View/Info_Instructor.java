@@ -118,8 +118,9 @@ public class Info_Instructor {
         edit_info.setForeground(Color.black);
         edit_info.setFocusPainted(false);
         edit_info.addActionListener(e -> {
-        	menu_inicio.pintar_vista(new Editar_Instructor(menu_inicio).getPanel());
+            menu_inicio.pintar_vista(new Editar_Instructor(menu_inicio, trainer.getId()).getPanel());
         });
+
         panel_info.add(edit_info);
         
         eli_info = new JButton("Eliminar");
