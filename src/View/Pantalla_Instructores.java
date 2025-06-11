@@ -131,7 +131,9 @@ public class Pantalla_Instructores {
         coach.setBackground(Color.WHITE);
         coach.setBounds(x, y, 290, 170);
         coach.setBorderPainted(false);
-        coach.addActionListener(e -> menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel())); // Puedes personalizar esto si quieres ver más info del entrenador
+        coach.addActionListener(e -> 
+        menu_inicio.pintar_vista(new Info_Instructor(menu_inicio, entrenador.getId()).getPanel()));
+
 
         // ==
         JPanel franja = new JPanel(null);
@@ -154,7 +156,8 @@ public class Pantalla_Instructores {
         btn_ver.setContentAreaFilled(false);
         btn_ver.setFocusPainted(false);
         btn_ver.setOpaque(false);
-        btn_ver.addActionListener(e -> menu_inicio.pintar_vista(new Info_Instructor(menu_inicio).getPanel()));
+        btn_ver.addActionListener(e -> 
+        menu_inicio.pintar_vista(new Info_Instructor(menu_inicio, entrenador.getId()).getPanel()));
         coach.add(btn_ver);
 
         contenedor.add(coach);

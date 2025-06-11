@@ -11,6 +11,7 @@ import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
 import Model.ClassModel;
+import Model.Trainer;
 import Model.TrainerModel;
 
 public class Info_Instructor {
@@ -26,9 +27,15 @@ public class Info_Instructor {
     ClassModel cTrainer = new ClassModel();
     
     TrainerController controller = new TrainerController(modelTrainer, cTrainer);
+    
+    private int trainerId;
 
-    public Info_Instructor(Vista_GYM log) {
+    public Info_Instructor(Vista_GYM log, int trainerId) {
         this.menu_inicio = log;
+        this.trainerId = trainerId;
+        this.modelTrainer = new TrainerModel();
+        this.cTrainer = new ClassModel();
+        this.controller = new TrainerController(modelTrainer, cTrainer);
     }
 
     public JPanel getPanel() {
@@ -100,16 +107,21 @@ public class Info_Instructor {
 		user.setBounds(135, 15, 128, 128);
 		panel_info.add(user);
 		
-		text_inicio = new JLabel("Felipe Ramos");
+		text_inicio = new JLabel(); 
+		Trainer trainer = controller.getTrainer(trainerId);
+//		controller.fillTrainerClassesHistoryTable(trainerId, modelo);
+//		controller.fillTrainerClassesTable(trainerId, modelo1);
+		text_inicio = new JLabel(trainer.getName(), SwingConstants.CENTER);
 		text_inicio.setFont(new Font("Arial", Font.BOLD, 40));
 		text_inicio.setForeground(Color.BLACK);
-		text_inicio.setBounds(75, 145, 500, 50);
+		text_inicio.setBounds(0, 145, panel_info.getWidth(), 50);
 		panel_info.add(text_inicio);
+
         
-        text_ = new JLabel("C l i e n t e");
+        text_ = new JLabel("I n s t r u c t o r");
         text_.setFont(new Font("Arial", Font.BOLD, 20));
         text_.setForeground(Color.GRAY);
-        text_.setBounds(155, 180, 500, 50);
+        text_.setBounds(125, 180, 500, 50);
         panel_info.add(text_);
         
         //
