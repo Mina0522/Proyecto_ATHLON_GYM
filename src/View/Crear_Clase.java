@@ -2,13 +2,20 @@
 package View;
 
 import javax.swing.*;
+
+import Controller.ClassController;
+import Controller.TrainerController;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 import Funciones_graficas.Graficos_fondo;
 import Funciones_graficas.Graficos_texto;
 import Funciones_graficas.Menu;
+import Model.ClassModel;
+import Model.TrainerModel;
 
 public class Crear_Clase {
 
@@ -18,10 +25,20 @@ public class Crear_Clase {
     private JPanel panel_botones, panel_agg;
     private JButton noti, confi, crear_clase, cancelar;
     private JLabel user, text;
+    private TrainerController controlador;
+    TrainerModel trainerModel;
+	ClassModel classModel;
+	
+	private ClassController controlador2;
 
 
     public Crear_Clase(Vista_GYM log) {
         this.menu_inicio = log;
+        trainerModel = new TrainerModel();
+        classModel = new ClassModel();
+        controlador = new TrainerController(trainerModel,classModel);
+        
+        controlador2 = new ClassController();
     }
 
     public JPanel getPanel() {
@@ -121,18 +138,37 @@ public class Crear_Clase {
         crear_clase.setFocusPainted(false);
         crear_clase.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String campo1= nombre.getText().trim();
-                String campo2 = hora.getText().trim();
-                String campo3= max.getText().trim();
-                String campo4 = nom.getText().trim();
+                String campo1 = nombre.getText().trim(); 
+                String campo2 = hora.getText().trim();  
+                String campo3 = max.getText().trim();    
+                String campo4 = nom.getText().trim();   
 
                 if (campo1.isEmpty() || campo2.isEmpty() || campo3.isEmpty() || campo4.isEmpty()) {
-    	            JOptionPane.showMessageDialog(menu,
-        	                "Rellena todos los campos.",
-        	                "Datos incompletos", JOptionPane.WARNING_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(null, "¡Clase guardada corrrectamente!");
+                    JOptionPane.showMessageDialog(menu,
+                            "Rellena todos los campos.",
+                            "Datos incompletos", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                try {
+                    int id_instructor = controlador.getTrainerIdByName(campo4);
+                    int id_class_type = controlador2.getClassTypeIdByName((campo1));     
+                    LocalDate fecha = LocalDate.now(); 
+
+                    controlador2.createClass(id_instructor, id_class_type, fecha.getYear(), fecha.getMonthValue(), fecha.getDayOfMonth());
+
+                    JOptionPane.showMessageDialog(menu,
+                            "¡Clase guardada correctamente!",
+                            "Éxito", JOptionPane.INFORMATION_MESSAGE);
                     menu_inicio.pintar_vista(new Pantalla_Inicio(menu_inicio).getPanel());
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(menu,
+                            "Capacidad debe ser un número.",
+                            "Error de formato", JOptionPane.ERROR_MESSAGE);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(menu,
+                            "Error al guardar la clase: " + ex.getMessage(),
+                            "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

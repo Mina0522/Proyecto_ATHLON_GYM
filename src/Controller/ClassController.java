@@ -44,4 +44,9 @@ public class ClassController {
 		return classModel.deleteClass(id);
 	}
 	
+	public int getClassTypeIdByName(String name) {
+	    return classModel.getClassTypeIdByName(name);
+	}
+
+	
 }

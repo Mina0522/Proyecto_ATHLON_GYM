@@ -230,7 +230,7 @@ public class Pantalla_Planes_Crear {
         
        
         
-        JComboBox<String> comboInvitacion = new JComboBox<>(new String[]{"Selecciona una opción", "Sí", "No"});
+        JComboBox<String> comboInvitacion = new JComboBox<>(new String[]{"Tiene tarjeta de invitacion", "Sí", "No"});
         comboInvitacion.setSelectedIndex(0); 
         comboInvitacion.setForeground(Color.GRAY);
         comboInvitacion.setBackground(colorGris);

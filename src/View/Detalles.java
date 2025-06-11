@@ -216,6 +216,15 @@ public class Detalles {
         eliminar.setBackground(Color.lightGray);
         eliminar.setForeground(Color.BLACK);
         eliminar.setFocusPainted(false);
+        eliminar.addActionListener(e -> {
+       	 
+	        controlador.geterateUserReportPDF(usuario.getId()) ;
+	        JOptionPane.showMessageDialog(null,
+	            "El reporte se descargó correctamente.",
+	            "Éxito",
+	            JOptionPane.INFORMATION_MESSAGE);
+    	   
+    });
         panelagg.add(eliminar);
         
         pdf = new JButton("Descargar credecial (PDF)");
@@ -228,7 +237,7 @@ public class Detalles {
         	 
     	        controlador.generateUserIdPDF(usuario.getId()); 
     	        JOptionPane.showMessageDialog(null,
-    	            "El reporte se descargó correctamente.",
+    	            "La credencialel se descargó correctamente.",
     	            "Éxito",
     	            JOptionPane.INFORMATION_MESSAGE);
         	   

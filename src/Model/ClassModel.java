@@ -146,6 +146,22 @@ public class ClassModel {
 			return null;
 		}
 		
+		public int getClassTypeIdByName(String name) {
+		    try (PreparedStatement ps = MyConnection.getConn().prepareStatement(
+		            "SELECT id FROM class_type WHERE LOWER(type_name) = LOWER(?)")) {
+		        ps.setString(1, name.trim());
+		        try (ResultSet rs = ps.executeQuery()) {
+		            if (rs.next()) {
+		                return rs.getInt("id");
+		            }
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    return -1; // Si no se encuentra
+		}
+
+		
 		//Actualiza el tipo de clase y la fecha de la clase
 		public void updateClass (int id, int id_class_type, Date session_date) {
 			System.out.println("Actualizando clase...");

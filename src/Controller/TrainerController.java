@@ -74,6 +74,16 @@ public class TrainerController {
 			}
 		}
 		
+		public int getTrainerIdByName(String name) {
+		    for (Trainer t : trainerModel.getAllTrainers()) {
+		        if (t.getName().equalsIgnoreCase(name.trim())) {
+		            return t.getId();
+		        }
+		    }
+		    return -1; // Si no se encuentra
+		}
+
+		
 		public int updateTrainer (int id, String name, String email, String phone_number, int type) {
 			boolean nempty = false, emailempty = false, pnempty = false;
 
